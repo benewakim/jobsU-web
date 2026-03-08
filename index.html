@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JobsU — College Jobs, Close to Home</title>
+  <meta name="description" content="JobsU connects college students with local residents for flexible, part-time work. Babysitting, tutoring, yard work, and more." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #0B1B3A;
+      --blue:   #1F4B99;
+      --blue-light: #2D5FBF;
+      --ice:    #F5F8FF;
+      --border: #E6ECFF;
+      --muted:  #5B6B88;
+      --white:  #ffffff;
+      --green:  #22C55E;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--white);
+      color: var(--navy);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 64px;
+      background: rgba(11, 27, 58, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-logo-mark {
+      width: 36px;
+      height: 36px;
+      background: var(--blue);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 18px;
+      color: white;
+    }
+
+    .nav-logo-text {
+      font-weight: 900;
+      font-size: 20px;
+      color: white;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: white; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(160deg, var(--navy) 0%, #142d6e 60%, #1a3880 100%);
+      display: flex;
+      align-items: center;
+      padding: 100px 40px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(31,75,153,0.4) 0%, transparent 70%);
+      top: -100px;
+      right: -100px;
+      border-radius: 50%;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(34,197,94,0.15) 0%, transparent 70%);
+      bottom: 0;
+      left: 20%;
+      border-radius: 50%;
+    }
+
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+      width: 100%;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(34,197,94,0.15);
+      border: 1px solid rgba(34,197,94,0.3);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #4ade80;
+      margin-bottom: 24px;
+    }
+
+    .hero-badge-dot {
+      width: 7px;
+      height: 7px;
+      background: #22C55E;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .hero h1 {
+      font-size: clamp(36px, 5vw, 58px);
+      font-weight: 900;
+      color: white;
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(90deg, #60a5fa, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.6;
+      margin-bottom: 36px;
+      max-width: 480px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .store-btns {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .store-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: white;
+      color: var(--navy);
+      text-decoration: none;
+      border-radius: 14px;
+      padding: 12px 20px;
+      font-weight: 800;
+      font-size: 14px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .store-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+    }
+
+    .store-btn-icon { font-size: 22px; }
+
+    .store-btn-sub { font-size: 10px; font-weight: 600; opacity: 0.6; display: block; }
+    .store-btn-name { font-size: 15px; font-weight: 900; display: block; line-height: 1.1; }
+
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 28px;
+    }
+
+    /* Phone mockups */
+    .phones {
+      display: flex;
+      gap: -20px;
+      align-items: flex-end;
+      justify-content: center;
+      position: relative;
+    }
+
+    .phone {
+      width: 180px;
+      height: 360px;
+      background: #1a1a2e;
+      border-radius: 32px;
+      border: 3px solid rgba(255,255,255,0.15);
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05);
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .phone-notch {
+      width: 80px;
+      height: 20px;
+      background: #1a1a2e;
+      border-radius: 0 0 14px 14px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .phone-screen {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .phone-screen-placeholder {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(160deg, #F5F8FF 0%, #EEF4FF 100%);
+      display: flex;
+      flex-direction: column;
+      padding: 12px;
+      gap: 8px;
+    }
+
+    .phone-placeholder-bar {
+      height: 10px;
+      border-radius: 5px;
+      background: #E6ECFF;
+    }
+
+    .phone-placeholder-card {
+      background: white;
+      border-radius: 10px;
+      padding: 10px;
+      border: 1px solid #E6ECFF;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .phone-placeholder-line {
+      height: 8px;
+      border-radius: 4px;
+      background: #E6ECFF;
+    }
+
+    .phone-placeholder-line.short { width: 60%; }
+    .phone-placeholder-line.med   { width: 80%; }
+    .phone-placeholder-line.full  { width: 100%; }
+    .phone-placeholder-pill {
+      height: 20px;
+      width: 60px;
+      border-radius: 10px;
+      background: #EEF4FF;
+      align-self: flex-end;
+    }
+
+    .phone-main {
+      transform: translateY(0) scale(1.05);
+      z-index: 2;
+    }
+
+    .phone-side {
+      opacity: 0.7;
+      transform: translateY(20px);
+    }
+
+    /* QR code section */
+    .qr-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 20px;
+      padding: 16px 20px;
+    }
+
+    .qr-box {
+      width: 100px;
+      height: 100px;
+      background: white;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .qr-box img {
+      width: 90px;
+      height: 90px;
+    }
+
+    /* QR placeholder grid */
+    .qr-placeholder {
+      width: 90px;
+      height: 90px;
+      display: grid;
+      grid-template-columns: repeat(9, 1fr);
+      grid-template-rows: repeat(9, 1fr);
+      gap: 1px;
+    }
+
+    .qr-placeholder span {
+      background: #0B1B3A;
+      border-radius: 1px;
+    }
+
+    .qr-placeholder span.w {
+      background: transparent;
+    }
+
+    .qr-text { color: white; }
+    .qr-text strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 900;
+      margin-bottom: 4px;
+    }
+    .qr-text p {
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.4;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .section {
+      padding: 96px 40px;
+    }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-eyebrow {
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--blue);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 900;
+      letter-spacing: -1px;
+      color: var(--navy);
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.6;
+    }
+
+    /* ── FEATURES ── */
+    .features-bg {
+      background: var(--ice);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 52px;
+    }
+
+    .feature-card {
+      background: white;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      padding: 28px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(31,75,153,0.1);
+    }
+
+    .feature-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: var(--ice);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      margin-bottom: 18px;
+    }
+
+    .feature-title {
+      font-size: 17px;
+      font-weight: 900;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+
+    .feature-desc {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── SCREENSHOTS ── */
+    .screenshots-grid {
+      display: flex;
+      gap: 20px;
+      margin-top: 52px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      scrollbar-width: none;
+    }
+
+    .screenshots-grid::-webkit-scrollbar { display: none; }
+
+    .screenshot-frame {
+      flex-shrink: 0;
+      width: 200px;
+      height: 420px;
+      background: var(--navy);
+      border-radius: 36px;
+      border: 4px solid rgba(255,255,255,0.15);
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(11,27,58,0.2);
+      position: relative;
+    }
+
+    .screenshot-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .screenshot-label {
+      text-align: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
+      margin-top: 12px;
+    }
+
+    .screenshot-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    /* Screenshot placeholder content */
+    .ss-placeholder {
+      width: 100%;
+      height: 100%;
+      padding: 14px 10px;
+      background: #F5F8FF;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .ss-topbar {
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+
+    .ss-title-bar {
+      height: 14px;
+      width: 100px;
+      background: var(--navy);
+      border-radius: 7px;
+    }
+
+    .ss-card {
+      background: white;
+      border-radius: 12px;
+      padding: 10px;
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .ss-line {
+      height: 8px;
+      border-radius: 4px;
+      background: #E6ECFF;
+    }
+
+    .ss-line.dark { background: var(--navy); height: 10px; }
+    .ss-line.blue { background: #EEF4FF; }
+    .ss-line.short { width: 55%; }
+    .ss-line.med   { width: 75%; }
+    .ss-line.full  { width: 100%; }
+
+    .ss-pill {
+      height: 18px;
+      width: 55px;
+      border-radius: 9px;
+      background: #EEF4FF;
+      border: 1px solid var(--border);
+    }
+
+    .ss-btn {
+      height: 32px;
+      border-radius: 10px;
+      background: var(--blue);
+      margin-top: 4px;
+    }
+
+    /* ── FOR STUDENTS / RESIDENTS ── */
+    .split-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+
+    .split-panel {
+      padding: 80px 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .split-panel.panel-blue {
+      background: var(--blue);
+    }
+
+    .split-panel.panel-navy {
+      background: var(--navy);
+    }
+
+    .split-panel .eyebrow {
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .split-panel h2 {
+      font-size: clamp(22px, 3vw, 32px);
+      font-weight: 900;
+      color: white;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+    }
+
+    .split-panel p {
+      font-size: 15px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.6;
+    }
+
+    .split-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .split-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.85);
+    }
+
+    .split-list li::before {
+      content: '✓';
+      font-weight: 900;
+      color: #4ade80;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ── CTA ── */
+    .cta {
+      padding: 96px 40px;
+      text-align: center;
+      background: linear-gradient(160deg, var(--navy) 0%, #142d6e 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(31,75,153,0.5) 0%, transparent 70%);
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 50%;
+    }
+
+    .cta-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .cta h2 {
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 900;
+      color: white;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+
+    .cta p {
+      font-size: 17px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+
+    .cta-qr {
+      display: inline-flex;
+      align-items: center;
+      gap: 20px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 24px;
+      padding: 20px 28px;
+    }
+
+    .cta-qr-box {
+      width: 120px;
+      height: 120px;
+      background: white;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cta-qr-box img {
+      width: 108px;
+      height: 108px;
+    }
+
+    .cta-qr-text { text-align: left; }
+    .cta-qr-text strong {
+      display: block;
+      font-size: 18px;
+      font-weight: 900;
+      color: white;
+      margin-bottom: 6px;
+    }
+    .cta-qr-text p {
+      font-size: 13px;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 0;
+    }
+
+    .cta-store-btns {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 32px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .footer-logo-mark {
+      width: 30px;
+      height: 30px;
+      background: var(--blue);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 14px;
+      color: white;
+    }
+
+    .footer-logo-text {
+      font-weight: 900;
+      font-size: 16px;
+      color: white;
+    }
+
+    .footer-copy {
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: white; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+
+      .hero { padding: 90px 20px 60px; }
+      .hero-inner { grid-template-columns: 1fr; gap: 48px; text-align: center; }
+      .hero-sub { margin: 0 auto 36px; }
+      .store-btns { justify-content: center; }
+      .hero-right { display: none; }
+
+      .section { padding: 64px 20px; }
+      .features-grid { grid-template-columns: 1fr; }
+
+      .split-section { grid-template-columns: 1fr; }
+      .split-panel { padding: 48px 24px; }
+
+      .cta { padding: 64px 20px; }
+      .cta-qr { flex-direction: column; text-align: center; }
+      .cta-qr-text { text-align: center; }
+      .cta-store-btns { justify-content: center; }
+
+      footer { flex-direction: column; text-align: center; padding: 24px 20px; }
+      .footer-links { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#">
+      <div class="nav-logo-mark">J</div>
+      <span class="nav-logo-text">JobsU</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#screenshots">Screenshots</a></li>
+      <li><a href="#students">Students</a></li>
+      <li><a href="#download">Download</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="hero-badge">
+          <span class="hero-badge-dot"></span>
+          Now available on iOS &amp; Android
+        </div>
+        <h1>College jobs,<br /><span>close to home.</span></h1>
+        <p class="hero-sub">
+          JobsU connects college students with local residents for flexible, part-time work — babysitting, tutoring, yard work, and more.
+        </p>
+        <div class="hero-actions">
+          <div class="store-btns">
+            <a href="#" class="store-btn">
+              <span class="store-btn-icon">🍎</span>
+              <span>
+                <span class="store-btn-sub">Download on the</span>
+                <span class="store-btn-name">App Store</span>
+              </span>
+            </a>
+            <a href="#" class="store-btn">
+              <span class="store-btn-icon">▶</span>
+              <span>
+                <span class="store-btn-sub">Get it on</span>
+                <span class="store-btn-name">Google Play</span>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <!-- Phone mockups — replace .phone-screen-placeholder with <img> tags once you have screenshots -->
+        <div class="phones">
+          <div class="phone phone-side">
+            <div class="phone-screen-placeholder">
+              <div class="phone-notch" style="width:60px;height:14px;background:#1a1a2e;border-radius:0 0 10px 10px;margin:0 auto;"></div>
+              <div style="display:flex;flex-direction:column;gap:6px;padding:4px;">
+                <div class="phone-placeholder-bar" style="width:70%;height:12px;background:#1F4B99;border-radius:6px;"></div>
+                <div class="phone-placeholder-card">
+                  <div class="phone-placeholder-line full"></div>
+                  <div class="phone-placeholder-line med"></div>
+                  <div class="phone-placeholder-pill"></div>
+                </div>
+                <div class="phone-placeholder-card">
+                  <div class="phone-placeholder-line full"></div>
+                  <div class="phone-placeholder-line short"></div>
+                  <div class="phone-placeholder-pill"></div>
+                </div>
+                <div class="phone-placeholder-card">
+                  <div class="phone-placeholder-line full"></div>
+                  <div class="phone-placeholder-line med"></div>
+                  <div class="phone-placeholder-pill"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="phone phone-main">
+            <div class="phone-screen-placeholder" style="background:linear-gradient(180deg,#0B1B3A 0%,#1F4B99 100%);">
+              <div style="padding:8px;display:flex;flex-direction:column;gap:8px;">
+                <div style="color:white;font-weight:900;font-size:13px;margin-top:6px;">Browse Jobs</div>
+                <div style="background:rgba(255,255,255,0.1);border-radius:8px;padding:8px;display:flex;flex-direction:column;gap:4px;">
+                  <div style="height:8px;background:rgba(255,255,255,0.4);border-radius:4px;width:80%;"></div>
+                  <div style="height:6px;background:rgba(255,255,255,0.2);border-radius:3px;width:55%;"></div>
+                </div>
+                <div style="background:rgba(255,255,255,0.1);border-radius:8px;padding:8px;display:flex;flex-direction:column;gap:4px;">
+                  <div style="height:8px;background:rgba(255,255,255,0.4);border-radius:4px;width:90%;"></div>
+                  <div style="height:6px;background:rgba(255,255,255,0.2);border-radius:3px;width:60%;"></div>
+                </div>
+                <div style="background:rgba(255,255,255,0.1);border-radius:8px;padding:8px;display:flex;flex-direction:column;gap:4px;">
+                  <div style="height:8px;background:rgba(255,255,255,0.4);border-radius:4px;width:70%;"></div>
+                  <div style="height:6px;background:rgba(255,255,255,0.2);border-radius:3px;width:45%;"></div>
+                </div>
+                <div style="height:32px;background:#22C55E;border-radius:10px;margin-top:4px;display:flex;align-items:center;justify-content:center;">
+                  <div style="height:8px;width:60px;background:rgba(255,255,255,0.8);border-radius:4px;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- QR code -->
+        <div class="qr-wrap">
+          <div class="qr-box">
+            <!--
+              REPLACE THIS with your actual QR code image:
+              <img src="qr-code.png" alt="Scan to download JobsU" />
+
+              Generate your QR code at: https://qr-code-generator.com
+              Point it to your App Store link.
+            -->
+            <svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="90" height="90" fill="white"/>
+              <!-- Top-left finder -->
+              <rect x="5" y="5" width="26" height="26" rx="3" fill="#0B1B3A"/>
+              <rect x="9" y="9" width="18" height="18" rx="1" fill="white"/>
+              <rect x="12" y="12" width="12" height="12" rx="1" fill="#0B1B3A"/>
+              <!-- Top-right finder -->
+              <rect x="59" y="5" width="26" height="26" rx="3" fill="#0B1B3A"/>
+              <rect x="63" y="9" width="18" height="18" rx="1" fill="white"/>
+              <rect x="66" y="12" width="12" height="12" rx="1" fill="#0B1B3A"/>
+              <!-- Bottom-left finder -->
+              <rect x="5" y="59" width="26" height="26" rx="3" fill="#0B1B3A"/>
+              <rect x="9" y="63" width="18" height="18" rx="1" fill="white"/>
+              <rect x="12" y="66" width="12" height="12" rx="1" fill="#0B1B3A"/>
+              <!-- Data dots (decorative) -->
+              <rect x="37" y="5" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="44" y="5" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="37" y="12" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="51" y="5" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="44" y="12" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="37" y="19" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="51" y="19" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="37" y="37" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="44" y="37" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="51" y="37" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="59" y="37" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="66" y="37" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="73" y="37" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="80" y="37" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="37" y="44" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="51" y="44" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="66" y="44" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="80" y="44" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="37" y="51" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="44" y="51" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="59" y="51" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="73" y="51" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="37" y="59" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="51" y="59" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="59" y="59" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="73" y="59" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="80" y="59" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="44" y="66" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="59" y="66" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="66" y="66" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="37" y="73" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="51" y="73" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="66" y="73" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="80" y="73" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="37" y="80" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="44" y="80" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="59" y="80" width="5" height="5" rx="1" fill="#0B1B3A"/>
+              <rect x="73" y="80" width="5" height="5" rx="1" fill="#0B1B3A"/>
+            </svg>
+          </div>
+          <div class="qr-text">
+            <strong>Scan to download</strong>
+            <p>Point your camera at the code to get the app instantly.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="section features-bg" id="features">
+    <div class="section-inner">
+      <p class="section-eyebrow">Why JobsU</p>
+      <h2 class="section-title">Everything you need, nothing you don't</h2>
+      <p class="section-sub">Built specifically for the college community — simple, safe, and designed for real people.</p>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">📍</div>
+          <h3 class="feature-title">Hyper-local</h3>
+          <p class="feature-desc">Jobs are matched to students at nearby colleges. Residents set a radius so only local students can apply.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⭐</div>
+          <h3 class="feature-title">Ratings & reviews</h3>
+          <p class="feature-desc">Both students and residents rate each other after every job. Trust is built into every interaction.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">💬</div>
+          <h3 class="feature-title">Built-in messaging</h3>
+          <p class="feature-desc">Coordinate details directly in the app. No need to share phone numbers until you're ready.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔔</div>
+          <h3 class="feature-title">Instant alerts</h3>
+          <p class="feature-desc">Students get notified the moment a matching job is posted. Residents get notified when accepted.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🛡️</div>
+          <h3 class="feature-title">Safe & verified</h3>
+          <p class="feature-desc">Every account is tied to a real email. Report and block tools keep the community safe.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">💰</div>
+          <h3 class="feature-title">Transparent pay</h3>
+          <p class="feature-desc">Minimum $25/hr guaranteed. Students see exactly what they'll earn before they apply.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREENSHOTS -->
+  <section class="section" id="screenshots">
+    <div class="section-inner">
+      <p class="section-eyebrow">The app</p>
+      <h2 class="section-title">Designed to be simple</h2>
+      <p class="section-sub">Clean, fast, and easy to use — whether you're a student looking for work or a resident who needs help.</p>
+
+      <!--
+        REPLACE the placeholder divs below with real screenshot images:
+        <img src="screenshots/browse.png" alt="Browse Jobs" />
+
+        Recommended screenshot size: 390x844px (iPhone 14 screen size)
+      -->
+      <div class="screenshots-grid">
+        <div class="screenshot-wrap">
+          <div class="screenshot-frame">
+            <div class="ss-placeholder">
+              <div class="ss-topbar"><div class="ss-title-bar"></div><div style="width:30px;height:14px;background:#E6ECFF;border-radius:7px;"></div></div>
+              <div style="color:#0B1B3A;font-weight:900;font-size:11px;margin-bottom:4px;">Browse Jobs</div>
+              <div class="ss-card"><div class="ss-line dark full"></div><div class="ss-line med"></div><div class="ss-pill"></div></div>
+              <div class="ss-card"><div class="ss-line dark full"></div><div class="ss-line short"></div><div class="ss-pill"></div></div>
+              <div class="ss-card"><div class="ss-line dark full"></div><div class="ss-line med"></div><div class="ss-pill"></div></div>
+              <div class="ss-card"><div class="ss-line dark full"></div><div class="ss-line short"></div><div class="ss-pill"></div></div>
+            </div>
+          </div>
+          <p class="screenshot-label">Browse Jobs</p>
+        </div>
+
+        <div class="screenshot-wrap">
+          <div class="screenshot-frame">
+            <div class="ss-placeholder">
+              <div class="ss-topbar"><div class="ss-title-bar"></div></div>
+              <div style="color:#0B1B3A;font-weight:900;font-size:11px;margin-bottom:4px;">Job Details</div>
+              <div class="ss-card" style="gap:6px;">
+                <div class="ss-line dark full"></div>
+                <div class="ss-line med"></div>
+                <div style="height:1px;background:#E6ECFF;"></div>
+                <div class="ss-line full"></div>
+                <div class="ss-line full"></div>
+                <div class="ss-line med"></div>
+              </div>
+              <div class="ss-btn"></div>
+            </div>
+          </div>
+          <p class="screenshot-label">Job Details</p>
+        </div>
+
+        <div class="screenshot-wrap">
+          <div class="screenshot-frame">
+            <div class="ss-placeholder" style="background:linear-gradient(160deg,#0B1B3A,#1F4B99);">
+              <div class="ss-topbar"><div style="height:14px;width:80px;background:rgba(255,255,255,0.3);border-radius:7px;"></div></div>
+              <div style="color:white;font-weight:900;font-size:11px;margin-bottom:6px;">Messages</div>
+              <div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:8px;display:flex;flex-direction:column;gap:5px;">
+                <div style="height:8px;background:rgba(255,255,255,0.4);border-radius:4px;width:70%;"></div>
+                <div style="height:6px;background:rgba(255,255,255,0.2);border-radius:3px;width:50%;"></div>
+              </div>
+              <div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:8px;display:flex;flex-direction:column;gap:5px;margin-top:6px;">
+                <div style="height:8px;background:rgba(255,255,255,0.4);border-radius:4px;width:85%;"></div>
+                <div style="height:6px;background:rgba(255,255,255,0.2);border-radius:3px;width:40%;"></div>
+              </div>
+            </div>
+          </div>
+          <p class="screenshot-label">Messages</p>
+        </div>
+
+        <div class="screenshot-wrap">
+          <div class="screenshot-frame">
+            <div class="ss-placeholder">
+              <div class="ss-topbar"><div class="ss-title-bar"></div></div>
+              <div style="color:#0B1B3A;font-weight:900;font-size:11px;margin-bottom:4px;">My Jobs</div>
+              <div style="background:#F0FDF4;border:2px solid #22C55E;border-radius:10px;padding:8px;display:flex;flex-direction:column;gap:5px;">
+                <div style="height:8px;background:#0B1B3A;border-radius:4px;width:75%;"></div>
+                <div class="ss-line short"></div>
+                <div style="height:6px;background:#22C55E;border-radius:3px;width:55%;opacity:0.5;"></div>
+              </div>
+              <div class="ss-card" style="margin-top:6px;"><div class="ss-line dark full"></div><div class="ss-line med"></div><div class="ss-pill"></div></div>
+              <div class="ss-card"><div class="ss-line dark full"></div><div class="ss-line short"></div><div class="ss-pill"></div></div>
+            </div>
+          </div>
+          <p class="screenshot-label">My Jobs</p>
+        </div>
+
+        <div class="screenshot-wrap">
+          <div class="screenshot-frame">
+            <div class="ss-placeholder">
+              <div class="ss-topbar"><div class="ss-title-bar"></div></div>
+              <div style="color:#0B1B3A;font-weight:900;font-size:11px;margin-bottom:4px;">Profile</div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:6px;background:white;border-radius:10px;padding:12px;border:1px solid #E6ECFF;">
+                <div style="width:40px;height:40px;border-radius:20px;background:#EEF4FF;border:2px solid #1F4B99;"></div>
+                <div style="height:10px;background:#0B1B3A;border-radius:5px;width:80px;"></div>
+                <div style="height:7px;background:#E6ECFF;border-radius:4px;width:60px;"></div>
+                <div style="height:18px;background:#FEF9EC;border-radius:9px;width:80px;border:1px solid #FCD34D;"></div>
+              </div>
+            </div>
+          </div>
+          <p class="screenshot-label">Profile</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOR STUDENTS / RESIDENTS -->
+  <div class="split-section" id="students">
+    <div class="split-panel panel-blue">
+      <p class="eyebrow">For Students</p>
+      <h2>Earn on your own schedule</h2>
+      <p>Browse local jobs that fit your skills, availability, and location. Get paid at least $25/hr — guaranteed.</p>
+      <ul class="split-list">
+        <li>Filter jobs by type, pay, and date</li>
+        <li>Apply in one tap</li>
+        <li>Chat with residents directly in the app</li>
+        <li>Build your reputation with ratings</li>
+        <li>Track all your earnings in one place</li>
+      </ul>
+    </div>
+    <div class="split-panel panel-navy">
+      <p class="eyebrow">For Residents</p>
+      <h2>Find reliable local help</h2>
+      <p>Post a job in under 2 minutes and get applicants from colleges near you. Review profiles and pick the right person.</p>
+      <ul class="split-list">
+        <li>Target specific nearby colleges</li>
+        <li>Review student profiles and ratings</li>
+        <li>Accept, message, and coordinate easily</li>
+        <li>Mark jobs complete when done</li>
+        <li>Re-post jobs with one tap</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CTA / DOWNLOAD -->
+  <section class="cta" id="download">
+    <div class="cta-inner">
+      <h2>Ready to get started?</h2>
+      <p>Download JobsU and find your first job — or your next great student — today.</p>
+
+      <div class="cta-qr">
+        <div class="cta-qr-box">
+          <!-- Same QR placeholder — replace with real QR code image -->
+          <svg width="108" height="108" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="90" height="90" fill="white"/>
+            <rect x="5" y="5" width="26" height="26" rx="3" fill="#0B1B3A"/>
+            <rect x="9" y="9" width="18" height="18" rx="1" fill="white"/>
+            <rect x="12" y="12" width="12" height="12" rx="1" fill="#0B1B3A"/>
+            <rect x="59" y="5" width="26" height="26" rx="3" fill="#0B1B3A"/>
+            <rect x="63" y="9" width="18" height="18" rx="1" fill="white"/>
+            <rect x="66" y="12" width="12" height="12" rx="1" fill="#0B1B3A"/>
+            <rect x="5" y="59" width="26" height="26" rx="3" fill="#0B1B3A"/>
+            <rect x="9" y="63" width="18" height="18" rx="1" fill="white"/>
+            <rect x="12" y="66" width="12" height="12" rx="1" fill="#0B1B3A"/>
+            <rect x="37" y="5" width="5" height="5" rx="1" fill="#0B1B3A"/>
+            <rect x="44" y="5" width="5" height="5" rx="1" fill="#0B1B3A"/>
+            <rect x="37" y="12" width="5" height="5" rx="1" fill="#0B1B3A"/>
+            <rect x="51" y="5" width="5" height="5" rx="1" fill="#0B1B3A"/>
+            <rect x="37" y="37" width="5" height="5" rx="1" fill="#0B1B3A"/>
+            <rect x="44" y="37" width="5" height="5" rx="1" fill="#0B1B3A"/>
+            <rect x="51" y="37" width="5" height="5" rx="1" fill="#0B1B3A"/>
+            <rect x="66" y="37" width="5" height="5" rx="1" fill="#0B1B3A"/>
+            <rect x="80" y="37" width="5" height="5" rx="1" fill="#0B1B3A"/>
+            <rect x="37" y="44" width="5" height="5" rx="1" fill="#0B1B3A"/>
+            <rect x="66" y="44" width="5" height="5" rx="1" fill="#0B1B3A"/>
+            <rect x="37" y="51" width="5" height="5" rx="1" fill="#0B1B3A"/>
+            <rect x="44" y="51" width="5" height="5" rx="1" fill="#0B1B3A"/>
+            <rect x="59" y="51" width="5" height="5" rx="1" fill="#0B1B3A"/>
+            <rect x="37" y="59" width="5" height="5" rx="1" fill="#0B1B3A"/>
+            <rect x="51" y="59" width="5" height="5" rx="1" fill="#0B1B3A"/>
+            <rect x="66" y="59" width="5" height="5" rx="1" fill="#0B1B3A"/>
+            <rect x="80" y="59" width="5" height="5" rx="1" fill="#0B1B3A"/>
+            <rect x="44" y="66" width="5" height="5" rx="1" fill="#0B1B3A"/>
+            <rect x="59" y="66" width="5" height="5" rx="1" fill="#0B1B3A"/>
+            <rect x="37" y="73" width="5" height="5" rx="1" fill="#0B1B3A"/>
+            <rect x="51" y="73" width="5" height="5" rx="1" fill="#0B1B3A"/>
+            <rect x="66" y="73" width="5" height="5" rx="1" fill="#0B1B3A"/>
+            <rect x="80" y="73" width="5" height="5" rx="1" fill="#0B1B3A"/>
+            <rect x="37" y="80" width="5" height="5" rx="1" fill="#0B1B3A"/>
+            <rect x="44" y="80" width="5" height="5" rx="1" fill="#0B1B3A"/>
+            <rect x="59" y="80" width="5" height="5" rx="1" fill="#0B1B3A"/>
+          </svg>
+        </div>
+        <div class="cta-qr-text">
+          <strong>Scan to download</strong>
+          <p>Works on iPhone and Android.<br />No sign-up required to browse.</p>
+          <div class="cta-store-btns">
+            <a href="#" class="store-btn" style="padding:8px 14px;">
+              <span class="store-btn-icon" style="font-size:18px;">🍎</span>
+              <span>
+                <span class="store-btn-sub">App Store</span>
+                <span class="store-btn-name" style="font-size:13px;">iOS</span>
+              </span>
+            </a>
+            <a href="#" class="store-btn" style="padding:8px 14px;">
+              <span class="store-btn-icon" style="font-size:18px;">▶</span>
+              <span>
+                <span class="store-btn-sub">Google Play</span>
+                <span class="store-btn-name" style="font-size:13px;">Android</span>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <a class="footer-logo" href="#">
+      <div class="footer-logo-mark">J</div>
+      <span class="footer-logo-text">JobsU</span>
+    </a>
+    <p class="footer-copy">&copy; 2025 JobsU. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+      <a href="mailto:support@jobsu.app">Contact</a>
+    </div>
+  </footer>
+
+</body>
+</html>

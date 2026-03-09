@@ -16,7 +16,9 @@
       background: #0B1B3A; border-bottom: 1px solid rgba(255,255,255,0.08);
     }
     .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-    .nav-logo-mark { width: 36px; height: 36px; background: #1F4B99; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 18px; color: white; }
+    .nav-logo-mark { display: none; }
+    .nav-logo-text { display: none; }
+    .nav-logo-img { height: 36px; background: white; border-radius: 10px; padding: 3px 10px; display: block; }
     .nav-logo-text { font-weight: 900; font-size: 20px; color: white; }
     .nav-back { font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.6); text-decoration: none; }
     .nav-back:hover { color: white; }
@@ -43,8 +45,8 @@
 <body>
   <nav>
     <a class="nav-logo" href="index.html">
-      <div class="nav-logo-mark">J</div>
-      <span class="nav-logo-text">JobsU</span>
+
+      <img src="logo.png" alt="JobsU" class="nav-logo-img" />
     </a>
     <a class="nav-back" href="index.html">← Back to home</a>
   </nav>

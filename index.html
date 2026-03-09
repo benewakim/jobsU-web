@@ -54,23 +54,19 @@
     }
 
     .nav-logo-mark {
-      width: 36px;
-      height: 36px;
-      background: var(--blue);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 900;
-      font-size: 18px;
-      color: white;
+      display: none;
     }
 
     .nav-logo-text {
-      font-weight: 900;
-      font-size: 20px;
-      color: white;
-      letter-spacing: -0.5px;
+      display: none;
+    }
+
+    .nav-logo-img {
+      height: 38px;
+      background: white;
+      border-radius: 10px;
+      padding: 3px 10px;
+      display: block;
     }
 
     .nav-links {
@@ -171,7 +167,7 @@
     }
 
     .hero h1 span {
-      background: linear-gradient(90deg, #60a5fa, #a78bfa);
+      background: linear-gradient(90deg, #4d9fff, #1a6fe8);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -827,8 +823,7 @@
   <!-- NAV -->
   <nav>
     <a class="nav-logo" href="#">
-      <div class="nav-logo-mark">J</div>
-      <span class="nav-logo-text">JobsU</span>
+      <img src="logo.png" alt="JobsU" class="nav-logo-img" />
     </a>
     <ul class="nav-links">
       <li><a href="#features">Features</a></li>
@@ -874,50 +869,11 @@
         <!-- Phone mockups — replace .phone-screen-placeholder with <img> tags once you have screenshots -->
         <div class="phones">
           <div class="phone phone-side">
-            <div class="phone-screen-placeholder">
-              <div class="phone-notch" style="width:60px;height:14px;background:#1a1a2e;border-radius:0 0 10px 10px;margin:0 auto;"></div>
-              <div style="display:flex;flex-direction:column;gap:6px;padding:4px;">
-                <div class="phone-placeholder-bar" style="width:70%;height:12px;background:#1F4B99;border-radius:6px;"></div>
-                <div class="phone-placeholder-card">
-                  <div class="phone-placeholder-line full"></div>
-                  <div class="phone-placeholder-line med"></div>
-                  <div class="phone-placeholder-pill"></div>
-                </div>
-                <div class="phone-placeholder-card">
-                  <div class="phone-placeholder-line full"></div>
-                  <div class="phone-placeholder-line short"></div>
-                  <div class="phone-placeholder-pill"></div>
-                </div>
-                <div class="phone-placeholder-card">
-                  <div class="phone-placeholder-line full"></div>
-                  <div class="phone-placeholder-line med"></div>
-                  <div class="phone-placeholder-pill"></div>
-                </div>
-              </div>
-            </div>
+            <img src="screenshot-home.png" class="phone-screen" alt="JobsU app" />
           </div>
 
           <div class="phone phone-main">
-            <div class="phone-screen-placeholder" style="background:linear-gradient(180deg,#0B1B3A 0%,#1F4B99 100%);">
-              <div style="padding:8px;display:flex;flex-direction:column;gap:8px;">
-                <div style="color:white;font-weight:900;font-size:13px;margin-top:6px;">Browse Jobs</div>
-                <div style="background:rgba(255,255,255,0.1);border-radius:8px;padding:8px;display:flex;flex-direction:column;gap:4px;">
-                  <div style="height:8px;background:rgba(255,255,255,0.4);border-radius:4px;width:80%;"></div>
-                  <div style="height:6px;background:rgba(255,255,255,0.2);border-radius:3px;width:55%;"></div>
-                </div>
-                <div style="background:rgba(255,255,255,0.1);border-radius:8px;padding:8px;display:flex;flex-direction:column;gap:4px;">
-                  <div style="height:8px;background:rgba(255,255,255,0.4);border-radius:4px;width:90%;"></div>
-                  <div style="height:6px;background:rgba(255,255,255,0.2);border-radius:3px;width:60%;"></div>
-                </div>
-                <div style="background:rgba(255,255,255,0.1);border-radius:8px;padding:8px;display:flex;flex-direction:column;gap:4px;">
-                  <div style="height:8px;background:rgba(255,255,255,0.4);border-radius:4px;width:70%;"></div>
-                  <div style="height:6px;background:rgba(255,255,255,0.2);border-radius:3px;width:45%;"></div>
-                </div>
-                <div style="height:32px;background:#22C55E;border-radius:10px;margin-top:4px;display:flex;align-items:center;justify-content:center;">
-                  <div style="height:8px;width:60px;background:rgba(255,255,255,0.8);border-radius:4px;"></div>
-                </div>
-              </div>
-            </div>
+            <img src="screenshot-home.png" class="phone-screen" alt="JobsU app home screen" />
           </div>
         </div>
 
@@ -1242,8 +1198,7 @@
   <!-- FOOTER -->
   <footer>
     <a class="footer-logo" href="#">
-      <div class="footer-logo-mark">J</div>
-      <span class="footer-logo-text">JobsU</span>
+      <img src="logo.png" alt="JobsU" style="height:30px;background:white;border-radius:8px;padding:2px 8px;" />
     </a>
     <p class="footer-copy">&copy; 2025 JobsU. All rights reserved.</p>
     <div class="footer-links">

@@ -16,10 +16,7 @@
       background: #0B1B3A; border-bottom: 1px solid rgba(255,255,255,0.08);
     }
     .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-    .nav-logo-mark { display: none; }
-    .nav-logo-text { display: none; }
     .nav-logo-img { height: 36px; background: white; border-radius: 10px; padding: 3px 10px; display: block; }
-    .nav-logo-text { font-weight: 900; font-size: 20px; color: white; }
     .nav-back { font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.6); text-decoration: none; }
     .nav-back:hover { color: white; }
 
@@ -29,23 +26,51 @@
     h1 { font-size: 40px; font-weight: 900; letter-spacing: -1px; margin-bottom: 8px; }
     .updated { font-size: 13px; font-weight: 600; color: #5B6B88; margin-bottom: 48px; }
 
-    .prose h2 { font-size: 20px; font-weight: 900; margin-top: 40px; margin-bottom: 12px; }
+    .prose h2 { font-size: 20px; font-weight: 900; margin-top: 48px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid #E6ECFF; }
+    .prose h3 { font-size: 15px; font-weight: 900; color: #1F4B99; margin-top: 24px; margin-bottom: 10px; }
     .prose p { font-size: 15px; font-weight: 600; color: #2D3748; line-height: 1.8; margin-bottom: 16px; }
     .prose ul { padding-left: 20px; margin-bottom: 16px; }
     .prose ul li { font-size: 15px; font-weight: 600; color: #2D3748; line-height: 1.8; margin-bottom: 6px; }
     .prose a { color: #1F4B99; }
+
+    .prose table { width: 100%; border-collapse: collapse; margin: 20px 0 24px; font-size: 14px; }
+    .prose table th { background: #0B1B3A; color: white; font-weight: 900; padding: 12px 16px; text-align: left; }
+    .prose table td { padding: 12px 16px; border-bottom: 1px solid #E6ECFF; font-weight: 600; color: #2D3748; line-height: 1.6; vertical-align: top; }
+    .prose table tr:nth-child(even) td { background: white; }
+    .prose table td:first-child { font-weight: 900; color: #0B1B3A; white-space: nowrap; }
+
+    .callout {
+      background: #FFF8E6;
+      border: 1px solid #FCD34D;
+      border-left: 4px solid #F59E0B;
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin-top: 48px;
+    }
+    .callout strong { display: block; font-size: 14px; font-weight: 900; color: #92400E; margin-bottom: 10px; }
+    .callout ul { padding-left: 18px; }
+    .callout ul li { font-size: 14px; font-weight: 600; color: #78350F; line-height: 1.7; margin-bottom: 6px; }
 
     footer { background: #0B1B3A; padding: 24px 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
     .footer-copy { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.4); }
     .footer-links { display: flex; gap: 24px; }
     .footer-links a { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.5); text-decoration: none; }
     .footer-links a:hover { color: white; }
+
+    @media (max-width: 600px) {
+      nav { padding: 0 20px; }
+      .page { padding: 48px 20px 72px; }
+      h1 { font-size: 30px; }
+      .prose table { font-size: 13px; }
+      .prose table td:first-child { white-space: normal; }
+      footer { padding: 24px 20px; flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
   </style>
 </head>
 <body>
   <nav>
     <a class="nav-logo" href="index.html">
-
       <img src="logo.png" alt="JobsU" class="nav-logo-img" />
     </a>
     <a class="nav-back" href="index.html">← Back to home</a>
@@ -54,72 +79,163 @@
   <div class="page">
     <p class="page-eyebrow">Legal</p>
     <h1>Privacy Policy</h1>
-    <p class="updated">Last updated: March 2025</p>
+    <p class="updated">Effective Date: [Insert Date]</p>
 
     <div class="prose">
-      <p>JobsU ("we," "us," or "our") operates the JobsU mobile application. This Privacy Policy explains how we collect, use, and protect your information when you use our app.</p>
+      <p>JobsU, Inc. ("JobsU," "we," "our," or "us") is committed to protecting your privacy. This Privacy Policy describes how we collect, use, disclose, and safeguard your personal information when you access or use the JobsU platform, including our mobile application, website, and related services (collectively, the "Platform").</p>
+      <p>By accessing or using the Platform, you acknowledge that you have read and understood this Privacy Policy. If you do not agree with our practices, please do not use the Platform.</p>
+      <p>This Privacy Policy should be read in conjunction with our <a href="terms.html">Terms of Service</a>, which govern your use of the Platform.</p>
 
       <h2>1. Information We Collect</h2>
-      <p>We collect information you provide directly when you create an account or use the app:</p>
+      <p>We collect information in several ways to provide, improve, and protect the Platform.</p>
+
+      <h3>1.1 Information You Provide Directly</h3>
+      <p>When you create an account or use the Platform, you may provide:</p>
       <ul>
-        <li>Name, email address, and password</li>
-        <li>Profile information (school, bio, photo, GPA, job preferences)</li>
-        <li>Address and location data (for residents setting a job radius)</li>
-        <li>Payment information (processed securely via Stripe)</li>
-        <li>Messages sent within the app</li>
-        <li>Ratings and reviews you submit</li>
+        <li><strong>Account Information:</strong> Name, email address (.edu email for Students), phone number, password, and profile photo</li>
+        <li><strong>Profile Information:</strong> Bio, skills, availability, university affiliation, year of study, and areas of expertise</li>
+        <li><strong>Payment Information:</strong> Billing address, bank account or payment card details (processed and stored by our third-party payment processor; JobsU does not directly store full payment card numbers)</li>
+        <li><strong>Job Information:</strong> Job descriptions, service requirements, location of work, pricing, and scheduling preferences</li>
+        <li><strong>Communications:</strong> Messages exchanged through the Platform, customer support inquiries, and feedback</li>
+        <li><strong>Verification Data:</strong> Educational enrollment verification, identity verification documents, and related data</li>
+        <li><strong>Reviews and Ratings:</strong> Feedback and ratings you provide about other users</li>
       </ul>
-      <p>We also collect certain information automatically:</p>
+
+      <h3>1.2 Information Collected Automatically</h3>
+      <p>When you use the Platform, we automatically collect:</p>
       <ul>
-        <li>Device type and operating system</li>
-        <li>Push notification tokens (for job alerts)</li>
-        <li>App usage and interaction data</li>
+        <li><strong>Device Information:</strong> Device type, operating system, unique device identifiers, browser type, and mobile network information</li>
+        <li><strong>Usage Data:</strong> Pages viewed, features used, search queries, click patterns, session duration, and interaction data</li>
+        <li><strong>Location Data:</strong> Approximate location based on IP address; precise location only if you grant permission through your device settings (used to show nearby jobs)</li>
+        <li><strong>Log Data:</strong> IP address, access times, referring URLs, and system activity logs</li>
+        <li><strong>Cookies and Tracking Technologies:</strong> We use cookies, web beacons, pixels, and similar technologies to collect data about your browsing activity (see Section 7)</li>
+      </ul>
+
+      <h3>1.3 Information from Third Parties</h3>
+      <p>We may receive information from:</p>
+      <ul>
+        <li><strong>Payment Processors:</strong> Transaction confirmation, payment status, and fraud screening results</li>
+        <li><strong>Identity Verification Providers:</strong> Results of background or identity checks, where applicable</li>
+        <li><strong>Educational Institutions:</strong> Enrollment verification data (where permitted)</li>
+        <li><strong>Analytics Providers:</strong> Aggregated and de-identified usage analytics</li>
       </ul>
 
       <h2>2. How We Use Your Information</h2>
+      <p>We use the information we collect for the following purposes:</p>
+      <table>
+        <thead>
+          <tr><th>Purpose</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Platform Operations</td><td>To create and manage your account, facilitate job postings and applications, process payments, and enable communication between users.</td></tr>
+          <tr><td>Trust and Safety</td><td>To verify identity and enrollment, prevent fraud and abuse, enforce our Terms of Service, and protect the security of the Platform.</td></tr>
+          <tr><td>Personalization</td><td>To recommend relevant jobs, customize your experience, and display content tailored to your preferences and location.</td></tr>
+          <tr><td>Communications</td><td>To send transactional messages (e.g., booking confirmations, payment receipts), service updates, and promotional communications (with your consent where required).</td></tr>
+          <tr><td>Analytics and Improvement</td><td>To analyze usage patterns, measure performance, conduct research, and improve the Platform's features and user experience.</td></tr>
+          <tr><td>Legal Compliance</td><td>To comply with applicable laws, respond to legal requests, establish or exercise legal claims, and fulfill tax reporting obligations.</td></tr>
+        </tbody>
+      </table>
+
+      <h2>3. How We Share Your Information</h2>
+      <p>We do not sell your personal information. We may share your information in the following circumstances:</p>
       <ul>
-        <li>To create and manage your account</li>
-        <li>To match students with relevant local job postings</li>
-        <li>To facilitate communication between residents and students</li>
-        <li>To process payments through our payment provider (Stripe)</li>
-        <li>To send push notifications about job matches and application updates</li>
-        <li>To display ratings and reviews on profiles</li>
-        <li>To investigate reports of policy violations</li>
-        <li>To improve the app and fix bugs</li>
+        <li><strong>With Other Users:</strong> When you use the Platform, certain profile information is visible to other users. Residents can see a Student's name, profile photo, university affiliation, ratings, and reviews. Students can see a Resident's name, job details, and ratings.</li>
+        <li><strong>With Service Providers:</strong> We share information with third-party vendors who perform services on our behalf, including payment processing, identity verification, cloud hosting, analytics, and customer support. These providers are contractually obligated to use your data only for the purposes we specify.</li>
+        <li><strong>For Legal Reasons:</strong> We may disclose your information if required by law, in response to a valid legal process, or to protect the rights, property, or safety of JobsU, our users, or the public.</li>
+        <li><strong>Business Transfers:</strong> In the event of a merger, acquisition, or sale of assets, your information may be transferred to the successor entity. We will notify you of any such change.</li>
+        <li><strong>With Your Consent:</strong> We may share your information for other purposes with your explicit consent.</li>
+        <li><strong>Aggregated or De-identified Data:</strong> We may share aggregated or de-identified data that cannot reasonably be used to identify you for research, analytics, or business purposes.</li>
       </ul>
 
-      <h2>3. Information Sharing</h2>
-      <p>We do not sell your personal information. We share data only in these circumstances:</p>
+      <h2>4. Data Retention</h2>
+      <p>We retain your personal information for as long as necessary to fulfill the purposes described in this Privacy Policy, including:</p>
       <ul>
-        <li><strong>With other users:</strong> Your profile information (name, school, rating, bio, photo) is visible to other app users when you apply for jobs or post jobs.</li>
-        <li><strong>With Stripe:</strong> Payment information is handled by Stripe, Inc. We do not store full payment card details. See <a href="https://stripe.com/privacy" target="_blank">Stripe's Privacy Policy</a>.</li>
-        <li><strong>With service providers:</strong> We use Supabase for database and authentication services.</li>
-        <li><strong>For legal reasons:</strong> We may disclose information if required by law or to protect the rights and safety of users.</li>
+        <li>For the duration of your active account</li>
+        <li>As needed to provide services, resolve disputes, and enforce agreements</li>
+        <li>As required by applicable law, regulation, or legal obligation (e.g., tax records, transaction history)</li>
+        <li>For a reasonable period after account deletion to comply with legal obligations and resolve pending matters</li>
       </ul>
+      <p>When personal information is no longer needed, we will securely delete or anonymize it in accordance with our data retention schedule.</p>
 
-      <h2>4. Data Storage and Security</h2>
-      <p>Your data is stored securely using Supabase infrastructure with row-level security policies. Authentication tokens are stored in your device's encrypted keychain. We use industry-standard encryption for data in transit.</p>
-      <p>No method of transmission over the internet is 100% secure. We strive to protect your information but cannot guarantee absolute security.</p>
-
-      <h2>5. Your Rights</h2>
-      <p>You have the right to:</p>
+      <h2>5. Data Security</h2>
+      <p>We implement commercially reasonable technical, administrative, and organizational security measures to protect your personal information, including:</p>
       <ul>
-        <li>Access the personal information we hold about you</li>
-        <li>Request correction of inaccurate data</li>
-        <li>Request deletion of your account and associated data</li>
-        <li>Opt out of push notifications through your device settings</li>
+        <li>Encryption of data in transit (TLS/SSL) and at rest</li>
+        <li>Secure payment processing through PCI-DSS compliant third-party providers</li>
+        <li>Access controls limiting employee access to personal data on a need-to-know basis</li>
+        <li>Regular security assessments, monitoring, and incident response procedures</li>
       </ul>
-      <p>To exercise these rights, contact us at <a href="mailto:support@jobsu.app">support@jobsu.app</a>.</p>
+      <p><strong>Important:</strong> No method of electronic transmission or storage is 100% secure. While we strive to protect your information, we cannot guarantee absolute security. You are responsible for maintaining the confidentiality of your account credentials.</p>
 
-      <h2>6. Children's Privacy</h2>
-      <p>JobsU is not intended for users under the age of 18. We do not knowingly collect personal information from children under 18. If we become aware that a child under 18 has provided us with personal information, we will delete it immediately.</p>
+      <h2>6. Your Rights and Choices</h2>
+      <p>Depending on your jurisdiction, you may have the following rights regarding your personal information:</p>
+      <ul>
+        <li><strong>Access:</strong> Request a copy of the personal information we hold about you</li>
+        <li><strong>Correction:</strong> Request correction of inaccurate or incomplete information</li>
+        <li><strong>Deletion:</strong> Request deletion of your personal information, subject to legal retention requirements</li>
+        <li><strong>Portability:</strong> Request a copy of your data in a structured, machine-readable format</li>
+        <li><strong>Opt-Out of Marketing:</strong> Unsubscribe from promotional communications at any time via the "unsubscribe" link in emails or through your account settings</li>
+        <li><strong>Withdraw Consent:</strong> Where processing is based on consent, you may withdraw consent at any time</li>
+        <li><strong>Location Permissions:</strong> You can disable precise location access through your device settings at any time</li>
+      </ul>
+      <p>To exercise any of these rights, please contact us at <a href="mailto:privacy@jobsu.com">privacy@jobsu.com</a>. We will respond within the timeframe required by applicable law (typically 30–45 days). We will not discriminate against you for exercising your privacy rights.</p>
 
-      <h2>7. Changes to This Policy</h2>
-      <p>We may update this Privacy Policy from time to time. We will notify you of significant changes by posting the new policy in the app and updating the "Last updated" date above.</p>
+      <h2>7. Cookies and Tracking Technologies</h2>
+      <p>We use cookies and similar technologies to:</p>
+      <ul>
+        <li><strong>Essential Cookies:</strong> Enable core functionality such as authentication, security, and session management</li>
+        <li><strong>Performance Cookies:</strong> Collect anonymous data about how users interact with the Platform to improve performance</li>
+        <li><strong>Functional Cookies:</strong> Remember your preferences and settings for a personalized experience</li>
+        <li><strong>Analytics Cookies:</strong> Help us understand usage patterns through third-party analytics services (e.g., Google Analytics)</li>
+      </ul>
+      <p>You can manage cookie preferences through your browser settings. Disabling certain cookies may affect Platform functionality.</p>
+      <p><strong>Do Not Track:</strong> Some browsers offer a "Do Not Track" signal. The Platform does not currently respond to Do Not Track signals, but we respect your choices through the cookie management options described above.</p>
 
-      <h2>8. Contact Us</h2>
-      <p>If you have questions about this Privacy Policy, please contact us at:<br />
-      <a href="mailto:support@jobsu.app">support@jobsu.app</a></p>
+      <h2>8. Children's Privacy</h2>
+      <p>The Platform is not intended for use by anyone under the age of 18. We do not knowingly collect personal information from children under 18. If we become aware that we have collected information from a child under 18, we will take steps to promptly delete such information.</p>
+      <p>If you believe a child under 18 has provided personal information to us, please contact us immediately at <a href="mailto:privacy@jobsu.com">privacy@jobsu.com</a>.</p>
+
+      <h2>9. State-Specific Privacy Rights</h2>
+
+      <h3>9.1 California Residents (CCPA/CPRA)</h3>
+      <p>If you are a California resident, you have additional rights under the California Consumer Privacy Act (CCPA) and the California Privacy Rights Act (CPRA), including:</p>
+      <ul>
+        <li>The right to know what personal information we collect, use, disclose, and sell</li>
+        <li>The right to delete personal information we hold about you</li>
+        <li>The right to opt out of the sale or sharing of personal information (JobsU does not sell personal information)</li>
+        <li>The right to correct inaccurate personal information</li>
+        <li>The right to limit the use of sensitive personal information</li>
+        <li>The right to non-discrimination for exercising your privacy rights</li>
+      </ul>
+      <p>To exercise these rights, contact us at <a href="mailto:privacy@jobsu.com">privacy@jobsu.com</a> or call [Insert Toll-Free Number].</p>
+
+      <h3>9.2 Other State Privacy Laws</h3>
+      <p>Residents of Virginia, Colorado, Connecticut, Utah, and other states with comprehensive privacy laws may have similar rights. We will honor applicable rights under your state's laws. Please contact us at <a href="mailto:privacy@jobsu.com">privacy@jobsu.com</a> to submit a request.</p>
+
+      <h2>10. International Users</h2>
+      <p>The Platform is currently operated in the United States. If you access the Platform from outside the United States, please be aware that your information may be transferred to, stored, and processed in the United States, where data protection laws may differ from those in your jurisdiction.</p>
+      <p>By using the Platform, you consent to the transfer of your information to the United States. If we expand internationally, we will comply with applicable data protection laws, including the GDPR where required.</p>
+
+      <h2>11. Third-Party Links and Services</h2>
+      <p>The Platform may contain links to third-party websites or services that are not owned or controlled by JobsU. This Privacy Policy does not apply to those third-party services. We encourage you to review the privacy policies of any third-party services you access through the Platform.</p>
+
+      <h2>12. Changes to This Privacy Policy</h2>
+      <p>We may update this Privacy Policy from time to time to reflect changes in our practices, technology, or legal requirements. When we make material changes, we will:</p>
+      <ul>
+        <li>Post the updated Privacy Policy on the Platform with a new effective date</li>
+        <li>Notify you by email or in-app notification for significant changes</li>
+        <li>Obtain your consent where required by applicable law</li>
+      </ul>
+      <p>Your continued use of the Platform after the effective date of any revised Privacy Policy constitutes your acceptance of the changes.</p>
+
+      <h2>13. Contact Us</h2>
+      <p>If you have any questions, concerns, or requests regarding this Privacy Policy or our data practices, please contact us:</p>
+      <ul>
+        <li><strong>JobsU, Inc.</strong> — Attn: Privacy Team</li>
+        <li>[Insert Registered Address]</li>
+        <li>Email: <a href="mailto:privacy@jobsu.com">privacy@jobsu.com</a></li>
+        <li>Website: www.jobsu.com</li>
+      </ul>
     </div>
   </div>
 

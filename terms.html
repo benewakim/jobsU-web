@@ -16,10 +16,7 @@
       background: #0B1B3A; border-bottom: 1px solid rgba(255,255,255,0.08);
     }
     .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-    .nav-logo-mark { display: none; }
-    .nav-logo-text { display: none; }
     .nav-logo-img { height: 36px; background: white; border-radius: 10px; padding: 3px 10px; display: block; }
-    .nav-logo-text { font-weight: 900; font-size: 20px; color: white; }
     .nav-back { font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.6); text-decoration: none; }
     .nav-back:hover { color: white; }
 
@@ -29,23 +26,63 @@
     h1 { font-size: 40px; font-weight: 900; letter-spacing: -1px; margin-bottom: 8px; }
     .updated { font-size: 13px; font-weight: 600; color: #5B6B88; margin-bottom: 48px; }
 
-    .prose h2 { font-size: 20px; font-weight: 900; margin-top: 40px; margin-bottom: 12px; }
+    .prose h2 { font-size: 20px; font-weight: 900; margin-top: 48px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid #E6ECFF; }
     .prose p { font-size: 15px; font-weight: 600; color: #2D3748; line-height: 1.8; margin-bottom: 16px; }
     .prose ul { padding-left: 20px; margin-bottom: 16px; }
     .prose ul li { font-size: 15px; font-weight: 600; color: #2D3748; line-height: 1.8; margin-bottom: 6px; }
     .prose a { color: #1F4B99; }
+
+    .callout {
+      background: #EFF6FF;
+      border: 1px solid #BFDBFE;
+      border-left: 4px solid #1F4B99;
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+    }
+    .callout p { margin-bottom: 0; color: #1E3A5F; }
+    .callout strong { color: #0B1B3A; }
+
+    .callout-warn {
+      background: #FFF8E6;
+      border: 1px solid #FCD34D;
+      border-left: 4px solid #F59E0B;
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+    }
+    .callout-warn p { margin-bottom: 0; color: #78350F; }
+
+    .uppercase-block {
+      font-size: 14px;
+      font-weight: 700;
+      color: #2D3748;
+      line-height: 1.8;
+      background: #F5F8FF;
+      border: 1px solid #E6ECFF;
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+    }
 
     footer { background: #0B1B3A; padding: 24px 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
     .footer-copy { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.4); }
     .footer-links { display: flex; gap: 24px; }
     .footer-links a { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.5); text-decoration: none; }
     .footer-links a:hover { color: white; }
+
+    @media (max-width: 600px) {
+      nav { padding: 0 20px; }
+      .page { padding: 48px 20px 72px; }
+      h1 { font-size: 30px; }
+      footer { padding: 24px 20px; flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
   </style>
 </head>
 <body>
   <nav>
     <a class="nav-logo" href="index.html">
-
       <img src="logo.png" alt="JobsU" class="nav-logo-img" />
     </a>
     <a class="nav-back" href="index.html">← Back to home</a>
@@ -54,62 +91,175 @@
   <div class="page">
     <p class="page-eyebrow">Legal</p>
     <h1>Terms of Service</h1>
-    <p class="updated">Last updated: March 2025</p>
+    <p class="updated">Effective Date: [Insert Date]</p>
 
     <div class="prose">
-      <p>By downloading or using the JobsU app, you agree to these Terms of Service. Please read them carefully.</p>
+      <p>Welcome to JobsU. These Terms of Service ("Terms") govern your access to and use of the JobsU platform, including the JobsU mobile application, website, and all related services (collectively, the "Platform"). Please read these Terms carefully before using JobsU.</p>
+      <p>By creating an account, accessing, or using the Platform, you acknowledge that you have read, understood, and agree to be bound by these Terms and our <a href="privacy.html">Privacy Policy</a>. If you do not agree to these Terms, you may not use the Platform.</p>
 
-      <h2>1. About JobsU</h2>
-      <p>JobsU is a platform that connects college students ("Students") with local residents ("Residents") for flexible, part-time work. JobsU acts as a marketplace and is not an employer of Students or Residents.</p>
+      <h2>1. Overview of the Platform</h2>
+      <p>JobsU is an online marketplace that connects individuals seeking short-term services ("Residents" or "Job Posters") with verified college students offering services ("Students" or "Service Providers"). Examples of services include, but are not limited to, babysitting, tutoring, yard work, errands, moving assistance, pet care, and other task-based work.</p>
+      <div class="callout">
+        <p><strong>Important:</strong> JobsU acts solely as a technology platform facilitating introductions and payments between users. JobsU does not itself provide, perform, or supervise any services, and does not employ any Service Providers.</p>
+      </div>
 
-      <h2>2. Eligibility</h2>
+      <h2>2. Independent Contractor Relationship</h2>
+      <p>Service Providers using JobsU are independent contractors. Nothing in these Terms creates an employment, agency, partnership, joint venture, or franchise relationship between JobsU and any user.</p>
+      <p>JobsU does not:</p>
       <ul>
-        <li>You must be at least 18 years old to use JobsU.</li>
-        <li>Students must be currently enrolled at a college or university.</li>
-        <li>You must provide accurate and complete information when creating an account.</li>
-        <li>One account per person is allowed.</li>
+        <li>Control the manner, method, or means by which services are performed</li>
+        <li>Supervise, direct, or evaluate Service Providers</li>
+        <li>Set working hours, schedules, or minimum availability requirements</li>
+        <li>Guarantee any minimum volume of work opportunities</li>
+      </ul>
+      <p>Service Providers are solely responsible for:</p>
+      <ul>
+        <li>Performing services in accordance with the agreement made with the Resident</li>
+        <li>Determining their own availability, pricing suggestions, and methods of work</li>
+        <li>Compliance with all applicable federal, state, and local laws and regulations</li>
+        <li>Payment of all taxes, self-employment contributions, and other obligations arising from their earnings</li>
       </ul>
 
-      <h2>3. User Conduct</h2>
-      <p>You agree not to:</p>
+      <h2>3. User Eligibility and Account Registration</h2>
+      <p>To create an account and use the Platform, you must:</p>
       <ul>
-        <li>Use the platform for illegal purposes or activities</li>
-        <li>Harass, threaten, or harm other users</li>
-        <li>Post false, misleading, or fraudulent job listings or profiles</li>
-        <li>Attempt to circumvent the platform (e.g., taking payments off-platform to avoid fees)</li>
-        <li>Share your account credentials with others</li>
-        <li>Use the platform to spam or send unsolicited messages</li>
+        <li>Be at least 18 years of age (or the age of majority in your jurisdiction)</li>
+        <li>Provide accurate, current, and complete registration information</li>
+        <li>Maintain the confidentiality and security of your account credentials</li>
+        <li>Promptly update your account information if any changes occur</li>
+        <li>Not create more than one account or transfer your account to another person</li>
+        <li>Comply with all applicable laws and these Terms</li>
+      </ul>
+      <p><strong>Student Verification:</strong> Students must verify their enrollment status using a valid .edu email address issued by an accredited institution. JobsU reserves the right to periodically re-verify enrollment status and to suspend accounts where verification cannot be confirmed.</p>
+      <p>You are responsible for all activity that occurs under your account. If you suspect unauthorized access, you must notify JobsU immediately at <a href="mailto:support@jobsu.com">support@jobsu.com</a>.</p>
+
+      <h2>4. Service Agreements Between Users</h2>
+      <p>All service agreements are made directly between Residents and Service Providers. JobsU is not a party to, and bears no responsibility for, any agreement, arrangement, or dispute between users.</p>
+      <p>JobsU does not guarantee:</p>
+      <ul>
+        <li>The quality, safety, legality, or timeliness of any services</li>
+        <li>The completion or satisfactory performance of any job</li>
+        <li>The accuracy of any user's profile, ratings, or representations</li>
+        <li>The suitability, reliability, or trustworthiness of any user</li>
+      </ul>
+      <p>Users assume all risks associated with interactions, communications, and transactions arranged through the Platform. You agree to exercise your own independent judgment when engaging with other users.</p>
+
+      <h2>5. Payments, Fees, and Escrow</h2>
+      <p>Payments for services are processed through JobsU's secure, third-party payment processor and held in escrow until the job is confirmed complete.</p>
+      <p>By using the Platform:</p>
+      <ul>
+        <li>Residents authorize JobsU to charge the listed job price, including any applicable platform fees, at the time of booking.</li>
+        <li>Service Providers authorize JobsU to deduct applicable platform service fees from each transaction before disbursing payment.</li>
+        <li>JobsU retains a service fee (disclosed at the time of booking) for facilitating each transaction.</li>
+        <li>All fees, charges, and payout amounts will be clearly disclosed prior to payment confirmation.</li>
+        <li>Funds are held in escrow and released to the Service Provider upon confirmation of job completion by the Resident, or automatically after a defined review period.</li>
+      </ul>
+      <p>JobsU is not a bank or financial institution. Escrow services are facilitated through licensed third-party providers.</p>
+
+      <h2>6. Cancellations, Refunds, and Disputes</h2>
+      <p><strong>Cancellation by Residents:</strong> Residents may cancel a job posting before a Service Provider has been confirmed at no charge. Cancellations after confirmation may be subject to a cancellation fee as disclosed at the time of booking.</p>
+      <p><strong>Cancellation by Service Providers:</strong> Service Providers who cancel confirmed jobs may be subject to account penalties, reduced visibility, or account suspension, depending on the frequency and timing of cancellations.</p>
+      <p><strong>Refunds:</strong> Refund eligibility depends on the timing and status of the job. JobsU reserves the right, in its sole discretion, to issue full or partial refunds, or to mediate payment disputes between users in order to maintain platform integrity and fairness.</p>
+      <p><strong>Disputes:</strong> Users are encouraged to resolve disputes directly. If a resolution cannot be reached, either party may submit a dispute to JobsU through the Platform. JobsU may, but is not obligated to, mediate disputes and make final determinations regarding payment release.</p>
+
+      <h2>7. Taxes</h2>
+      <p>Service Providers are solely responsible for reporting and paying all applicable federal, state, and local taxes on income earned through the Platform. JobsU does not withhold taxes on behalf of Service Providers.</p>
+      <p>Where required by law, JobsU will issue applicable tax documentation, including IRS Form 1099-NEC, to Service Providers who meet the applicable reporting thresholds. Service Providers are encouraged to consult a qualified tax professional regarding their tax obligations.</p>
+
+      <h2>8. User Conduct and Prohibited Activities</h2>
+      <p>All users agree to use the Platform in a lawful, respectful, and professional manner. The following conduct is strictly prohibited:</p>
+      <ul>
+        <li>Providing false, misleading, or fraudulent information in your profile or job postings</li>
+        <li>Circumventing or attempting to circumvent the Platform's payment system</li>
+        <li>Soliciting or accepting off-platform payments to avoid JobsU fees</li>
+        <li>Harassing, threatening, discriminating against, or abusing any other user</li>
+        <li>Engaging in any unlawful activity or activity that violates the rights of others</li>
+        <li>Posting jobs or content that is offensive, discriminatory, or inappropriate</li>
+        <li>Using the Platform for any purpose other than its intended marketplace function</li>
+        <li>Creating fake accounts, manipulating ratings, or engaging in fraudulent reviews</li>
+      </ul>
+      <p>JobsU reserves the right to investigate violations, suspend or permanently terminate accounts, and report illegal activity to law enforcement as deemed appropriate.</p>
+
+      <h2>9. Ratings and Reviews</h2>
+      <p>After each completed job, both Residents and Service Providers may leave ratings and reviews. Ratings and reviews must be honest, accurate, and based on genuine experiences.</p>
+      <p>JobsU reserves the right to remove reviews that violate these Terms, contain offensive or defamatory content, or appear to be fraudulent or manipulated. JobsU does not guarantee the accuracy of any ratings or reviews and is not responsible for decisions made based on them.</p>
+
+      <h2>10. Background Checks and Verification</h2>
+      <p>JobsU may perform identity verification, educational enrollment checks, or other eligibility screening. However, JobsU does not guarantee the accuracy, completeness, or reliability of any verification process.</p>
+      <div class="callout-warn">
+        <p><strong>Important:</strong> Verification measures are provided as a supplemental trust layer and do not constitute a guarantee of any user's character, conduct, or fitness. Users remain solely responsible for exercising independent judgment and due diligence when engaging with other users on the Platform.</p>
+      </div>
+
+      <h2>11. Intellectual Property</h2>
+      <p>All content, features, functionality, trademarks, logos, and intellectual property associated with the Platform are owned by or licensed to JobsU, Inc. and are protected by applicable intellectual property laws.</p>
+      <p>Users may not copy, modify, distribute, sell, or lease any part of the Platform or its content without prior written permission from JobsU. Users retain ownership of content they submit to the Platform but grant JobsU a non-exclusive, royalty-free, worldwide license to use, display, and distribute such content in connection with the operation of the Platform.</p>
+
+      <h2>12. Limitation of Liability</h2>
+      <div class="uppercase-block">
+        TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, JOBSU, ITS OFFICERS, DIRECTORS, EMPLOYEES, AGENTS, AND AFFILIATES SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO: ACTS OR OMISSIONS OF ANY USER; PERSONAL INJURY OR PROPERTY DAMAGE ARISING FROM SERVICES ARRANGED THROUGH THE PLATFORM; LOSS OF DATA, REVENUE, OR PROFITS; OR UNAUTHORIZED ACCESS TO YOUR TRANSMISSIONS OR DATA.
+      </div>
+      <div class="uppercase-block">
+        IN NO EVENT SHALL JOBSU'S TOTAL AGGREGATE LIABILITY EXCEED THE GREATER OF (A) THE AMOUNT OF FEES PAID BY YOU TO JOBSU IN THE TWELVE (12) MONTHS PRECEDING THE CLAIM, OR (B) ONE HUNDRED DOLLARS ($100.00).
+      </div>
+      <div class="uppercase-block">
+        USE OF THE PLATFORM IS AT YOUR OWN RISK. THE PLATFORM IS PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS WITHOUT WARRANTIES OF ANY KIND, WHETHER EXPRESS OR IMPLIED.
+      </div>
+
+      <h2>13. Indemnification</h2>
+      <p>You agree to indemnify, defend, and hold harmless JobsU, Inc. and its officers, directors, employees, agents, and affiliates from and against any and all claims, liabilities, damages, losses, costs, and expenses (including reasonable attorneys' fees) arising out of or related to:</p>
+      <ul>
+        <li>Your use of or conduct on the Platform</li>
+        <li>Services you perform, request, or receive through the Platform</li>
+        <li>Your violation of these Terms or any applicable law</li>
+        <li>Your violation of the rights of any third party</li>
+        <li>Any content you submit, post, or transmit through the Platform</li>
       </ul>
 
-      <h2>4. Jobs and Payments</h2>
-      <p>Residents agree to pay the posted hourly rate for completed work. The minimum rate is $25/hr. JobsU charges a platform fee on each transaction. The exact amount is disclosed before any job is accepted.</p>
-      <p>Payment processing is handled by Stripe. By using JobsU, you agree to <a href="https://stripe.com/legal" target="_blank">Stripe's Terms of Service</a>.</p>
-      <p>JobsU does not guarantee that jobs will be completed or that payment will be made. Disputes between Residents and Students should be resolved directly; JobsU may assist but is not obligated to mediate.</p>
+      <h2>14. Dispute Resolution and Arbitration</h2>
+      <p><strong>Informal Resolution:</strong> Before initiating any formal dispute, you agree to first contact JobsU at <a href="mailto:support@jobsu.com">support@jobsu.com</a> and attempt to resolve the matter informally for at least thirty (30) days.</p>
+      <p><strong>Binding Arbitration:</strong> If informal resolution is unsuccessful, any disputes arising under these Terms shall be resolved through binding arbitration administered by the American Arbitration Association ("AAA") under its Consumer Arbitration Rules. Arbitration shall take place in the State of New York. The arbitrator's decision shall be final and binding.</p>
+      <p><strong>Class Action Waiver:</strong> You agree that any disputes will be resolved on an individual basis only. You waive any right to participate in a class action, collective action, or representative proceeding.</p>
+      <p><strong>Small Claims Exception:</strong> Either party may bring an individual action in small claims court for disputes within that court's jurisdictional limits.</p>
 
-      <h2>5. Ratings and Reviews</h2>
-      <p>After each completed job, both parties may leave a rating and review. Ratings must be honest and based on the actual experience. JobsU reserves the right to remove reviews that violate our guidelines or are fraudulent.</p>
+      <h2>15. Account Suspension or Termination</h2>
+      <p>JobsU may, at its sole discretion, suspend or terminate your access to the Platform at any time, with or without notice, for any reason, including but not limited to:</p>
+      <ul>
+        <li>Violation of these Terms or any applicable law</li>
+        <li>Fraudulent, abusive, or harmful conduct</li>
+        <li>Failure to maintain accurate account information</li>
+        <li>Extended inactivity or failure to re-verify enrollment (for Students)</li>
+        <li>Protection of the marketplace, other users, or JobsU's interests</li>
+      </ul>
+      <p>Upon termination, your right to use the Platform ceases immediately. Any pending payments or escrow funds will be handled in accordance with JobsU's then-current policies.</p>
 
-      <h2>6. Independent Contractors</h2>
-      <p>Students using JobsU are independent contractors, not employees of JobsU or the Residents who hire them. Students are responsible for their own taxes, insurance, and compliance with applicable laws.</p>
+      <h2>16. Third-Party Services</h2>
+      <p>The Platform may utilize third-party services, including payment processors, identity verification providers, and communication tools. JobsU is not responsible for the availability, accuracy, or performance of any third-party service and disclaims all liability for third-party service interruptions, errors, or failures.</p>
+      <p>Your use of third-party services may be subject to additional terms and conditions imposed by those providers.</p>
 
-      <h2>7. Safety</h2>
-      <p>JobsU does not conduct background checks on users. You use the platform at your own risk. We encourage all users to exercise good judgment, meet in safe locations, and report any suspicious behavior through the in-app reporting tool.</p>
+      <h2>17. Communications and Notifications</h2>
+      <p>By creating an account, you consent to receive communications from JobsU, including transactional emails, push notifications, and service-related announcements. You may opt out of non-essential communications at any time through your account settings, but you may not opt out of essential service communications (e.g., payment confirmations, security alerts, and Terms updates).</p>
 
-      <h2>8. Intellectual Property</h2>
-      <p>The JobsU app, logo, and all related content are owned by JobsU. You may not copy, reproduce, or distribute any part of the platform without our written permission.</p>
+      <h2>18. Modifications to These Terms</h2>
+      <p>JobsU reserves the right to modify these Terms at any time. We will notify users of material changes by posting updated Terms on the Platform and, where practicable, sending notice via email or in-app notification.</p>
+      <p>Your continued use of the Platform after the effective date of any revised Terms constitutes your acceptance of the changes. If you do not agree to updated Terms, you must discontinue your use of the Platform and close your account.</p>
 
-      <h2>9. Account Termination</h2>
-      <p>We reserve the right to suspend or terminate accounts that violate these Terms at any time. You may delete your account at any time through the app settings.</p>
+      <h2>19. Governing Law and Jurisdiction</h2>
+      <p>These Terms shall be governed by and construed in accordance with the laws of the State of New York, without regard to its conflict of law principles. Subject to the arbitration provisions in Section 14, any legal action or proceeding arising under these Terms shall be brought exclusively in the state or federal courts located in New York, and you consent to the personal jurisdiction of such courts.</p>
 
-      <h2>10. Disclaimers and Limitation of Liability</h2>
-      <p>JobsU is provided "as is" without warranties of any kind. We are not liable for any damages arising from your use of the platform, including but not limited to lost earnings, property damage, or personal injury resulting from jobs arranged through the app.</p>
+      <h2>20. Severability</h2>
+      <p>If any provision of these Terms is found to be invalid, illegal, or unenforceable, the remaining provisions shall continue in full force and effect. The invalid provision shall be modified to the minimum extent necessary to make it enforceable while preserving its original intent.</p>
 
-      <h2>11. Changes to These Terms</h2>
-      <p>We may update these Terms from time to time. Continued use of the app after changes constitutes acceptance of the new terms. We will notify users of material changes.</p>
+      <h2>21. Entire Agreement</h2>
+      <p>These Terms, together with the <a href="privacy.html">Privacy Policy</a> and any other policies referenced herein, constitute the entire agreement between you and JobsU with respect to your use of the Platform and supersede all prior agreements, understandings, and communications, whether written or oral.</p>
 
-      <h2>12. Contact</h2>
-      <p>For questions about these Terms, contact us at:<br />
-      <a href="mailto:support@jobsu.app">support@jobsu.app</a></p>
+      <h2>22. Contact Information</h2>
+      <p>If you have any questions, concerns, or feedback regarding these Terms, please contact us:</p>
+      <ul>
+        <li><strong>JobsU, Inc.</strong></li>
+        <li>[Insert Registered Address]</li>
+        <li>Email: <a href="mailto:support@jobsu.com">support@jobsu.com</a></li>
+        <li>Website: www.jobsu.com</li>
+      </ul>
     </div>
   </div>
 

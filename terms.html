@@ -14,12 +14,14 @@
     nav {
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 40px; height: 64px;
-      background: #0B1B3A; border-bottom: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(11,27,58,0.08);
     }
     .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-    .nav-logo-img { height: 36px; background: white; border-radius: 10px; padding: 3px 10px; display: block; }
-    .nav-back { font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.6); text-decoration: none; }
-    .nav-back:hover { color: white; }
+    .nav-logo-img { height: 48px; display: block; }
+    .nav-back { font-size: 14px; font-weight: 700; color: rgba(11,27,58,0.5); text-decoration: none; }
+    .nav-back:hover { color: #0B1B3A; }
 
     .page { max-width: 760px; margin: 0 auto; padding: 64px 40px 96px; }
 
@@ -92,16 +94,16 @@
   <div class="page">
     <p class="page-eyebrow">Legal</p>
     <h1>Terms of Service</h1>
-    <p class="updated">Effective Date: [Insert Date]</p>
+    <p class="updated">Effective Date: [Insert Date Prior to Launch]</p>
 
     <div class="prose">
       <p>Welcome to JobsU. These Terms of Service ("Terms") govern your access to and use of the JobsU platform, including the JobsU mobile application, website, and all related services (collectively, the "Platform"). Please read these Terms carefully before using JobsU.</p>
       <p>By creating an account, accessing, or using the Platform, you acknowledge that you have read, understood, and agree to be bound by these Terms and our <a href="privacy.html">Privacy Policy</a>. If you do not agree to these Terms, you may not use the Platform.</p>
 
       <h2>1. Overview of the Platform</h2>
-      <p>JobsU is an online marketplace that connects individuals seeking short-term services ("Residents" or "Job Posters") with verified college students offering services ("Students" or "Service Providers"). Examples of services include, but are not limited to, babysitting, tutoring, yard work, errands, moving assistance, pet care, and other task-based work.</p>
+      <p>JobsU is an online marketplace that connects individuals seeking short-term services ("Residents" or "Job Posters") with verified college students offering services ("Students" or "Service Providers"). Examples of permitted services include babysitting assistance, tutoring, yard work, errands, light moving assistance, pet care, and other task-based work, subject to the limitations set forth in these Terms.</p>
       <div class="callout">
-        <p><strong>Important:</strong> JobsU acts solely as a technology platform facilitating introductions and payments between users. JobsU does not itself provide, perform, or supervise any services, and does not employ any Service Providers.</p>
+        <p><strong>Important:</strong> JobsU acts solely as a technology platform facilitating introductions and payments between users. JobsU does not itself provide, perform, supervise, inspect, or evaluate any services, and does not employ any Service Providers.</p>
       </div>
 
       <h2>2. Independent Contractor Relationship</h2>
@@ -119,6 +121,7 @@
         <li>Determining their own availability, pricing suggestions, and methods of work</li>
         <li>Compliance with all applicable federal, state, and local laws and regulations</li>
         <li>Payment of all taxes, self-employment contributions, and other obligations arising from their earnings</li>
+        <li>Maintaining any personal insurance coverage they deem appropriate for the services they perform</li>
       </ul>
 
       <h2>3. User Eligibility and Account Registration</h2>
@@ -140,37 +143,83 @@
       <ul>
         <li>The quality, safety, legality, or timeliness of any services</li>
         <li>The completion or satisfactory performance of any job</li>
-        <li>The accuracy of any user's profile, ratings, or representations</li>
+        <li>The accuracy of any user's profile, ratings, certifications, or representations</li>
         <li>The suitability, reliability, or trustworthiness of any user</li>
       </ul>
-      <p>Users assume all risks associated with interactions, communications, and transactions arranged through the Platform. You agree to exercise your own independent judgment when engaging with other users.</p>
+      <p>Users assume all risks associated with interactions, communications, and transactions arranged through the Platform. You agree to exercise your own independent judgment and due diligence when engaging with other users.</p>
+      <p><strong>Property Access and Damage:</strong> Residents who permit Service Providers to enter or perform work on their property do so at their own risk. Residents are strongly encouraged to confirm that their homeowner's, renter's, or liability insurance policy provides appropriate coverage for third parties performing work on their property, including coverage for bodily injury and property damage. Service Providers are strongly encouraged to carry their own general liability insurance appropriate to the services they offer. JobsU is not responsible for any property damage, loss, or theft occurring before, during, or after the performance of services.</p>
 
-      <h2>5. Payments, Fees, and Escrow</h2>
+      <h2>5. Prohibited Job Types and Service Limitations</h2>
+      <p>The Platform is intended only for non-specialized, task-based work that does not require a professional license, specialized training, or regulated certification. To protect all users, the following categories of work are strictly prohibited on the Platform, whether posted by Residents or offered by Service Providers:</p>
+      <ul>
+        <li>Electrical work of any kind, including wiring, outlet installation, or fixture replacement that requires a licensed electrician</li>
+        <li>Plumbing work beyond minor, non-invasive tasks (e.g., no pipe replacement, no work on gas lines, no water heater installation)</li>
+        <li>Roofing, gutter repair requiring ladder work above one story, or any rooftop work</li>
+        <li>Tree removal, tree felling, chainsaw work, or any work involving climbing trees</li>
+        <li>HVAC installation, repair, or servicing</li>
+        <li>Gas appliance installation, repair, or disconnection</li>
+        <li>Demolition, structural work, or any work requiring a building permit</li>
+        <li>Asbestos, lead, mold, or hazardous material handling or removal</li>
+        <li>Pest control or application of regulated chemicals, pesticides, or herbicides</li>
+        <li>Any medical, nursing, therapeutic, or personal care services requiring licensure</li>
+        <li>Driving Residents, their children, or their pets in a vehicle in exchange for payment</li>
+        <li>Operation of heavy machinery, power tools beyond basic hand tools, or commercial equipment</li>
+        <li>Any work that requires a professional license, bond, permit, or regulatory certification under applicable law</li>
+        <li>Any work involving firearms, weapons, controlled substances, or illegal activity</li>
+      </ul>
+      <p>JobsU reserves the right, in its sole discretion, to remove job postings, suspend accounts, and permanently terminate users who post or accept work in any prohibited category. This list is non-exhaustive, and JobsU may update it at any time to reflect additional prohibited categories.</p>
+
+      <h2>6. Babysitting and Childcare Assistance</h2>
+      <p>Babysitting services offered through the Platform are provided on a non-licensed, informal basis. Service Providers offering babysitting assistance are college students, not licensed childcare providers, licensed daycare operators, or medical professionals.</p>
+      <p><strong>Parental and Guardian Responsibility:</strong> Parents and legal guardians remain at all times solely and ultimately responsible for the safety, supervision, medical care, and well-being of their children. Service Providers serve only as temporary aids at the direction of the parent or guardian. Parents and guardians are responsible for providing Service Providers with any emergency contacts, medical information, allergy information, house rules, and instructions necessary to care for their children.</p>
+      <p><strong>No Certification Guarantee:</strong> JobsU does not require Service Providers to hold CPR certification, first aid certification, early childhood education credentials, or any other childcare-related qualification. Any certifications listed on a Service Provider's profile are self-reported and have not been independently verified by JobsU unless expressly stated otherwise. Residents are solely responsible for verifying any certifications that are material to their hiring decision.</p>
+      <p>By booking babysitting assistance through the Platform, Residents acknowledge and accept these limitations and agree that JobsU bears no responsibility for any injury, illness, incident, or harm arising out of or related to such services.</p>
+
+      <h2>7. Moving Assistance and Physical Labor</h2>
+      <p>Moving assistance, furniture rearrangement, lifting, and similar physical tasks carry inherent risks of bodily injury and property damage. By posting or accepting any such job, both Residents and Service Providers acknowledge and accept the following:</p>
+      <ul>
+        <li>Heavy lifting, carrying, and moving of objects carries an inherent risk of strain, muscle injury, back injury, slips, trips, and falls</li>
+        <li>Transporting items in or out of homes, vehicles, or buildings carries an inherent risk of damage to the items being moved, to surrounding property (walls, floors, doorways, staircases), and to vehicles used in the move</li>
+        <li>Service Providers are not licensed or insured professional movers and are not trained in the safe handling of heavy, fragile, valuable, or specialty items</li>
+        <li>Residents should not request, and Service Providers should not accept, jobs involving pianos, safes, gun safes, large appliances requiring disconnection, or any other items that typically require professional movers</li>
+        <li>Both parties assume full risk for any bodily injury or property damage arising out of or related to moving or physical-labor tasks arranged through the Platform</li>
+      </ul>
+      <p>JobsU is not responsible for any injury, damage, loss, or theft arising out of or related to moving assistance or physical labor performed through the Platform.</p>
+
+      <h2>8. Insurance Disclaimer</h2>
+      <p><strong>No Insurance Provided by JobsU.</strong> JobsU does not provide, offer, or arrange insurance coverage of any kind for Residents, Service Providers, or any other party in connection with services arranged through the Platform. JobsU does not carry general liability, professional liability, workers' compensation, property, or any other insurance for the benefit of its users.</p>
+      <p><strong>No Insurance Requirement.</strong> Neither Residents nor Service Providers are required by JobsU to carry insurance in order to use the Platform. However, both parties are strongly encouraged to evaluate their own insurance needs and to obtain coverage appropriate to the services they intend to perform or receive.</p>
+      <p><strong>Assumption of Risk.</strong> Both Residents and Service Providers assume full and complete risk for any property damage, bodily injury, illness, death, financial loss, theft, or other harm arising out of, related to, or in connection with any services arranged, performed, or received through the Platform. Each party agrees that it is their sole responsibility to assess and insure against such risks, and that JobsU shall have no liability whatsoever for any such losses.</p>
+      <p><strong>Recommended Coverage.</strong> Residents are encouraged to maintain homeowner's or renter's insurance that covers third parties performing work on their property. Service Providers are encouraged to consider general liability insurance, personal accident coverage, and any profession-specific coverage appropriate to the services they offer. Consultation with a licensed insurance professional is strongly recommended.</p>
+
+      <h2>9. Payments, Fees, and Escrow</h2>
       <p>Payments for services are processed through JobsU's secure, third-party payment processor and held in escrow until the job is confirmed complete.</p>
       <p>By using the Platform:</p>
       <ul>
-        <li>Residents authorize JobsU to charge the listed job price, including any applicable platform fees, at the time of booking.</li>
-        <li>Service Providers authorize JobsU to deduct applicable platform service fees from each transaction before disbursing payment.</li>
-        <li>JobsU retains a service fee (disclosed at the time of booking) for facilitating each transaction.</li>
-        <li>All fees, charges, and payout amounts will be clearly disclosed prior to payment confirmation.</li>
-        <li>Funds are held in escrow and released to the Service Provider upon confirmation of job completion by the Resident, or automatically after a defined review period.</li>
+        <li>Residents authorize JobsU to charge the listed job price, including any applicable platform fees, at the time of booking</li>
+        <li>Service Providers authorize JobsU to deduct applicable platform service fees from each transaction before disbursing payment</li>
+        <li>JobsU retains a service fee (disclosed at the time of booking) for facilitating each transaction</li>
+        <li>All fees, charges, and payout amounts will be clearly disclosed prior to payment confirmation</li>
+        <li>Funds are held in escrow and released to the Service Provider upon confirmation of job completion by the Resident, or automatically after a defined review period</li>
       </ul>
       <p>JobsU is not a bank or financial institution. Escrow services are facilitated through licensed third-party providers.</p>
 
-      <h2>6. Cancellations, Refunds, and Disputes</h2>
+      <h2>10. Cancellations, Refunds, and Disputes</h2>
       <p><strong>Cancellation by Residents:</strong> Residents may cancel a job posting before a Service Provider has been confirmed at no charge. Cancellations after confirmation may be subject to a cancellation fee as disclosed at the time of booking.</p>
       <p><strong>Cancellation by Service Providers:</strong> Service Providers who cancel confirmed jobs may be subject to account penalties, reduced visibility, or account suspension, depending on the frequency and timing of cancellations.</p>
       <p><strong>Refunds:</strong> Refund eligibility depends on the timing and status of the job. JobsU reserves the right, in its sole discretion, to issue full or partial refunds, or to mediate payment disputes between users in order to maintain platform integrity and fairness.</p>
       <p><strong>Disputes:</strong> Users are encouraged to resolve disputes directly. If a resolution cannot be reached, either party may submit a dispute to JobsU through the Platform. JobsU may, but is not obligated to, mediate disputes and make final determinations regarding payment release.</p>
 
-      <h2>7. Taxes</h2>
+      <h2>11. Taxes</h2>
       <p>Service Providers are solely responsible for reporting and paying all applicable federal, state, and local taxes on income earned through the Platform. JobsU does not withhold taxes on behalf of Service Providers.</p>
       <p>Where required by law, JobsU will issue applicable tax documentation, including IRS Form 1099-NEC, to Service Providers who meet the applicable reporting thresholds. Service Providers are encouraged to consult a qualified tax professional regarding their tax obligations.</p>
 
-      <h2>8. User Conduct and Prohibited Activities</h2>
+      <h2>12. User Conduct and Prohibited Activities</h2>
       <p>All users agree to use the Platform in a lawful, respectful, and professional manner. The following conduct is strictly prohibited:</p>
       <ul>
         <li>Providing false, misleading, or fraudulent information in your profile or job postings</li>
+        <li>Misrepresenting certifications, licenses, training, or qualifications</li>
+        <li>Posting or accepting jobs in any prohibited category listed in Section 5</li>
         <li>Circumventing or attempting to circumvent the Platform's payment system</li>
         <li>Soliciting or accepting off-platform payments to avoid JobsU fees</li>
         <li>Harassing, threatening, discriminating against, or abusing any other user</li>
@@ -181,51 +230,53 @@
       </ul>
       <p>JobsU reserves the right to investigate violations, suspend or permanently terminate accounts, and report illegal activity to law enforcement as deemed appropriate.</p>
 
-      <h2>9. Ratings and Reviews</h2>
+      <h2>13. Ratings and Reviews</h2>
       <p>After each completed job, both Residents and Service Providers may leave ratings and reviews. Ratings and reviews must be honest, accurate, and based on genuine experiences.</p>
       <p>JobsU reserves the right to remove reviews that violate these Terms, contain offensive or defamatory content, or appear to be fraudulent or manipulated. JobsU does not guarantee the accuracy of any ratings or reviews and is not responsible for decisions made based on them.</p>
 
-      <h2>10. Background Checks and Verification</h2>
+      <h2>14. Background Checks and Verification</h2>
       <p>JobsU may perform identity verification, educational enrollment checks, or other eligibility screening. However, JobsU does not guarantee the accuracy, completeness, or reliability of any verification process.</p>
       <div class="callout-warn">
-        <p><strong>Important:</strong> Verification measures are provided as a supplemental trust layer and do not constitute a guarantee of any user's character, conduct, or fitness. Users remain solely responsible for exercising independent judgment and due diligence when engaging with other users on the Platform.</p>
+        <p><strong>Important:</strong> Verification measures are provided as a supplemental trust layer and do not constitute a guarantee of any user's character, conduct, fitness, skill, or qualifications. Users remain solely responsible for exercising independent judgment and due diligence when engaging with other users on the Platform.</p>
       </div>
 
-      <h2>11. Intellectual Property</h2>
+      <h2>15. Intellectual Property</h2>
       <p>All content, features, functionality, trademarks, logos, and intellectual property associated with the Platform are owned by or licensed to JobsU, Inc. and are protected by applicable intellectual property laws.</p>
       <p>Users may not copy, modify, distribute, sell, or lease any part of the Platform or its content without prior written permission from JobsU. Users retain ownership of content they submit to the Platform but grant JobsU a non-exclusive, royalty-free, worldwide license to use, display, and distribute such content in connection with the operation of the Platform.</p>
 
-      <h2>12. Limitation of Liability</h2>
+      <h2>16. Limitation of Liability</h2>
       <div class="uppercase-block">
-        TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, JOBSU, ITS OFFICERS, DIRECTORS, EMPLOYEES, AGENTS, AND AFFILIATES SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO: ACTS OR OMISSIONS OF ANY USER; PERSONAL INJURY OR PROPERTY DAMAGE ARISING FROM SERVICES ARRANGED THROUGH THE PLATFORM; LOSS OF DATA, REVENUE, OR PROFITS; OR UNAUTHORIZED ACCESS TO YOUR TRANSMISSIONS OR DATA.
+        TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, JOBSU, ITS OFFICERS, DIRECTORS, EMPLOYEES, AGENTS, AND AFFILIATES SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO: ACTS OR OMISSIONS OF ANY USER; PERSONAL INJURY, ILLNESS, OR PROPERTY DAMAGE ARISING FROM SERVICES ARRANGED THROUGH THE PLATFORM; THEFT OR LOSS OF PROPERTY; LOSS OF DATA, REVENUE, OR PROFITS; OR UNAUTHORIZED ACCESS TO YOUR TRANSMISSIONS OR DATA.
       </div>
       <div class="uppercase-block">
         IN NO EVENT SHALL JOBSU'S TOTAL AGGREGATE LIABILITY EXCEED THE GREATER OF (A) THE AMOUNT OF FEES PAID BY YOU TO JOBSU IN THE TWELVE (12) MONTHS PRECEDING THE CLAIM, OR (B) ONE HUNDRED DOLLARS ($100.00).
       </div>
       <div class="uppercase-block">
-        USE OF THE PLATFORM IS AT YOUR OWN RISK. THE PLATFORM IS PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS WITHOUT WARRANTIES OF ANY KIND, WHETHER EXPRESS OR IMPLIED.
+        USE OF THE PLATFORM IS AT YOUR OWN RISK. THE PLATFORM IS PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS WITHOUT WARRANTIES OF ANY KIND, WHETHER EXPRESS OR IMPLIED. JOBSU EXPRESSLY DISCLAIMS ALL WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
       </div>
 
-      <h2>13. Indemnification</h2>
+      <h2>17. Indemnification</h2>
       <p>You agree to indemnify, defend, and hold harmless JobsU, Inc. and its officers, directors, employees, agents, and affiliates from and against any and all claims, liabilities, damages, losses, costs, and expenses (including reasonable attorneys' fees) arising out of or related to:</p>
       <ul>
         <li>Your use of or conduct on the Platform</li>
         <li>Services you perform, request, or receive through the Platform</li>
+        <li>Any bodily injury, illness, property damage, or loss arising from services arranged through the Platform</li>
         <li>Your violation of these Terms or any applicable law</li>
         <li>Your violation of the rights of any third party</li>
         <li>Any content you submit, post, or transmit through the Platform</li>
       </ul>
 
-      <h2>14. Dispute Resolution and Arbitration</h2>
+      <h2>18. Dispute Resolution and Arbitration</h2>
       <p><strong>Informal Resolution:</strong> Before initiating any formal dispute, you agree to first contact JobsU at <a href="mailto:support@jobsu.com">support@jobsu.com</a> and attempt to resolve the matter informally for at least thirty (30) days.</p>
       <p><strong>Binding Arbitration:</strong> If informal resolution is unsuccessful, any disputes arising under these Terms shall be resolved through binding arbitration administered by the American Arbitration Association ("AAA") under its Consumer Arbitration Rules. Arbitration shall take place in the State of New York. The arbitrator's decision shall be final and binding.</p>
       <p><strong>Class Action Waiver:</strong> You agree that any disputes will be resolved on an individual basis only. You waive any right to participate in a class action, collective action, or representative proceeding.</p>
       <p><strong>Small Claims Exception:</strong> Either party may bring an individual action in small claims court for disputes within that court's jurisdictional limits.</p>
 
-      <h2>15. Account Suspension or Termination</h2>
+      <h2>19. Account Suspension or Termination</h2>
       <p>JobsU may, at its sole discretion, suspend or terminate your access to the Platform at any time, with or without notice, for any reason, including but not limited to:</p>
       <ul>
         <li>Violation of these Terms or any applicable law</li>
+        <li>Posting or accepting prohibited categories of work</li>
         <li>Fraudulent, abusive, or harmful conduct</li>
         <li>Failure to maintain accurate account information</li>
         <li>Extended inactivity or failure to re-verify enrollment (for Students)</li>
@@ -233,31 +284,31 @@
       </ul>
       <p>Upon termination, your right to use the Platform ceases immediately. Any pending payments or escrow funds will be handled in accordance with JobsU's then-current policies.</p>
 
-      <h2>16. Third-Party Services</h2>
+      <h2>20. Third-Party Services</h2>
       <p>The Platform may utilize third-party services, including payment processors, identity verification providers, and communication tools. JobsU is not responsible for the availability, accuracy, or performance of any third-party service and disclaims all liability for third-party service interruptions, errors, or failures.</p>
       <p>Your use of third-party services may be subject to additional terms and conditions imposed by those providers.</p>
 
-      <h2>17. Communications and Notifications</h2>
+      <h2>21. Communications and Notifications</h2>
       <p>By creating an account, you consent to receive communications from JobsU, including transactional emails, push notifications, and service-related announcements. You may opt out of non-essential communications at any time through your account settings, but you may not opt out of essential service communications (e.g., payment confirmations, security alerts, and Terms updates).</p>
 
-      <h2>18. Modifications to These Terms</h2>
+      <h2>22. Modifications to These Terms</h2>
       <p>JobsU reserves the right to modify these Terms at any time. We will notify users of material changes by posting updated Terms on the Platform and, where practicable, sending notice via email or in-app notification.</p>
       <p>Your continued use of the Platform after the effective date of any revised Terms constitutes your acceptance of the changes. If you do not agree to updated Terms, you must discontinue your use of the Platform and close your account.</p>
 
-      <h2>19. Governing Law and Jurisdiction</h2>
-      <p>These Terms shall be governed by and construed in accordance with the laws of the State of New York, without regard to its conflict of law principles. Subject to the arbitration provisions in Section 14, any legal action or proceeding arising under these Terms shall be brought exclusively in the state or federal courts located in New York, and you consent to the personal jurisdiction of such courts.</p>
+      <h2>23. Governing Law and Jurisdiction</h2>
+      <p>These Terms shall be governed by and construed in accordance with the laws of the State of New York, without regard to its conflict of law principles. Subject to the arbitration provisions in Section 18, any legal action or proceeding arising under these Terms shall be brought exclusively in the state or federal courts located in New York, and you consent to the personal jurisdiction of such courts.</p>
 
-      <h2>20. Severability</h2>
+      <h2>24. Severability</h2>
       <p>If any provision of these Terms is found to be invalid, illegal, or unenforceable, the remaining provisions shall continue in full force and effect. The invalid provision shall be modified to the minimum extent necessary to make it enforceable while preserving its original intent.</p>
 
-      <h2>21. Entire Agreement</h2>
+      <h2>25. Entire Agreement</h2>
       <p>These Terms, together with the <a href="privacy.html">Privacy Policy</a> and any other policies referenced herein, constitute the entire agreement between you and JobsU with respect to your use of the Platform and supersede all prior agreements, understandings, and communications, whether written or oral.</p>
 
-      <h2>22. Contact Information</h2>
+      <h2>26. Contact Information</h2>
       <p>If you have any questions, concerns, or feedback regarding these Terms, please contact us:</p>
       <ul>
         <li><strong>JobsU, Inc.</strong></li>
-        <li>[Insert Registered Address]</li>
+        <li>[Insert Registered Business Address Prior to Launch]</li>
         <li>Email: <a href="mailto:support@jobsu.com">support@jobsu.com</a></li>
         <li>Website: www.jobsu.com</li>
       </ul>
@@ -265,6 +316,9 @@
   </div>
 
   <footer>
+    <a href="index.html">
+      <img src="JobsU-logo.png" alt="JobsU" style="height:30px;background:white;border-radius:8px;padding:2px 8px;" />
+    </a>
     <p class="footer-copy">&copy; 2025 JobsU. All rights reserved.</p>
     <div class="footer-links">
       <a href="privacy.html">Privacy Policy</a>

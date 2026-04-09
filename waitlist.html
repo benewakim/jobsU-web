@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Join the Waitlist — JobsU</title>
+  <meta name="description" content="Be among the first to use JobsU. Join the waitlist for students and residents." />
+  <link rel="icon" type="image/png" href="JobsU-favicon-nobackground.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!--
+    SETUP INSTRUCTIONS (one-time, ~5 minutes):
+
+    1. Go to https://formspree.io and create a free account.
+    2. Create TWO forms — one called "Student Waitlist", one "Resident Waitlist".
+    3. Copy the student form's ID (looks like "xpwzgabc") and replace the
+       FORMSPREE_STUDENT_FORM_ID placeholder below. Resident form is already wired up.
+    4. Formspree free tier sends submissions to your email and stores them in a dashboard.
+       No backend needed.
+
+    Optional CAPTCHA:
+    - Sign up at https://www.cloudflare.com/products/turnstile/ (free)
+    - Replace YOUR_TURNSTILE_SITE_KEY below with your site key
+    - Uncomment the Turnstile script and widget divs
+  -->
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:       #0B1B3A;
+      --blue:       #1F4B99;
+      --blue-light: #2D5FBF;
+      --ice:        #F5F8FF;
+      --border:     #E6ECFF;
+      --muted:      #5B6B88;
+      --white:      #ffffff;
+      --green:      #22C55E;
+      --red:        #EF4444;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--ice);
+      color: var(--navy);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 64px;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(11,27,58,0.08);
+    }
+
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo-img { height: 48px; display: block; }
+    .nav-back { font-size: 14px; font-weight: 700; color: rgba(11,27,58,0.5); text-decoration: none; transition: color 0.2s; }
+    .nav-back:hover { color: var(--navy); }
+
+    /* ── PAGE LAYOUT ── */
+    .page {
+      max-width: 560px;
+      margin: 0 auto;
+      padding: 96px 24px 96px;
+    }
+
+    .page-eyebrow {
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--blue);
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: clamp(28px, 5vw, 38px);
+      font-weight: 900;
+      letter-spacing: -1px;
+      text-align: center;
+      margin-bottom: 10px;
+      color: var(--navy);
+    }
+
+    .subtitle {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--muted);
+      text-align: center;
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+
+    /* ── TAB SWITCHER ── */
+    .tab-switcher {
+      display: flex;
+      background: white;
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 4px;
+      margin-bottom: 32px;
+      gap: 4px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 12px 16px;
+      border: none;
+      background: transparent;
+      border-radius: 12px;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--muted);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      line-height: 1.2;
+    }
+
+    .tab-btn .tab-label { display: block; }
+    .tab-btn .tab-sub { font-size: 11px; font-weight: 600; opacity: 0.7; }
+
+    .tab-btn.active {
+      background: var(--blue);
+      color: white;
+    }
+
+    .tab-btn.active .tab-sub { opacity: 0.75; }
+
+    /* ── FORM CARD ── */
+    .form-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 36px;
+      box-shadow: 0 4px 24px rgba(11,27,58,0.06);
+    }
+
+    .form-panel { display: none; }
+    .form-panel.active { display: block; }
+
+    /* ── FORM FIELDS ── */
+    .field {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 7px;
+      letter-spacing: 0.2px;
+    }
+
+    label .opt {
+      font-weight: 600;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    select {
+      width: 100%;
+      padding: 13px 16px;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--navy);
+      background: white;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none;
+      appearance: none;
+      outline: none;
+    }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' viewBox='0 0 24 24'%3E%3Cpath stroke='%235B6B88' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 42px;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(31,75,153,0.1);
+    }
+
+    input.invalid, select.invalid {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(239,68,68,0.1);
+    }
+
+    .field-error {
+      display: none;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--red);
+      margin-top: 5px;
+    }
+
+    .field-error.visible { display: block; }
+
+    /* ── CHECKBOXES ── */
+    .checkbox-label {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .checkbox-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 9px 12px;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      transition: border-color 0.15s, background 0.15s;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--navy);
+      user-select: none;
+    }
+
+    .checkbox-item:hover { border-color: var(--blue); }
+
+    .checkbox-item input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      border: 2px solid var(--border);
+      border-radius: 4px;
+      padding: 0;
+      flex-shrink: 0;
+      accent-color: var(--blue);
+      cursor: pointer;
+    }
+
+    .checkbox-item:has(input:checked) {
+      border-color: var(--blue);
+      background: #F0F5FF;
+    }
+
+    /* ── SUBMIT BUTTON ── */
+    .submit-btn {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      margin-top: 28px;
+      border: none;
+      border-radius: 14px;
+      background: var(--blue);
+      color: white;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 16px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 4px 16px rgba(31,75,153,0.3);
+    }
+
+    .submit-btn:hover {
+      background: var(--blue-light);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(31,75,153,0.35);
+    }
+
+    .submit-btn:active { transform: none; }
+
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* ── EDU HINT ── */
+    .edu-hint {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-top: 5px;
+    }
+
+    /* ── SUCCESS STATE ── */
+    .success-state {
+      display: none;
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .success-state.visible { display: block; }
+
+    .success-icon {
+      width: 72px;
+      height: 72px;
+      background: #F0FDF4;
+      border: 2px solid #22C55E;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 32px;
+    }
+
+    .success-state h2 {
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+
+    .success-state p {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── DIVIDER ── */
+    .form-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 24px 0;
+    }
+
+    /* ── TRUST ROW ── */
+    .trust-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+      flex-wrap: wrap;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      padding: 24px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-copy { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.4); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.5); text-decoration: none; }
+    .footer-links a:hover { color: white; }
+
+    @media (max-width: 600px) {
+      nav { padding: 0 20px; }
+      .page { padding: 80px 16px 72px; }
+      .form-card { padding: 24px 20px; }
+      .checkbox-grid { grid-template-columns: 1fr; }
+      footer { padding: 24px 20px; flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="index.html">
+      <img src="JobsU-logo-nobackground.png" alt="JobsU" class="nav-logo-img" />
+    </a>
+    <a class="nav-back" href="index.html">← Back to home</a>
+  </nav>
+
+  <div class="page">
+    <p class="page-eyebrow">Coming soon</p>
+    <h1>Get early access</h1>
+    <p class="subtitle">JobsU is launching in Fairfield County, CT. Join the waitlist and be first in line.</p>
+
+    <!-- TAB SWITCHER -->
+    <div class="tab-switcher" role="tablist">
+      <button class="tab-btn active" id="tab-student" role="tab" aria-selected="true" aria-controls="panel-student" onclick="switchTab('student')">
+        <span class="tab-label">I'm a Student</span>
+        <span class="tab-sub">Looking for work</span>
+      </button>
+      <button class="tab-btn" id="tab-resident" role="tab" aria-selected="false" aria-controls="panel-resident" onclick="switchTab('resident')">
+        <span class="tab-label">I'm a Resident</span>
+        <span class="tab-sub">Need help with tasks</span>
+      </button>
+    </div>
+
+    <!-- FORM CARD -->
+    <div class="form-card">
+
+      <!-- ── STUDENT PANEL ── -->
+      <div class="form-panel active" id="panel-student" role="tabpanel" aria-labelledby="tab-student">
+
+        <!-- Success state -->
+        <div class="success-state" id="student-success">
+          <div class="success-icon">&#10003;</div>
+          <h2>You're on the list!</h2>
+          <p>We'll email you when JobsU opens up at your school. Keep an eye on your inbox.</p>
+        </div>
+
+        <!-- Form -->
+        <form id="student-form"
+              action="https://formspree.io/f/xkoplgqq"
+              method="POST"
+              novalidate>
+
+          <!-- Hidden field so Formspree submissions are labeled -->
+          <input type="hidden" name="_subject" value="New Student Waitlist Signup" />
+          <!-- Redirect after submission (Formspree default thank-you page is fine, or set a custom URL) -->
+          <!-- <input type="hidden" name="_next" value="https://jobsu.app/waitlist-thanks.html" /> -->
+
+          <div class="field">
+            <label for="student-name">Full name</label>
+            <input type="text" id="student-name" name="name" placeholder="Alex Johnson" autocomplete="name" />
+            <span class="field-error" id="student-name-error">Please enter your name.</span>
+          </div>
+
+          <div class="field">
+            <label for="student-email">School email <span style="font-size:11px;font-weight:700;background:#EEF4FF;color:#1F4B99;padding:2px 8px;border-radius:6px;margin-left:4px;">.edu required</span></label>
+            <input type="email" id="student-email" name="email" placeholder="ajohnson@fairfield.edu" autocomplete="email" />
+            <div class="edu-hint">Must be a .edu address — this confirms you're a real student.</div>
+            <span class="field-error" id="student-email-error">Please enter a valid .edu email address.</span>
+          </div>
+
+          <div class="field">
+            <label for="student-school">School</label>
+            <select id="student-school" name="school">
+              <option value="" disabled selected>Select your school</option>
+              <option value="Fairfield University">Fairfield University</option>
+              <option value="Sacred Heart University">Sacred Heart University</option>
+              <option value="Other (CT)">Other (CT school)</option>
+            </select>
+            <span class="field-error" id="student-school-error">Please select your school.</span>
+          </div>
+
+          <div class="field">
+            <label for="student-grad">Expected graduation year <span class="opt">(optional)</span></label>
+            <select id="student-grad" name="graduation_year">
+              <option value="" selected>Select year</option>
+              <option value="2025">2025</option>
+              <option value="2026">2026</option>
+              <option value="2027">2027</option>
+              <option value="2028">2028</option>
+              <option value="2029">2029</option>
+            </select>
+          </div>
+
+          <!--
+            OPTIONAL: Cloudflare Turnstile CAPTCHA
+            1. Sign up at https://www.cloudflare.com/products/turnstile/
+            2. Add your domain and get a site key
+            3. Uncomment the script tag below AND the div inside this form
+
+            <div class="cf-turnstile" data-sitekey="YOUR_TURNSTILE_SITE_KEY"></div>
+          -->
+
+          <button type="submit" class="submit-btn" id="student-submit">Join Student Waitlist</button>
+        </form>
+      </div>
+
+      <!-- ── RESIDENT PANEL ── -->
+      <div class="form-panel" id="panel-resident" role="tabpanel" aria-labelledby="tab-resident">
+
+        <!-- Success state -->
+        <div class="success-state" id="resident-success">
+          <div class="success-icon">&#10003;</div>
+          <h2>You're on the list!</h2>
+          <p>We'll be in touch when JobsU launches in your area. You'll be first to find great local students.</p>
+        </div>
+
+        <!-- Form -->
+        <form id="resident-form"
+              action="https://formspree.io/f/xvzvjgwv"
+              method="POST"
+              novalidate>
+
+          <input type="hidden" name="_subject" value="New Resident Waitlist Signup" />
+
+          <div class="field">
+            <label for="resident-name">Full name</label>
+            <input type="text" id="resident-name" name="name" placeholder="Sarah Chen" autocomplete="name" />
+            <span class="field-error" id="resident-name-error">Please enter your name.</span>
+          </div>
+
+          <div class="field">
+            <label for="resident-email">Email address</label>
+            <input type="email" id="resident-email" name="email" placeholder="sarah@email.com" autocomplete="email" />
+            <span class="field-error" id="resident-email-error">Please enter a valid email address.</span>
+          </div>
+
+          <div class="field">
+            <label for="resident-zip">ZIP code <span style="font-size:11px;font-weight:700;background:#EEF4FF;color:#1F4B99;padding:2px 8px;border-radius:6px;margin-left:4px;">CT only</span></label>
+            <input type="text" id="resident-zip" name="zip_code" placeholder="06824" maxlength="5" inputmode="numeric" pattern="[0-9]*" />
+            <div class="edu-hint">Must be in Connecticut — JobsU is launching in Fairfield County.</div>
+            <span class="field-error" id="resident-zip-error">Please enter a valid Connecticut ZIP code.</span>
+          </div>
+
+          <div class="form-divider"></div>
+
+          <div class="field">
+            <span class="checkbox-label">What kind of help do you need? <span class="opt">(optional)</span></span>
+            <div class="checkbox-grid">
+              <label class="checkbox-item"><input type="checkbox" name="help_types" value="Babysitting" /> Babysitting</label>
+              <label class="checkbox-item"><input type="checkbox" name="help_types" value="Tutoring" /> Tutoring</label>
+              <label class="checkbox-item"><input type="checkbox" name="help_types" value="Yard work" /> Yard work</label>
+              <label class="checkbox-item"><input type="checkbox" name="help_types" value="Moving help" /> Moving help</label>
+              <label class="checkbox-item"><input type="checkbox" name="help_types" value="Pet care" /> Pet care</label>
+              <label class="checkbox-item"><input type="checkbox" name="help_types" value="Cleaning" /> Cleaning</label>
+              <label class="checkbox-item"><input type="checkbox" name="help_types" value="Errands" /> Errands</label>
+              <label class="checkbox-item"><input type="checkbox" name="help_types" value="Tech help" /> Tech help</label>
+            </div>
+          </div>
+
+          <!--
+            OPTIONAL: Cloudflare Turnstile CAPTCHA
+            <div class="cf-turnstile" data-sitekey="YOUR_TURNSTILE_SITE_KEY"></div>
+          -->
+
+          <button type="submit" class="submit-btn" id="resident-submit">Join Resident Waitlist</button>
+        </form>
+      </div>
+
+    </div><!-- /form-card -->
+
+    <!-- Trust signals -->
+    <div class="trust-row">
+      <span class="trust-item">&#128274; No spam, ever</span>
+      <span class="trust-item">&#127881; Free to join</span>
+      <span class="trust-item">&#128205; Fairfield County, CT</span>
+    </div>
+
+  </div><!-- /page -->
+
+  <!--
+    OPTIONAL: Uncomment this script if you're using Cloudflare Turnstile
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  -->
+
+  <footer>
+    <a href="index.html">
+      <img src="JobsU-logo.png" alt="JobsU" style="height:30px;background:white;border-radius:8px;padding:2px 8px;" />
+    </a>
+    <p class="footer-copy">&copy; 2025 JobsU. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+      <a href="mailto:support@jobsu.app">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    // ── TAB SWITCHING ──
+    function switchTab(tab) {
+      const panels = document.querySelectorAll('.form-panel');
+      const tabs   = document.querySelectorAll('.tab-btn');
+      panels.forEach(p => p.classList.remove('active'));
+      tabs.forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      document.getElementById('panel-' + tab).classList.add('active');
+      const activeTab = document.getElementById('tab-' + tab);
+      activeTab.classList.add('active');
+      activeTab.setAttribute('aria-selected', 'true');
+    }
+
+    // ── VALIDATION HELPERS ──
+    function isValidEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+    }
+
+    function isEduEmail(email) {
+      return email.trim().toLowerCase().endsWith('.edu');
+    }
+
+    // Connecticut ZIP codes start with 06
+    function isConnecticutZip(zip) {
+      return /^\d{5}$/.test(zip) && zip.startsWith('06');
+    }
+
+    function showError(inputEl, errorEl, message) {
+      inputEl.classList.add('invalid');
+      errorEl.textContent = message;
+      errorEl.classList.add('visible');
+    }
+
+    function clearError(inputEl, errorEl) {
+      inputEl.classList.remove('invalid');
+      errorEl.classList.remove('visible');
+    }
+
+    // ── STUDENT FORM ──
+    const studentForm   = document.getElementById('student-form');
+    const studentSubmit = document.getElementById('student-submit');
+    const studentSuccess = document.getElementById('student-success');
+
+    studentForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      let valid = true;
+
+      const nameEl   = document.getElementById('student-name');
+      const emailEl  = document.getElementById('student-email');
+      const schoolEl = document.getElementById('student-school');
+
+      // Name
+      if (!nameEl.value.trim()) {
+        showError(nameEl, document.getElementById('student-name-error'), 'Please enter your name.');
+        valid = false;
+      } else {
+        clearError(nameEl, document.getElementById('student-name-error'));
+      }
+
+      // .edu email
+      const emailVal = emailEl.value.trim();
+      if (!isValidEmail(emailVal)) {
+        showError(emailEl, document.getElementById('student-email-error'), 'Please enter a valid email address.');
+        valid = false;
+      } else if (!isEduEmail(emailVal)) {
+        showError(emailEl, document.getElementById('student-email-error'), 'Must be a .edu address — personal emails aren\'t accepted for students.');
+        valid = false;
+      } else {
+        clearError(emailEl, document.getElementById('student-email-error'));
+      }
+
+      // School
+      if (!schoolEl.value) {
+        showError(schoolEl, document.getElementById('student-school-error'), 'Please select your school.');
+        valid = false;
+      } else {
+        clearError(schoolEl, document.getElementById('student-school-error'));
+      }
+
+      if (!valid) return;
+
+      studentSubmit.disabled = true;
+      studentSubmit.textContent = 'Joining...';
+
+      try {
+        const data = new FormData(studentForm);
+        const resp = await fetch(studentForm.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (resp.ok) {
+          studentForm.style.display = 'none';
+          studentSuccess.classList.add('visible');
+        } else {
+          throw new Error('Submission failed');
+        }
+      } catch (err) {
+        studentSubmit.disabled = false;
+        studentSubmit.textContent = 'Join Student Waitlist';
+        alert('Something went wrong. Please try again or email us at support@jobsu.app.');
+      }
+    });
+
+    // Clear errors on input
+    document.getElementById('student-name').addEventListener('input', function() {
+      clearError(this, document.getElementById('student-name-error'));
+    });
+    document.getElementById('student-email').addEventListener('input', function() {
+      clearError(this, document.getElementById('student-email-error'));
+    });
+    document.getElementById('student-school').addEventListener('change', function() {
+      clearError(this, document.getElementById('student-school-error'));
+    });
+
+    // ── RESIDENT FORM ──
+    const residentForm    = document.getElementById('resident-form');
+    const residentSubmit  = document.getElementById('resident-submit');
+    const residentSuccess = document.getElementById('resident-success');
+
+    residentForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      let valid = true;
+
+      const nameEl  = document.getElementById('resident-name');
+      const emailEl = document.getElementById('resident-email');
+      const zipEl   = document.getElementById('resident-zip');
+
+      // Name
+      if (!nameEl.value.trim()) {
+        showError(nameEl, document.getElementById('resident-name-error'), 'Please enter your name.');
+        valid = false;
+      } else {
+        clearError(nameEl, document.getElementById('resident-name-error'));
+      }
+
+      // Email
+      if (!isValidEmail(emailEl.value)) {
+        showError(emailEl, document.getElementById('resident-email-error'), 'Please enter a valid email address.');
+        valid = false;
+      } else {
+        clearError(emailEl, document.getElementById('resident-email-error'));
+      }
+
+      // CT ZIP
+      const zipVal = zipEl.value.trim();
+      if (!isConnecticutZip(zipVal)) {
+        showError(zipEl, document.getElementById('resident-zip-error'), 'Must be a valid Connecticut ZIP code (starts with 06).');
+        valid = false;
+      } else {
+        clearError(zipEl, document.getElementById('resident-zip-error'));
+      }
+
+      if (!valid) return;
+
+      residentSubmit.disabled = true;
+      residentSubmit.textContent = 'Joining...';
+
+      try {
+        const data = new FormData(residentForm);
+        const resp = await fetch(residentForm.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (resp.ok) {
+          residentForm.style.display = 'none';
+          residentSuccess.classList.add('visible');
+        } else {
+          throw new Error('Submission failed');
+        }
+      } catch (err) {
+        residentSubmit.disabled = false;
+        residentSubmit.textContent = 'Join Resident Waitlist';
+        alert('Something went wrong. Please try again or email us at support@jobsu.app.');
+      }
+    });
+
+    // Clear errors on input
+    document.getElementById('resident-name').addEventListener('input', function() {
+      clearError(this, document.getElementById('resident-name-error'));
+    });
+    document.getElementById('resident-email').addEventListener('input', function() {
+      clearError(this, document.getElementById('resident-email-error'));
+    });
+    document.getElementById('resident-zip').addEventListener('input', function() {
+      // Strip non-digits
+      this.value = this.value.replace(/\D/g, '').slice(0, 5);
+      clearError(this, document.getElementById('resident-zip-error'));
+    });
+  </script>
+
+</body>
+</html>

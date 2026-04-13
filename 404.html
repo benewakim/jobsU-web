@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Page Not Found — JobsU</title>
+  <link rel="icon" type="image/png" href="JobsU-favicon-nobackground.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --navy: #0B1B3A; --blue: #1F4B99; --ice: #F5F8FF; --border: #E6ECFF; --muted: #5B6B88; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--ice); color: var(--navy);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh; display: flex; flex-direction: column;
+    }
+    nav {
+      display: flex; align-items: center; padding: 0 40px; height: 64px;
+      background: rgba(255,255,255,0.97); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(11,27,58,0.08);
+    }
+    .nav-logo-img { height: 48px; display: block; }
+    main {
+      flex: 1; display: flex; align-items: center;
+      justify-content: center; padding: 40px 24px; text-align: center;
+    }
+    .inner { max-width: 440px; }
+    .four-oh-four {
+      font-size: 96px; font-weight: 900; color: var(--border);
+      letter-spacing: -4px; line-height: 1; margin-bottom: 24px;
+    }
+    h1 { font-size: 26px; font-weight: 900; margin-bottom: 12px; }
+    p { font-size: 16px; font-weight: 600; color: var(--muted); line-height: 1.6; margin-bottom: 36px; }
+    .links { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      padding: 14px 24px; background: var(--blue); color: white;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 15px; font-weight: 900; border-radius: 14px;
+      text-decoration: none; transition: background 0.15s, transform 0.15s;
+      box-shadow: 0 4px 16px rgba(31,75,153,0.3);
+    }
+    .btn-primary:hover { background: #2D5FBF; transform: translateY(-1px); }
+    .btn-outline {
+      padding: 14px 24px; background: white; color: var(--navy);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 15px; font-weight: 900; border-radius: 14px;
+      text-decoration: none; border: 2px solid var(--border);
+      transition: border-color 0.15s, transform 0.15s;
+    }
+    .btn-outline:hover { border-color: var(--blue); color: var(--blue); transform: translateY(-1px); }
+    footer {
+      background: var(--navy); padding: 20px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .footer-copy { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.4); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.5); text-decoration: none; }
+    .footer-links a:hover { color: white; }
+    @media (max-width: 520px) {
+      nav { padding: 0 20px; }
+      .four-oh-four { font-size: 72px; }
+      footer { padding: 20px; flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html">
+      <img src="JobsU-logo-nobackground.png" alt="JobsU" class="nav-logo-img" />
+    </a>
+  </nav>
+
+  <main>
+    <div class="inner">
+      <div class="four-oh-four">404</div>
+      <h1>Page not found</h1>
+      <p>The page you're looking for doesn't exist or may have moved. Head back home and we'll get you sorted.</p>
+      <div class="links">
+        <a href="index.html" class="btn-primary">Go to Homepage</a>
+        <a href="waitlist.html" class="btn-outline">Join the Waitlist</a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <img src="JobsU-logo.png" alt="JobsU" style="height:28px;background:white;border-radius:6px;padding:2px 6px;" />
+    <p class="footer-copy">&copy; 2026 JobsU. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="mailto:support@jobsu.app">Support</a>
+    </div>
+  </footer>
+
+</body>
+</html>

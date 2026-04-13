@@ -6,6 +6,18 @@
   <title>JobsU — College Jobs, Close to Home</title>
   <meta name="description" content="JobsU connects college students with local residents for flexible, part-time work. Babysitting, tutoring, yard work, and more." />
   <link rel="icon" type="image/png" href="JobsU-favicon-nobackground.png" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="JobsU — College Jobs, Close to Home" />
+  <meta property="og:description" content="JobsU connects college students with local residents for flexible, part-time work. Launching in Fairfield County, CT." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://jobsu.app" />
+  <meta property="og:image" content="https://jobsu.app/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="JobsU — College Jobs, Close to Home" />
+  <meta name="twitter:description" content="JobsU connects college students with local residents for flexible, part-time work. Launching in Fairfield County, CT." />
+  <meta name="twitter:image" content="https://jobsu.app/og-image.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
@@ -789,6 +801,56 @@
 
     .footer-links a:hover { color: white; }
 
+    /* ── FAQ ── */
+    .faq-item {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: box-shadow 0.2s;
+    }
+
+    .faq-item[open] {
+      box-shadow: 0 4px 20px rgba(31,75,153,0.08);
+    }
+
+    .faq-q {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--navy);
+      padding: 20px 24px;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      user-select: none;
+    }
+
+    .faq-q::-webkit-details-marker { display: none; }
+
+    .faq-q::after {
+      content: '+';
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--blue);
+      flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+
+    .faq-item[open] .faq-q::after {
+      transform: rotate(45deg);
+    }
+
+    .faq-a {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--muted);
+      line-height: 1.7;
+      padding: 0 24px 20px;
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       nav { padding: 0 20px; }
@@ -1048,6 +1110,49 @@
       <a href="subscribe.html" style="display:inline-block;margin-top:8px;padding:14px 24px;background:white;color:#0B1B3A;font-size:15px;font-weight:900;border-radius:14px;text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">View Pricing Plans →</a>
     </div>
   </div>
+
+  <!-- FAQ -->
+  <section class="section features-bg" id="faq">
+    <div class="section-inner">
+      <p class="section-eyebrow">FAQ</p>
+      <h2 class="section-title">Common questions</h2>
+      <p class="section-sub" style="margin-bottom:48px;">Everything you need to know before you sign up.</p>
+
+      <div style="display:flex;flex-direction:column;gap:12px;max-width:720px;">
+
+        <details class="faq-item">
+          <summary class="faq-q">When does the app launch?</summary>
+          <p class="faq-a">We're launching in Fairfield County, CT soon — starting with Fairfield University and Sacred Heart University. Join the waitlist and we'll email you the moment it's live.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-q">What schools are supported?</summary>
+          <p class="faq-a">At launch we're starting with Fairfield University and Sacred Heart University. More schools in the area will follow shortly after.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-q">How do students get paid?</summary>
+          <p class="faq-a">Students connect a bank account through the app (powered by Stripe) and receive direct deposits after each completed job. The minimum rate is $18/hr — always visible before you apply.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-q">Is it safe? How are students verified?</summary>
+          <p class="faq-a">Every student account requires a valid .edu email address, tying each profile to a real enrolled student. Both students and residents rate each other after every job, and the app has built-in reporting and blocking tools.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-q">How much does it cost residents to post a job?</summary>
+          <p class="faq-a">Your first job is always free to post. After that, you can pay small per-job fees or subscribe for unlimited postings at $20/month or $200/year. Fees are never charged upfront — only after a job is completed.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-q">What kinds of jobs can I post or find?</summary>
+          <p class="faq-a">Babysitting, tutoring, yard work, moving help, pet care, cleaning, errands, tech help, and more. If it's a task a college student can help with, it belongs on JobsU.</p>
+        </details>
+
+      </div>
+    </div>
+  </section>
 
   <!-- CTA / WAITLIST -->
   <section class="cta" id="download">

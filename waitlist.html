@@ -599,6 +599,10 @@
       activeTab.setAttribute('aria-selected', 'true');
     }
 
+    // Auto-switch tab based on ?tab=resident URL param
+    const urlTab = new URLSearchParams(window.location.search).get('tab');
+    if (urlTab === 'resident') switchTab('resident');
+
     // ── VALIDATION HELPERS ──
     function isValidEmail(email) {
       return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());

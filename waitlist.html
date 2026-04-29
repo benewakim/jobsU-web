@@ -8,7 +8,7 @@
   <link rel="icon" type="image/png" href="JobsU-favicon-nobackground.png" />
   <!-- Open Graph -->
   <meta property="og:title" content="Join the JobsU Waitlist" />
-  <meta property="og:description" content="JobsU is launching in Fairfield County, CT. Be the first student to get paid — or the first resident to find great local help." />
+  <meta property="og:description" content="JobsU is launching in Boston, MA. Be the first student to get paid — or the first resident to find great local help." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://jobsu.app/waitlist.html" />
   <meta property="og:image" content="https://jobsu.app/og-image.png" />
@@ -16,7 +16,7 @@
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Join the JobsU Waitlist" />
-  <meta name="twitter:description" content="JobsU is launching in Fairfield County, CT. Be the first student to get paid — or the first resident to find great local help." />
+  <meta name="twitter:description" content="JobsU is launching in Boston, MA. Be the first student to get paid — or the first resident to find great local help." />
   <meta name="twitter:image" content="https://jobsu.app/og-image.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
@@ -418,7 +418,7 @@
   <div class="page">
     <p class="page-eyebrow">Coming soon</p>
     <h1>Get early access</h1>
-    <p class="subtitle">JobsU is launching in Fairfield County, CT. Join the waitlist and be first in line.</p>
+    <p class="subtitle">JobsU is launching in Boston, MA. Join the waitlist and be first in line.</p>
 
     <!-- TAB SWITCHER -->
     <div class="tab-switcher" role="tablist">
@@ -462,7 +462,7 @@
 
           <div class="field">
             <label for="student-email">School email <span style="font-size:11px;font-weight:700;background:#EEF4FF;color:#1F4B99;padding:2px 8px;border-radius:6px;margin-left:4px;">.edu required</span></label>
-            <input type="email" id="student-email" name="email" placeholder="ajohnson@fairfield.edu" autocomplete="email" />
+            <input type="email" id="student-email" name="email" placeholder="ajohnson@bu.edu" autocomplete="email" />
             <div class="edu-hint">Must be a .edu address — this confirms you're a real student.</div>
             <span class="field-error" id="student-email-error">Please enter a valid .edu email address.</span>
           </div>
@@ -471,9 +471,14 @@
             <label for="student-school">School</label>
             <select id="student-school" name="school">
               <option value="" disabled selected>Select your school</option>
-              <option value="Fairfield University">Fairfield University</option>
-              <option value="Sacred Heart University">Sacred Heart University</option>
-              <option value="Other (CT)">Other (CT school)</option>
+              <option value="Boston University">Boston University</option>
+              <option value="Northeastern University">Northeastern University</option>
+              <option value="Boston College">Boston College</option>
+              <option value="Emerson College">Emerson College</option>
+              <option value="Suffolk University">Suffolk University</option>
+              <option value="Tufts University">Tufts University</option>
+              <option value="Simmons University">Simmons University</option>
+              <option value="Other (Boston area)">Other (Boston area)</option>
             </select>
             <span class="field-error" id="student-school-error">Please select your school.</span>
           </div>
@@ -535,8 +540,8 @@
 
           <div class="field">
             <label for="resident-zip">ZIP code <span style="font-size:11px;font-weight:700;background:#EEF4FF;color:#1F4B99;padding:2px 8px;border-radius:6px;margin-left:4px;">CT only</span></label>
-            <input type="text" id="resident-zip" name="zip_code" placeholder="06824" maxlength="5" inputmode="numeric" pattern="[0-9]*" />
-            <div class="edu-hint">Must be in Connecticut — JobsU is launching in Fairfield County.</div>
+            <input type="text" id="resident-zip" name="zip_code" placeholder="02115" maxlength="5" inputmode="numeric" pattern="[0-9]*" />
+            <div class="edu-hint">Must be in Massachusetts — JobsU is launching in Boston, MA.</div>
             <span class="field-error" id="resident-zip-error">Please enter a valid Connecticut ZIP code.</span>
           </div>
 
@@ -571,7 +576,7 @@
     <div class="trust-row">
       <span class="trust-item">&#128274; No spam, ever</span>
       <span class="trust-item">&#127881; Free to join</span>
-      <span class="trust-item">&#128205; Fairfield County, CT</span>
+      <span class="trust-item">&#128205; Boston, MA</span>
     </div>
 
   </div><!-- /page -->
@@ -622,9 +627,9 @@
       return email.trim().toLowerCase().endsWith('.edu');
     }
 
-    // Connecticut ZIP codes start with 06
-    function isConnecticutZip(zip) {
-      return /^\d{5}$/.test(zip) && zip.startsWith('06');
+    // Massachusetts ZIP codes start with 01 or 02
+    function isMassachusettsZip(zip) {
+      return /^\d{5}$/.test(zip) && (zip.startsWith('02') || zip.startsWith('01'));
     }
 
     function showError(inputEl, errorEl, message) {
@@ -747,8 +752,8 @@
 
       // CT ZIP
       const zipVal = zipEl.value.trim();
-      if (!isConnecticutZip(zipVal)) {
-        showError(zipEl, document.getElementById('resident-zip-error'), 'Must be a valid Connecticut ZIP code (starts with 06).');
+      if (!isMassachusettsZip(zipVal)) {
+        showError(zipEl, document.getElementById('resident-zip-error'), 'Must be a valid Massachusetts ZIP code (starts with 02).');
         valid = false;
       } else {
         clearError(zipEl, document.getElementById('resident-zip-error'));

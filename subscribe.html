@@ -56,6 +56,21 @@
       text-align: center; margin-bottom: 48px; line-height: 1.6;
     }
 
+    /* ── LAUNCH BANNER ── */
+    .launch-banner {
+      background: #FFFBEB;
+      border: 1.5px solid #FCD34D;
+      border-radius: 16px;
+      padding: 18px 22px;
+      margin-bottom: 24px;
+    }
+    .launch-banner-title {
+      font-size: 15px; font-weight: 900; color: #92400E; margin-bottom: 4px;
+    }
+    .launch-banner-sub {
+      font-size: 14px; font-weight: 600; color: #B45309; line-height: 1.5;
+    }
+
     /* ── PLAN CARDS ── */
     .plans { display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px; }
 
@@ -287,6 +302,12 @@
     <h1>Choose a Posting Plan</h1>
     <p class="subtitle">Post jobs and find trusted local students.<br />No fees charged upfront — ever.</p>
 
+    <!-- LAUNCH BANNER -->
+    <div class="launch-banner">
+      <div class="launch-banner-title">Free during our launch period</div>
+      <div class="launch-banner-sub">All job posts are free right now. Lock in a plan early to keep unlimited posting when fees go live.</div>
+    </div>
+
     <!-- FREE TIER -->
     <div class="free-section" style="margin-bottom:16px;">
       <div class="free-header">
@@ -294,24 +315,12 @@
       </div>
       <div class="free-table">
         <div class="free-row">
-          <span class="job-label">1st completed job</span>
-          <span class="fee free">Free to post</span>
+          <span class="job-label">During launch period</span>
+          <span class="fee free">Free</span>
         </div>
         <div class="free-row">
-          <span class="job-label">2nd</span>
-          <span class="fee">$2 posting fee</span>
-        </div>
-        <div class="free-row">
-          <span class="job-label">3rd</span>
-          <span class="fee">$4 posting fee</span>
-        </div>
-        <div class="free-row">
-          <span class="job-label">4th</span>
-          <span class="fee">$6 posting fee</span>
-        </div>
-        <div class="free-row">
-          <span class="job-label">5th+</span>
-          <span class="fee">$8 posting fee</span>
+          <span class="job-label">After launch period</span>
+          <span class="fee">$4 per job posted</span>
         </div>
       </div>
       <div class="free-note">
@@ -329,7 +338,7 @@
             <div class="plan-sub">Flexible, cancel anytime</div>
           </div>
           <div class="plan-price">
-            <span class="amount">$20</span>
+            <span class="amount">$18</span>
             <span class="period">/month</span>
           </div>
         </div>
@@ -339,29 +348,29 @@
           <li><span class="check">✓</span> Cancel anytime</li>
         </ul>
         <!-- Replace href with your Stripe payment link -->
-        <a href="#" class="plan-btn btn-outline">Get Started — $20/month</a>
+        <a href="#" class="plan-btn btn-outline">Get Started — $18/month</a>
       </div>
 
       <!-- YEARLY -->
       <div class="plan-card featured">
-        <div class="plan-badge">Best Value — Save $40/year</div>
+        <div class="plan-badge">Best Value — Save $91/year</div>
         <div class="plan-header">
           <div>
             <div class="plan-name">Yearly</div>
-            <div class="plan-sub">Just $16.67/month — billed annually</div>
+            <div class="plan-sub">Just $10.42/month — billed annually</div>
           </div>
           <div class="plan-price">
-            <span class="amount">$200</span>
+            <span class="amount">$125</span>
             <span class="period">/year</span>
           </div>
         </div>
         <ul class="plan-features">
           <li><span class="check">✓</span> Unlimited job postings</li>
           <li><span class="check">✓</span> No per-job posting fees</li>
-          <li class="highlight"><span class="check">✓</span> Save $40 vs monthly</li>
+          <li class="highlight"><span class="check">✓</span> Save $91 vs monthly</li>
         </ul>
         <!-- Replace href with your Stripe payment link -->
-        <a href="#" class="plan-btn btn-primary">Get Started — $200/year</a>
+        <a href="#" class="plan-btn btn-primary">Get Started — $125/year</a>
       </div>
 
     </div>

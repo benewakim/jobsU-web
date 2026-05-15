@@ -192,21 +192,21 @@
       <p><strong>Assumption of Risk.</strong> Both Residents and Service Providers assume full and complete risk for any property damage, bodily injury, illness, death, financial loss, theft, or other harm arising out of, related to, or in connection with any services arranged, performed, or received through the Platform. Each party agrees that it is their sole responsibility to assess and insure against such risks, and that JobsU shall have no liability whatsoever for any such losses.</p>
       <p><strong>Recommended Coverage.</strong> Residents are encouraged to maintain homeowner's or renter's insurance that covers third parties performing work on their property. Service Providers are encouraged to consider general liability insurance, personal accident coverage, and any profession-specific coverage appropriate to the services they offer. Consultation with a licensed insurance professional is strongly recommended.</p>
 
-      <h2>9. Payments, Fees, and Escrow</h2>
-      <p>Payments for services are processed through JobsU's secure, third-party payment processor and held in escrow until the job is confirmed complete.</p>
+      <h2>9. Payments and Payment Holds</h2>
+      <p>Payments for services are processed through Stripe, Inc., JobsU's third-party payment processor. When a Resident books a job, payment is pre-authorized and held pending job completion — this is a pre-authorized payment hold, not a legal escrow arrangement. Funds are released to the Service Provider upon confirmation of job completion by the Resident, or automatically after a defined review period.</p>
       <p>By using the Platform:</p>
       <ul>
-        <li>Residents authorize JobsU to charge the listed job price, including any applicable platform fees, at the time of booking</li>
-        <li>Service Providers authorize JobsU to deduct applicable platform service fees from each transaction before disbursing payment</li>
-        <li>JobsU retains a service fee (disclosed at the time of booking) for facilitating each transaction</li>
-        <li>All fees, charges, and payout amounts will be clearly disclosed prior to payment confirmation</li>
-        <li>Funds are held in escrow and released to the Service Provider upon confirmation of job completion by the Resident, or automatically after a defined review period</li>
+        <li>Residents authorize a pre-authorized hold on their payment method at the time of booking, which is captured upon job completion</li>
+        <li>Service Providers receive the full job price set by the Resident, less any applicable Stripe payment processing fees; JobsU does not currently deduct an additional platform service fee</li>
+        <li>All payout amounts and any applicable fees will be clearly disclosed prior to booking confirmation</li>
+        <li>For jobs involving multiple Service Providers, payment is held until all participating providers confirm completion and approve any hour adjustments; payment is not released until all required approvals are received</li>
+        <li>Service Providers who onboard for payouts through the Platform agree to Stripe's Connected Account Agreement, available at <a href="https://stripe.com/connect-account/legal" target="_blank" rel="noopener">stripe.com/connect-account/legal</a></li>
       </ul>
-      <p>JobsU is not a bank or financial institution. Escrow services are facilitated through licensed third-party providers.</p>
+      <p>JobsU is not a bank or financial institution. Payment processing and holding services are provided by Stripe, Inc. under Stripe's terms of service.</p>
 
       <h2>10. Cancellations, Refunds, and Disputes</h2>
       <p><strong>Cancellation by Residents:</strong> Residents may cancel a job posting before a Service Provider has been confirmed at no charge. Cancellations after confirmation may be subject to a cancellation fee as disclosed at the time of booking.</p>
-      <p><strong>Cancellation by Service Providers:</strong> Service Providers who cancel confirmed jobs may be subject to account penalties, reduced visibility, or account suspension, depending on the frequency and timing of cancellations.</p>
+      <p><strong>Cancellation by Service Providers:</strong> Service Providers who cancel confirmed jobs may be subject to account penalties, reduced visibility, or account suspension, depending on the frequency and timing of cancellations. JobsU operates a tracked no-show and cancellation strike system; repeated no-shows or late cancellations will result in escalating penalties up to and including permanent account suspension.</p>
       <p><strong>Refunds:</strong> Refund eligibility depends on the timing and status of the job. JobsU reserves the right, in its sole discretion, to issue full or partial refunds, or to mediate payment disputes between users in order to maintain platform integrity and fairness.</p>
       <p><strong>Disputes:</strong> Users are encouraged to resolve disputes directly. If a resolution cannot be reached, either party may submit a dispute to JobsU through the Platform. JobsU may, but is not obligated to, mediate disputes and make final determinations regarding payment release.</p>
 
@@ -268,7 +268,7 @@
 
       <h2>18. Dispute Resolution and Arbitration</h2>
       <p><strong>Informal Resolution:</strong> Before initiating any formal dispute, you agree to first contact JobsU at <a href="mailto:support@jobsu.app">support@jobsu.app</a> and attempt to resolve the matter informally for at least thirty (30) days.</p>
-      <p><strong>Binding Arbitration:</strong> If informal resolution is unsuccessful, any disputes arising under these Terms shall be resolved through binding arbitration administered by the American Arbitration Association ("AAA") under its Consumer Arbitration Rules. Arbitration shall take place in the State of New York. The arbitrator's decision shall be final and binding.</p>
+      <p><strong>Binding Arbitration:</strong> If informal resolution is unsuccessful, any disputes arising under these Terms shall be resolved through binding arbitration administered by the American Arbitration Association ("AAA") under its Consumer Arbitration Rules. Arbitration shall take place in the State of Delaware. The arbitrator's decision shall be final and binding.</p>
       <p><strong>Class Action Waiver:</strong> You agree that any disputes will be resolved on an individual basis only. You waive any right to participate in a class action, collective action, or representative proceeding.</p>
       <p><strong>Small Claims Exception:</strong> Either party may bring an individual action in small claims court for disputes within that court's jurisdictional limits.</p>
 
@@ -282,7 +282,7 @@
         <li>Extended inactivity or failure to re-verify enrollment (for Students)</li>
         <li>Protection of the marketplace, other users, or JobsU's interests</li>
       </ul>
-      <p>Upon termination, your right to use the Platform ceases immediately. Any pending payments or escrow funds will be handled in accordance with JobsU's then-current policies.</p>
+      <p>Upon termination, your right to use the Platform ceases immediately. Any pending payment holds will be handled in accordance with JobsU's then-current policies.</p>
 
       <h2>20. Third-Party Services</h2>
       <p>The Platform may utilize third-party services, including payment processors, identity verification providers, and communication tools. JobsU is not responsible for the availability, accuracy, or performance of any third-party service and disclaims all liability for third-party service interruptions, errors, or failures.</p>
@@ -296,7 +296,7 @@
       <p>Your continued use of the Platform after the effective date of any revised Terms constitutes your acceptance of the changes. If you do not agree to updated Terms, you must discontinue your use of the Platform and close your account.</p>
 
       <h2>23. Governing Law and Jurisdiction</h2>
-      <p>These Terms shall be governed by and construed in accordance with the laws of the State of New York, without regard to its conflict of law principles. Subject to the arbitration provisions in Section 18, any legal action or proceeding arising under these Terms shall be brought exclusively in the state or federal courts located in New York, and you consent to the personal jurisdiction of such courts.</p>
+      <p>These Terms shall be governed by and construed in accordance with the laws of the State of Delaware, without regard to its conflict of law principles. Subject to the arbitration provisions in Section 18, any legal action or proceeding arising under these Terms shall be brought exclusively in the state or federal courts located in Delaware, and you consent to the personal jurisdiction of such courts.</p>
 
       <h2>24. Severability</h2>
       <p>If any provision of these Terms is found to be invalid, illegal, or unenforceable, the remaining provisions shall continue in full force and effect. The invalid provision shall be modified to the minimum extent necessary to make it enforceable while preserving its original intent.</p>
@@ -309,7 +309,8 @@
       <ul>
         <li><strong>JobsU, Inc.</strong></li>
         <li>[Insert Registered Business Address Prior to Launch]</li>
-        <li>Email: <a href="mailto:support@jobsu.app">support@jobsu.app</a></li>
+        <li>General inquiries: <a href="mailto:support@jobsu.app">support@jobsu.app</a></li>
+        <li>Legal matters: <a href="mailto:legal@jobsu.app">legal@jobsu.app</a></li>
         <li>Website: jobsu.app</li>
       </ul>
     </div>

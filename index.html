@@ -235,6 +235,17 @@
 
     .schools-row img:hover { opacity: 1; filter: grayscale(0%); }
 
+    .schools-trust {
+      display: flex; gap: 12px; justify-content: center;
+      margin-top: 24px; flex-wrap: wrap;
+    }
+
+    .schools-trust-pill {
+      font-size: 12px; font-weight: 700; color: var(--muted);
+      background: var(--ice); border: 1px solid var(--border);
+      padding: 5px 14px; border-radius: 999px;
+    }
+
     /* ── TRUST BAR ── */
     .trust-bar {
       background: var(--navy); padding: 14px 40px;
@@ -566,20 +577,6 @@
           <a href="waitlist.html?tab=resident" class="btn-primary">Resident Waitlist &rarr;</a>
           <a href="waitlist.html" class="btn-secondary">Student Waitlist &rarr;</a>
         </div>
-        <div class="hero-trust">
-          <div class="hero-trust-item">
-            <div class="trust-check">✓</div>
-            .edu verified students
-          </div>
-          <div class="hero-trust-item">
-            <div class="trust-check">✓</div>
-            $18/hr minimum
-          </div>
-          <div class="hero-trust-item">
-            <div class="trust-check">✓</div>
-            Secure payments
-          </div>
-        </div>
       </div>
 
     </div>
@@ -596,14 +593,10 @@
       <img src="logo-tufts.png"        alt="Tufts" />
       <img src="logo-wellesley.svg"    alt="Wellesley" />
     </div>
-  </div>
-
-  <!-- TRUST BAR -->
-  <div class="trust-bar">
-    <div class="trust-bar-item"><span class="trust-bar-dot">●</span> 6 Boston colleges at launch</div>
-    <div class="trust-bar-item"><span class="trust-bar-dot">●</span> .edu email verified</div>
-    <div class="trust-bar-item"><span class="trust-bar-dot">●</span> Secure payments via Stripe</div>
-    <div class="trust-bar-item"><span class="trust-bar-dot">●</span> iOS app coming soon</div>
+    <div class="schools-trust">
+      <span class="schools-trust-pill">🔒 Payments secured by Stripe</span>
+      <span class="schools-trust-pill">✓ .edu email verified</span>
+    </div>
   </div>
 
   <!-- HOW IT WORKS -->

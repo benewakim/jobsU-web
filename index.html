@@ -209,6 +209,32 @@
 
     .hero-float-tag span { font-size: 11px; font-weight: 600; color: var(--muted); }
 
+    /* ── SCHOOL LOGOS STRIP ── */
+    .schools-strip {
+      background: white;
+      padding: 36px 40px;
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .schools-label {
+      font-size: 12px; font-weight: 900; text-transform: uppercase;
+      letter-spacing: 1.5px; color: var(--muted); margin-bottom: 24px;
+    }
+
+    .schools-row {
+      display: flex; align-items: center; justify-content: center;
+      gap: 48px; flex-wrap: wrap;
+    }
+
+    .schools-row img {
+      height: 48px; width: auto; object-fit: contain;
+      opacity: 0.75; transition: opacity 0.2s;
+      filter: grayscale(20%);
+    }
+
+    .schools-row img:hover { opacity: 1; filter: grayscale(0%); }
+
     /* ── TRUST BAR ── */
     .trust-bar {
       background: var(--navy); padding: 14px 40px;
@@ -583,6 +609,19 @@
       </div>
     </div>
   </section>
+
+  <!-- SCHOOL LOGOS STRIP -->
+  <div class="schools-strip">
+    <p class="schools-label">Launching at these Boston colleges</p>
+    <div class="schools-row">
+      <img src="logo-bc.png"           alt="Boston College" />
+      <img src="logo-harvard.png"      alt="Harvard" />
+      <img src="logo-bu.png"           alt="Boston University" />
+      <img src="logo-northeastern.png" alt="Northeastern" />
+      <img src="logo-tufts.png"        alt="Tufts" />
+      <img src="logo-wellesley.png"    alt="Wellesley" />
+    </div>
+  </div>
 
   <!-- TRUST BAR -->
   <div class="trust-bar">

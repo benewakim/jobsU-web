@@ -24,18 +24,18 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --navy:        #0B1B3A;
-      --blue:        #1F4B99;
-      --blue-hover:  #2D5FBF;
-      --amber:       #D97706;
-      --amber-bg:    #FFFBEB;
-      --amber-border:#FDE68A;
-      --ice:         #F5F8FF;
-      --border:      #E6ECFF;
-      --muted:       #5B6B88;
-      --green:       #22C55E;
-      --green-bg:    #F0FDF4;
-      --white:       #ffffff;
+      --navy:       #0B1B3A;
+      --blue:       #1F4B99;
+      --blue-hover: #2D5FBF;
+      --ice:        #F5F8FF;
+      --border:     #E6ECFF;
+      --muted:      #5B6B88;
+      --green:      #22C55E;
+      --green-dark: #16A34A;
+      --green-deep: #15803D;
+      --green-bg:   #F0FDF4;
+      --green-mid:  #DCFCE7;
+      --white:      #ffffff;
     }
 
     html { scroll-behavior: smooth; }
@@ -60,7 +60,7 @@
     .nav-logo-img { height: 44px; display: block; }
 
     .nav-links {
-      display: flex; align-items: center; gap: 32px; list-style: none;
+      display: flex; align-items: center; gap: 28px; list-style: none;
     }
 
     .nav-links a {
@@ -79,13 +79,25 @@
 
     .nav-cta:hover { background: var(--blue-hover) !important; transform: translateY(-1px); }
 
-    /* ── HERO ── */
+    /* ── HERO — full bleed photo ── */
     .hero {
-      padding: 120px 40px 80px;
-      background: var(--white);
+      position: relative;
+      padding: 148px 40px 108px;
+      overflow: hidden;
+    }
+
+    .hero-bg-img {
+      position: absolute; inset: 0; z-index: 0;
+      width: 100%; height: 100%; object-fit: cover; object-position: center 30%;
+    }
+
+    .hero-overlay {
+      position: absolute; inset: 0; z-index: 1;
+      background: rgba(8, 18, 48, 0.58);
     }
 
     .hero-inner {
+      position: relative; z-index: 2;
       max-width: 1100px; margin: 0 auto;
       display: grid; grid-template-columns: 1fr 1fr;
       gap: 80px; align-items: center;
@@ -93,9 +105,9 @@
 
     .hero-badge {
       display: inline-flex; align-items: center; gap: 8px;
-      background: var(--green-bg); border: 1px solid rgba(34,197,94,0.25);
+      background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.3);
       border-radius: 999px; padding: 6px 14px;
-      font-size: 13px; font-weight: 700; color: #16A34A;
+      font-size: 13px; font-weight: 700; color: #86EFAC;
       margin-bottom: 28px;
     }
 
@@ -110,15 +122,15 @@
 
     .hero h1 {
       font-size: clamp(36px, 4.5vw, 56px);
-      font-weight: 900; color: var(--navy);
+      font-weight: 900; color: white;
       line-height: 1.08; letter-spacing: -1.5px;
       margin-bottom: 20px;
     }
 
-    .hero h1 em { font-style: normal; color: var(--blue); }
+    .hero h1 em { font-style: normal; color: #93C5FD; }
 
     .hero-sub {
-      font-size: 18px; font-weight: 600; color: var(--muted);
+      font-size: 18px; font-weight: 600; color: rgba(255,255,255,0.82);
       line-height: 1.65; margin-bottom: 40px; max-width: 460px;
     }
 
@@ -132,82 +144,56 @@
       font-size: 15px; font-weight: 800; border-radius: 12px;
       text-decoration: none;
       transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 4px 16px rgba(31,75,153,0.3);
+      box-shadow: 0 4px 16px rgba(31,75,153,0.4);
     }
 
     .btn-primary:hover {
       background: var(--blue-hover); transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(31,75,153,0.35);
+      box-shadow: 0 8px 24px rgba(31,75,153,0.5);
     }
 
     .btn-secondary {
       display: inline-flex; align-items: center; gap: 8px;
-      padding: 15px 28px; background: var(--amber-bg); color: var(--amber);
+      padding: 15px 28px; background: var(--green-dark); color: white;
       font-size: 15px; font-weight: 800; border-radius: 12px;
-      text-decoration: none; border: 1.5px solid var(--amber-border);
+      text-decoration: none;
       transition: background 0.2s, transform 0.2s;
+      box-shadow: 0 4px 16px rgba(22,163,74,0.35);
     }
 
-    .btn-secondary:hover { background: #FEF3C7; transform: translateY(-2px); }
+    .btn-secondary:hover { background: var(--green-deep); transform: translateY(-2px); }
 
     .hero-trust { display: flex; gap: 20px; flex-wrap: wrap; }
 
     .hero-trust-item {
       display: flex; align-items: center; gap: 6px;
-      font-size: 13px; font-weight: 700; color: var(--muted);
+      font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.8);
     }
 
     .trust-check {
-      width: 18px; height: 18px; background: var(--green-bg);
+      width: 18px; height: 18px; background: rgba(34,197,94,0.2);
       border-radius: 50%; display: flex; align-items: center;
       justify-content: center; flex-shrink: 0;
-      color: #16A34A; font-size: 10px; font-weight: 900;
+      color: #86EFAC; font-size: 10px; font-weight: 900;
     }
 
-    /* Hero visual */
+    /* Hero right — floating screenshot */
     .hero-visual {
-      position: relative; display: flex;
-      align-items: center; justify-content: center;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 16px;
     }
 
-    .hero-photo-bg {
-      width: 100%; min-height: 480px;
-      background: linear-gradient(135deg, #EEF4FF 0%, #DCE8FF 100%);
-      border-radius: 28px; overflow: hidden; position: relative;
-      display: flex; align-items: center; justify-content: center;
-      padding: 40px;
-    }
-
-    /*
-      PHOTO SLOT — hero right panel
-      ───────────────────────────────
-      When you have a lifestyle photo (college student helping a resident:
-      yard work, tutoring, babysitting, moving boxes), do this:
-
-      1. Upload the photo as "hero-photo.jpg" to this folder
-      2. Replace the background gradient on .hero-photo-bg with:
-            background: none;
-      3. Add inside .hero-photo-bg, BEFORE the screenshot img:
-            <img src="hero-photo.jpg" alt="College student helping a neighbor"
-                 style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" />
-            <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(10,24,60,0.2),transparent);"></div>
-      4. Change .hero-screenshot-solo width to 200px so it overlays smaller
-
-      Photo specs: warm, authentic, not too staged. 4:3 landscape.
-      Unsplash searches: "college student helping elderly", "young person yard work",
-      "student tutoring home", "college student neighborhood".
-    */
-
-    .hero-screenshot-solo {
-      position: relative; z-index: 2;
-      filter: drop-shadow(0 20px 40px rgba(11,27,58,0.2));
+    .hero-screenshot {
+      filter: drop-shadow(0 24px 48px rgba(0,0,0,0.5));
     }
 
     .hero-float-tag {
-      position: absolute; bottom: 20px; left: 20px;
-      background: white; border-radius: 14px; padding: 12px 16px;
-      box-shadow: 0 8px 28px rgba(11,27,58,0.12);
-      display: flex; align-items: center; gap: 10px; z-index: 3;
+      background: rgba(255,255,255,0.96);
+      border-radius: 14px; padding: 12px 16px;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.25);
+      display: flex; align-items: center; gap: 10px;
+      backdrop-filter: blur(8px);
+      align-self: flex-start;
     }
 
     .hero-float-tag-icon {
@@ -220,9 +206,7 @@
       display: block; font-size: 13px; font-weight: 900; color: var(--navy);
     }
 
-    .hero-float-tag span {
-      font-size: 11px; font-weight: 600; color: var(--muted);
-    }
+    .hero-float-tag span { font-size: 11px; font-weight: 600; color: var(--muted); }
 
     /* ── TRUST BAR ── */
     .trust-bar {
@@ -240,7 +224,6 @@
 
     /* ── SECTIONS ── */
     .section { padding: 96px 40px; }
-
     .section-inner { max-width: 1100px; margin: 0 auto; }
 
     .section-eyebrow {
@@ -277,7 +260,7 @@
     }
 
     .hiw-col-header.resident { background: #EEF4FF; }
-    .hiw-col-header.student  { background: var(--amber-bg); }
+    .hiw-col-header.student  { background: var(--green-bg); }
 
     .hiw-col-icon {
       width: 44px; height: 44px; border-radius: 12px;
@@ -285,7 +268,7 @@
     }
 
     .hiw-col-icon.resident { background: #DBEAFE; }
-    .hiw-col-icon.student  { background: #FDE68A; }
+    .hiw-col-icon.student  { background: var(--green-mid); }
 
     .hiw-col-eyebrow {
       font-size: 11px; font-weight: 900; text-transform: uppercase;
@@ -293,7 +276,7 @@
     }
 
     .hiw-col-eyebrow.resident { color: var(--blue); }
-    .hiw-col-eyebrow.student  { color: var(--amber); }
+    .hiw-col-eyebrow.student  { color: var(--green-dark); }
 
     .hiw-col-title { font-size: 17px; font-weight: 900; color: var(--navy); }
 
@@ -311,7 +294,7 @@
     }
 
     .hiw-step-num.resident { background: #EEF4FF; color: var(--blue); }
-    .hiw-step-num.student  { background: #FEF3C7; color: var(--amber); }
+    .hiw-step-num.student  { background: var(--green-mid); color: var(--green-dark); }
 
     .hiw-step-body h4 { font-size: 15px; font-weight: 800; color: var(--navy); margin-bottom: 4px; }
     .hiw-step-body p  { font-size: 13px; font-weight: 600; color: var(--muted); line-height: 1.55; }
@@ -327,8 +310,8 @@
 
     .btn-hiw.resident { background: var(--blue); color: white; }
     .btn-hiw.resident:hover { background: var(--blue-hover); transform: translateY(-1px); }
-    .btn-hiw.student  { background: var(--amber); color: white; }
-    .btn-hiw.student:hover  { background: #B45309; transform: translateY(-1px); }
+    .btn-hiw.student  { background: var(--green-dark); color: white; }
+    .btn-hiw.student:hover  { background: var(--green-deep); transform: translateY(-1px); }
 
     /* ── CATEGORIES ── */
     .categories-grid {
@@ -372,7 +355,6 @@
 
     .why-icon.blue  { background: #EEF4FF; }
     .why-icon.green { background: var(--green-bg); }
-    .why-icon.amber { background: var(--amber-bg); }
 
     .why-card h3 { font-size: 17px; font-weight: 900; color: var(--navy); margin-bottom: 8px; }
     .why-card p  { font-size: 14px; font-weight: 600; color: var(--muted); line-height: 1.65; }
@@ -479,13 +461,13 @@
 
     .btn-cta-student {
       display: inline-flex; align-items: center; gap: 8px;
-      padding: 15px 28px; background: var(--amber); color: white;
+      padding: 15px 28px; background: var(--green-dark); color: white;
       font-size: 15px; font-weight: 800; border-radius: 12px;
-      text-decoration: none; box-shadow: 0 4px 16px rgba(217,119,6,0.35);
+      text-decoration: none; box-shadow: 0 4px 16px rgba(22,163,74,0.35);
       transition: background 0.2s, transform 0.2s;
     }
 
-    .btn-cta-student:hover { background: #B45309; transform: translateY(-2px); }
+    .btn-cta-student:hover { background: var(--green-deep); transform: translateY(-2px); }
 
     /* ── FOOTER ── */
     footer {
@@ -495,14 +477,11 @@
     }
 
     .footer-copy { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.4); }
-
     .footer-links { display: flex; gap: 24px; }
-
     .footer-links a {
       font-size: 13px; font-weight: 700;
       color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s;
     }
-
     .footer-links a:hover { color: white; }
 
     /* ── RESPONSIVE ── */
@@ -517,13 +496,12 @@
       nav { padding: 0 20px; }
       .nav-links { display: none; }
 
-      .hero { padding: 90px 20px 60px; }
-      .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+      .hero { padding: 100px 20px 72px; }
+      .hero-inner { grid-template-columns: 1fr; gap: 40px; }
       .hero-visual { display: none; }
 
       .section { padding: 64px 20px; }
       .trust-bar { padding: 14px 20px; gap: 20px; }
-
       .why-grid { grid-template-columns: 1fr; }
       .cta { padding: 64px 20px; }
 
@@ -557,8 +535,11 @@
     </ul>
   </nav>
 
-  <!-- HERO -->
+  <!-- HERO — full bleed photo -->
   <section class="hero">
+    <img src="hero-image.raking.png" alt="College student helping a neighbor" class="hero-bg-img" />
+    <div class="hero-overlay"></div>
+
     <div class="hero-inner">
       <div>
         <div class="hero-badge">
@@ -567,11 +548,11 @@
         </div>
         <h1>Real help from<br /><em>students</em> near you.</h1>
         <p class="hero-sub">
-          JobsU connects local residents with .edu-verified college students for babysitting, tutoring, yard work, and more.
+          JobsU connects local residents with .edu-verified college students for babysitting, tutoring, yard work, and more. Join the waitlist — launching in Boston soon.
         </p>
         <div class="hero-actions">
-          <a href="waitlist.html?tab=resident" class="btn-primary">I need help &rarr;</a>
-          <a href="waitlist.html" class="btn-secondary">I'm a student &rarr;</a>
+          <a href="waitlist.html?tab=resident" class="btn-primary">Resident Waitlist &rarr;</a>
+          <a href="waitlist.html" class="btn-secondary">Student Waitlist &rarr;</a>
         </div>
         <div class="hero-trust">
           <div class="hero-trust-item">
@@ -590,11 +571,7 @@
       </div>
 
       <div class="hero-visual">
-        <div class="hero-photo-bg">
-          <img src="hero-image.raking.png" alt="College student helping a neighbor" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" />
-          <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(10,24,60,0.18),transparent);"></div>
-          <img src="screenshot-home.png" alt="JobsU app" class="hero-screenshot-solo" style="width:200px;" />
-        </div>
+        <img src="screenshot-home.png" alt="JobsU app" class="hero-screenshot" style="width:220px;" />
         <div class="hero-float-tag">
           <div class="hero-float-tag-icon">🎓</div>
           <div>
@@ -608,18 +585,10 @@
 
   <!-- TRUST BAR -->
   <div class="trust-bar">
-    <div class="trust-bar-item">
-      <span class="trust-bar-dot">●</span> 6 Boston colleges at launch
-    </div>
-    <div class="trust-bar-item">
-      <span class="trust-bar-dot">●</span> .edu email verified
-    </div>
-    <div class="trust-bar-item">
-      <span class="trust-bar-dot">●</span> Secure payments via Stripe
-    </div>
-    <div class="trust-bar-item">
-      <span class="trust-bar-dot">●</span> iOS app coming soon
-    </div>
+    <div class="trust-bar-item"><span class="trust-bar-dot">●</span> 6 Boston colleges at launch</div>
+    <div class="trust-bar-item"><span class="trust-bar-dot">●</span> .edu email verified</div>
+    <div class="trust-bar-item"><span class="trust-bar-dot">●</span> Secure payments via Stripe</div>
+    <div class="trust-bar-item"><span class="trust-bar-dot">●</span> iOS app coming soon</div>
   </div>
 
   <!-- HOW IT WORKS -->
@@ -756,22 +725,22 @@
           <p>Jobs start at $18/hr. Students see the rate before they apply, and payment is handled securely through the app — no cash, no awkward conversations.</p>
         </div>
         <div class="why-card">
-          <div class="why-icon amber">⭐</div>
+          <div class="why-icon blue">⭐</div>
           <h3>Ratings after every job</h3>
           <p>Both residents and students rate each other. This builds a community where reliability is rewarded and everyone holds up their end.</p>
         </div>
         <div class="why-card">
-          <div class="why-icon blue">📍</div>
+          <div class="why-icon green">📍</div>
           <h3>Hyper-local by design</h3>
           <p>Students are matched to jobs near their campus. Residents set a radius so only students from your neighborhood can apply.</p>
         </div>
         <div class="why-card">
-          <div class="why-icon green">💬</div>
+          <div class="why-icon blue">💬</div>
           <h3>Chat without sharing numbers</h3>
           <p>Coordinate everything in the app. No need to share personal contact info until you're ready.</p>
         </div>
         <div class="why-card">
-          <div class="why-icon amber">🔔</div>
+          <div class="why-icon green">🔔</div>
           <h3>Instant notifications</h3>
           <p>Students hear about matching jobs the moment they're posted. Residents are notified the second someone applies.</p>
         </div>
@@ -780,7 +749,7 @@
   </section>
 
   <!-- TESTIMONIALS -->
-  <!-- NOTE: These are placeholder testimonials. Replace with real quotes before launch. -->
+  <!-- NOTE: Placeholder testimonials — replace with real quotes before launch -->
   <section class="section">
     <div class="section-inner">
       <p class="section-eyebrow">Stories</p>
@@ -801,7 +770,6 @@
             </div>
           </div>
         </div>
-
         <div class="testimonial-card">
           <div class="testimonial-stars">
             <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
@@ -815,7 +783,6 @@
             </div>
           </div>
         </div>
-
         <div class="testimonial-card">
           <div class="testimonial-stars">
             <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
@@ -875,8 +842,8 @@
       <h2>Launching soon in Boston, MA</h2>
       <p>JobsU is coming to iOS. Join the waitlist and be the first student to get paid — or the first resident to find great local help.</p>
       <div class="cta-actions">
-        <a href="waitlist.html?tab=resident" class="btn-cta-resident">🏡 &nbsp;I need help</a>
-        <a href="waitlist.html" class="btn-cta-student">🎓 &nbsp;I'm a student</a>
+        <a href="waitlist.html?tab=resident" class="btn-cta-resident">🏡 &nbsp;Resident Waitlist</a>
+        <a href="waitlist.html" class="btn-cta-student">🎓 &nbsp;Student Waitlist</a>
       </div>
     </div>
   </section>

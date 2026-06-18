@@ -230,6 +230,52 @@
 
     .field-error.visible { display: block; }
 
+    /* ── SCHOOL AUTOCOMPLETE ── */
+    .school-autocomplete { position: relative; }
+
+    .school-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      background: white;
+      border: 2px solid var(--blue);
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(11,27,58,0.12);
+      z-index: 50;
+      overflow: hidden;
+      max-height: 280px;
+      overflow-y: auto;
+    }
+
+    .school-dropdown.open { display: block; }
+
+    .school-dropdown-item {
+      padding: 11px 16px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--navy);
+      cursor: pointer;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .school-dropdown-item:last-child { border-bottom: none; }
+
+    .school-dropdown-item:hover,
+    .school-dropdown-item.highlighted {
+      background: #EEF4FF;
+      color: var(--blue);
+    }
+
+    .school-dropdown-empty {
+      padding: 12px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--muted);
+      font-style: italic;
+    }
+
     /* ── CHECKBOXES ── */
     .checkbox-label {
       font-size: 13px;
@@ -453,23 +499,13 @@
 
           <!-- Hidden field so Formspree submissions are labeled -->
           <input type="hidden" name="_subject" value="New Student Waitlist Signup" />
+          <!-- Populated by JS — holds the final school name submitted -->
+          <input type="hidden" id="school-final" name="school" value="" />
 
-          <div class="field">
-            <label for="student-name">Full name</label>
-            <input type="text" id="student-name" name="name" placeholder="Alex Johnson" autocomplete="name" />
-            <span class="field-error" id="student-name-error">Please enter your name.</span>
-          </div>
-
-          <div class="field">
-            <label for="student-email">School email <span style="font-size:11px;font-weight:700;background:#EEF4FF;color:#1F4B99;padding:2px 8px;border-radius:6px;margin-left:4px;">.edu required</span></label>
-            <input type="email" id="student-email" name="email" placeholder="ajohnson@bc.edu" autocomplete="email" />
-            <div class="edu-hint">Must be a .edu address — this confirms you're a real student.</div>
-            <span class="field-error" id="student-email-error">Please enter a valid .edu email address.</span>
-          </div>
-
+          <!-- 1. School (first) -->
           <div class="field">
             <label for="student-school">School</label>
-            <select id="student-school" name="school">
+            <select id="student-school">
               <option value="" disabled selected>Select your school</option>
               <option value="Boston College">Boston College</option>
               <option value="Harvard University">Harvard University</option>
@@ -477,14 +513,48 @@
               <option value="Northeastern University">Northeastern University</option>
               <option value="Tufts University">Tufts University</option>
               <option value="Wellesley College">Wellesley College</option>
+              <option value="other">Other school…</option>
             </select>
             <span class="field-error" id="student-school-error">Please select your school.</span>
           </div>
 
+          <!-- Other school search (shown when "Other" selected) -->
+          <div class="field" id="other-school-field" style="display:none;">
+            <label for="school-search">Search for your school</label>
+            <div class="school-autocomplete">
+              <input
+                type="text"
+                id="school-search"
+                placeholder="Start typing your school name…"
+                autocomplete="off"
+              />
+              <div class="school-dropdown" id="school-dropdown"></div>
+            </div>
+            <span class="field-error" id="other-school-error">Please enter your school name.</span>
+          </div>
+
+          <!-- 2. Full name -->
+          <div class="field">
+            <label for="student-name">Full name</label>
+            <input type="text" id="student-name" name="name" placeholder="Alex Johnson" autocomplete="name" />
+            <span class="field-error" id="student-name-error">Please enter your name.</span>
+          </div>
+
+          <!-- 3. School email (placeholder updates with school selection) -->
+          <div class="field">
+            <label for="student-email">School email <span style="font-size:11px;font-weight:700;background:#EEF4FF;color:#1F4B99;padding:2px 8px;border-radius:6px;margin-left:4px;">.edu required</span></label>
+            <input type="email" id="student-email" name="email" placeholder="Select your school above first" autocomplete="email" />
+            <div class="edu-hint">Must be a .edu address — this confirms you're a real student.</div>
+            <span class="field-error" id="student-email-error">Please enter a valid .edu email address.</span>
+          </div>
+
+          <!-- 4. Graduation year -->
           <div class="field">
             <label for="student-grad">Expected graduation year <span class="opt">(optional)</span></label>
             <select id="student-grad" name="graduation_year">
               <option value="" selected>Select year</option>
+              <option value="2025">2025</option>
+              <option value="2026">2026</option>
               <option value="2027">2027</option>
               <option value="2028">2028</option>
               <option value="2029">2029</option>
@@ -536,10 +606,10 @@
           </div>
 
           <div class="field">
-            <label for="resident-zip">ZIP code <span style="font-size:11px;font-weight:700;background:#EEF4FF;color:#1F4B99;padding:2px 8px;border-radius:6px;margin-left:4px;">CT only</span></label>
+            <label for="resident-zip">ZIP code <span style="font-size:11px;font-weight:700;background:#EEF4FF;color:#1F4B99;padding:2px 8px;border-radius:6px;margin-left:4px;">MA only</span></label>
             <input type="text" id="resident-zip" name="zip_code" placeholder="02115" maxlength="5" inputmode="numeric" pattern="[0-9]*" />
             <div class="edu-hint">Must be in Massachusetts — JobsU is launching in Boston, MA.</div>
-            <span class="field-error" id="resident-zip-error">Please enter a valid Connecticut ZIP code.</span>
+            <span class="field-error" id="resident-zip-error">Please enter a valid Massachusetts ZIP code.</span>
           </div>
 
           <div class="form-divider"></div>
@@ -626,7 +696,6 @@
       return email.trim().toLowerCase().endsWith('.edu');
     }
 
-    // Massachusetts ZIP codes start with 01 or 02
     function isMassachusettsZip(zip) {
       return /^\d{5}$/.test(zip) && (zip.startsWith('02') || zip.startsWith('01'));
     }
@@ -642,18 +711,241 @@
       errorEl.classList.remove('visible');
     }
 
-    // ── STUDENT FORM ──
-    const studentForm   = document.getElementById('student-form');
-    const studentSubmit = document.getElementById('student-submit');
+    // ── SCHOOL → EMAIL PLACEHOLDER MAP ──
+    const schoolEmailPlaceholder = {
+      'Boston College':         'ajohnson@bc.edu',
+      'Harvard University':     'ajohnson@college.harvard.edu',
+      'Boston University':      'ajohnson@bu.edu',
+      'Northeastern University':'ajohnson@northeastern.edu',
+      'Tufts University':       'ajohnson@tufts.edu',
+      'Wellesley College':      'ajohnson@wellesley.edu',
+    };
+
+    // ── COMPREHENSIVE US COLLEGE LIST (for Other search) ──
+    const ALL_SCHOOLS = [
+      // Boston / Greater Boston
+      'Babson College','Bentley University','Berklee College of Music',
+      'Brandeis University','Cambridge College','Clark University',
+      'Emerson College','Emmanuel College','Endicott College','Fisher College',
+      'Gordon College','Lasell University','Lesley University','MCPHS University',
+      'Massachusetts College of Art and Design','Massachusetts Institute of Technology',
+      'Merrimack College','MIT','Olin College of Engineering','Regis College',
+      'Salem State University','Simmons University','Stonehill College',
+      'Suffolk University','UMass Boston','UMass Lowell',
+      'Wentworth Institute of Technology','Wheaton College',
+      'Worcester Polytechnic Institute','Worcester State University',
+      // Rest of New England
+      'Amherst College','Bates College','Bowdoin College','Bryant University',
+      'Colby College','Connecticut College','Dartmouth College',
+      'Fairfield University','Hampshire College','Johnson & Wales University',
+      'Keene State College','Middlebury College','Mount Holyoke College',
+      'New England College','Norwich University','Plymouth State University',
+      'Providence College','Quinnipiac University','Rhode Island College',
+      'Rhode Island School of Design','Roger Williams University',
+      'Sacred Heart University','Saint Anselm College',"Saint Michael's College",
+      'Salve Regina University','Smith College','Southern Connecticut State University',
+      'Springfield College','Trinity College','UConn','UMass Amherst',
+      'UMass Dartmouth','URI','UVM','Wesleyan University',
+      'Western New England University','Williams College','Yale University',
+      // Mid-Atlantic
+      'American University','Bucknell University','Carnegie Mellon University',
+      'Case Western Reserve University','Colgate University','Columbia University',
+      'Cornell University','Dickinson College','Drexel University','Duke University',
+      'Duquesne University','Fordham University','Franklin & Marshall College',
+      'George Mason University','George Washington University','Georgetown University',
+      'Gettysburg College','Hamilton College','Hampton University','Haverford College',
+      'Howard University','Johns Hopkins University','Lehigh University',
+      'Manhattan College','Marist College','Muhlenberg College','New York University',
+      'NJIT','NYU','Pace University','Penn State University','Princeton University',
+      'Rensselaer Polytechnic Institute','Rutgers University','Seton Hall University',
+      'Skidmore College',"St. John's University",'Stony Brook University',
+      'Swarthmore College','Syracuse University','Temple University','Union College',
+      'University of Delaware','University of Maryland','University of Pennsylvania',
+      'University of Pittsburgh','University of Rochester','University of Virginia',
+      'Vassar College','Villanova University','Wake Forest University',
+      'Washington and Lee University','West Virginia University','William & Mary',
+      // Southeast
+      'Auburn University','Belmont University','Clemson University','Davidson College',
+      'Emory University','Florida A&M University','Florida International University',
+      'Florida State University','Furman University','Georgia Institute of Technology',
+      'Georgia Tech','James Madison University','Louisiana State University',
+      'Mercer University','Mississippi State University',
+      'North Carolina State University','Rollins College','Sewanee','Stetson University',
+      'Tulane University','University of Alabama','University of Central Florida',
+      'University of Florida','University of Georgia','University of Kentucky',
+      'University of Miami','University of Mississippi','University of North Carolina',
+      'University of South Carolina','University of Tennessee','Vanderbilt University',
+      'Virginia Tech',
+      // Midwest
+      'Ball State University','Butler University','Calvin University','Carleton College',
+      'DePauw University','Drake University','Grinnell College',
+      'Illinois Wesleyan University','Indiana University','Iowa State University',
+      'Kansas State University','Kenyon College','Knox College','Lawrence University',
+      'Loyola University Chicago','Macalester College','Marquette University',
+      'Michigan State University','Notre Dame','Oberlin College','Ohio State University',
+      'Ohio University','Purdue University','Rose-Hulman Institute of Technology',
+      'Saint Louis University','University of Chicago','University of Illinois',
+      'University of Iowa','University of Kansas','University of Michigan',
+      'University of Minnesota','University of Missouri','University of Nebraska',
+      'University of Notre Dame','University of Wisconsin',
+      'Washington University in St. Louis','Xavier University',
+      // Southwest & Mountain
+      'Arizona State University','Baylor University','Boise State University',
+      'Brigham Young University','Colorado College','Colorado State University',
+      'New Mexico State University','Rice University','SMU','TCU',
+      'Texas A&M University','Texas Tech University','University of Arizona',
+      'University of Colorado Boulder','University of Denver','University of New Mexico',
+      'University of Texas at Austin','University of Utah',
+      // West Coast
+      'Cal Poly','California Institute of Technology','Chapman University',
+      'Claremont McKenna College','Gonzaga University','Harvey Mudd College',
+      'Loyola Marymount University','Montana State University','Oregon State University',
+      'Pepperdine University','Pomona College','Reed College',
+      'San Diego State University','San Jose State University',
+      'Santa Clara University','Seattle Pacific University','Seattle University',
+      'Stanford University','UC Berkeley','UC Davis','UC Irvine',
+      'UC Los Angeles','UC Riverside','UC San Diego','UC Santa Barbara',
+      'UC Santa Cruz','UCLA','University of Hawaii','University of Houston',
+      'University of Nevada Las Vegas','University of Oregon',
+      'University of San Diego','University of San Francisco',
+      'University of Southern California','University of Washington',
+      'Washington State University','Whitman College',
+    ].sort();
+
+    // ── SCHOOL SELECT LOGIC ──
+    const schoolSelect    = document.getElementById('student-school');
+    const schoolFinal     = document.getElementById('school-final');
+    const otherField      = document.getElementById('other-school-field');
+    const schoolSearch    = document.getElementById('school-search');
+    const schoolDropdown  = document.getElementById('school-dropdown');
+    const emailInput      = document.getElementById('student-email');
+
+    schoolSelect.addEventListener('change', function () {
+      const val = this.value;
+      clearError(this, document.getElementById('student-school-error'));
+
+      if (val === 'other') {
+        otherField.style.display = 'block';
+        emailInput.placeholder = 'ajohnson@youruniversity.edu';
+        schoolFinal.value = '';
+        schoolSearch.focus();
+      } else {
+        otherField.style.display = 'none';
+        emailInput.placeholder = schoolEmailPlaceholder[val] || 'ajohnson@school.edu';
+        schoolFinal.value = val;
+        clearError(schoolSearch, document.getElementById('other-school-error'));
+      }
+    });
+
+    // ── AUTOCOMPLETE ──
+    let highlightIndex = -1;
+
+    function getMatches(query) {
+      if (query.length < 2) return [];
+      const q = query.toLowerCase();
+      return ALL_SCHOOLS.filter(s => s.toLowerCase().includes(q)).slice(0, 8);
+    }
+
+    function renderDropdown(matches) {
+      if (matches.length === 0) {
+        schoolDropdown.innerHTML = '<div class="school-dropdown-empty">No matches — just type your school name and continue.</div>';
+      } else {
+        schoolDropdown.innerHTML = matches.map((s, i) =>
+          `<div class="school-dropdown-item" data-index="${i}" data-value="${s}">${s}</div>`
+        ).join('');
+      }
+      schoolDropdown.classList.add('open');
+      highlightIndex = -1;
+    }
+
+    function closeDropdown() {
+      schoolDropdown.classList.remove('open');
+      highlightIndex = -1;
+    }
+
+    function selectSchool(name) {
+      schoolSearch.value = name;
+      schoolFinal.value = name;
+      clearError(schoolSearch, document.getElementById('other-school-error'));
+      closeDropdown();
+    }
+
+    schoolSearch.addEventListener('input', function () {
+      const matches = getMatches(this.value);
+      if (this.value.length < 2) {
+        closeDropdown();
+      } else {
+        renderDropdown(matches);
+      }
+      // Keep hidden field in sync so free-text is captured too
+      schoolFinal.value = this.value.trim();
+    });
+
+    schoolSearch.addEventListener('keydown', function (e) {
+      const items = schoolDropdown.querySelectorAll('.school-dropdown-item');
+      if (!items.length) return;
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        highlightIndex = Math.min(highlightIndex + 1, items.length - 1);
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        highlightIndex = Math.max(highlightIndex - 1, 0);
+      } else if (e.key === 'Enter' && highlightIndex >= 0) {
+        e.preventDefault();
+        selectSchool(items[highlightIndex].dataset.value);
+        return;
+      } else if (e.key === 'Escape') {
+        closeDropdown();
+        return;
+      }
+
+      items.forEach((el, i) => el.classList.toggle('highlighted', i === highlightIndex));
+      if (highlightIndex >= 0) items[highlightIndex].scrollIntoView({ block: 'nearest' });
+    });
+
+    schoolDropdown.addEventListener('mousedown', function (e) {
+      const item = e.target.closest('.school-dropdown-item');
+      if (item) selectSchool(item.dataset.value);
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.school-autocomplete')) closeDropdown();
+    });
+
+    // ── STUDENT FORM SUBMISSION ──
+    const studentForm    = document.getElementById('student-form');
+    const studentSubmit  = document.getElementById('student-submit');
     const studentSuccess = document.getElementById('student-success');
 
-    studentForm.addEventListener('submit', async function(e) {
+    studentForm.addEventListener('submit', async function (e) {
       e.preventDefault();
       let valid = true;
 
-      const nameEl   = document.getElementById('student-name');
-      const emailEl  = document.getElementById('student-email');
-      const schoolEl = document.getElementById('student-school');
+      const nameEl       = document.getElementById('student-name');
+      const emailEl      = document.getElementById('student-email');
+      const schoolErr    = document.getElementById('student-school-error');
+      const otherErr     = document.getElementById('other-school-error');
+
+      // School
+      if (!schoolSelect.value) {
+        showError(schoolSelect, schoolErr, 'Please select your school.');
+        valid = false;
+      } else {
+        clearError(schoolSelect, schoolErr);
+      }
+
+      // Other school search — must have at least 2 chars
+      if (schoolSelect.value === 'other') {
+        const typed = schoolSearch.value.trim();
+        if (typed.length < 2) {
+          showError(schoolSearch, otherErr, 'Please enter your school name.');
+          valid = false;
+        } else {
+          schoolFinal.value = typed;
+          clearError(schoolSearch, otherErr);
+        }
+      }
 
       // Name
       if (!nameEl.value.trim()) {
@@ -669,24 +961,16 @@
         showError(emailEl, document.getElementById('student-email-error'), 'Please enter a valid email address.');
         valid = false;
       } else if (!isEduEmail(emailVal)) {
-        showError(emailEl, document.getElementById('student-email-error'), 'Must be a .edu address — personal emails aren\'t accepted for students.');
+        showError(emailEl, document.getElementById('student-email-error'), "Must be a .edu address — personal emails aren't accepted for students.");
         valid = false;
       } else {
         clearError(emailEl, document.getElementById('student-email-error'));
       }
 
-      // School
-      if (!schoolEl.value) {
-        showError(schoolEl, document.getElementById('student-school-error'), 'Please select your school.');
-        valid = false;
-      } else {
-        clearError(schoolEl, document.getElementById('student-school-error'));
-      }
-
       if (!valid) return;
 
       studentSubmit.disabled = true;
-      studentSubmit.textContent = 'Joining...';
+      studentSubmit.textContent = 'Joining…';
 
       try {
         const data = new FormData(studentForm);
@@ -710,14 +994,11 @@
     });
 
     // Clear errors on input
-    document.getElementById('student-name').addEventListener('input', function() {
+    document.getElementById('student-name').addEventListener('input', function () {
       clearError(this, document.getElementById('student-name-error'));
     });
-    document.getElementById('student-email').addEventListener('input', function() {
+    document.getElementById('student-email').addEventListener('input', function () {
       clearError(this, document.getElementById('student-email-error'));
-    });
-    document.getElementById('student-school').addEventListener('change', function() {
-      clearError(this, document.getElementById('student-school-error'));
     });
 
     // ── RESIDENT FORM ──
@@ -725,7 +1006,7 @@
     const residentSubmit  = document.getElementById('resident-submit');
     const residentSuccess = document.getElementById('resident-success');
 
-    residentForm.addEventListener('submit', async function(e) {
+    residentForm.addEventListener('submit', async function (e) {
       e.preventDefault();
       let valid = true;
 
@@ -749,10 +1030,10 @@
         clearError(emailEl, document.getElementById('resident-email-error'));
       }
 
-      // CT ZIP
+      // MA ZIP
       const zipVal = zipEl.value.trim();
       if (!isMassachusettsZip(zipVal)) {
-        showError(zipEl, document.getElementById('resident-zip-error'), 'Must be a valid Massachusetts ZIP code (starts with 02).');
+        showError(zipEl, document.getElementById('resident-zip-error'), 'Must be a valid Massachusetts ZIP code (starts with 01 or 02).');
         valid = false;
       } else {
         clearError(zipEl, document.getElementById('resident-zip-error'));
@@ -761,7 +1042,7 @@
       if (!valid) return;
 
       residentSubmit.disabled = true;
-      residentSubmit.textContent = 'Joining...';
+      residentSubmit.textContent = 'Joining…';
 
       try {
         const data = new FormData(residentForm);
@@ -785,14 +1066,13 @@
     });
 
     // Clear errors on input
-    document.getElementById('resident-name').addEventListener('input', function() {
+    document.getElementById('resident-name').addEventListener('input', function () {
       clearError(this, document.getElementById('resident-name-error'));
     });
-    document.getElementById('resident-email').addEventListener('input', function() {
+    document.getElementById('resident-email').addEventListener('input', function () {
       clearError(this, document.getElementById('resident-email-error'));
     });
-    document.getElementById('resident-zip').addEventListener('input', function() {
-      // Strip non-digits
+    document.getElementById('resident-zip').addEventListener('input', function () {
       this.value = this.value.replace(/\D/g, '').slice(0, 5);
       clearError(this, document.getElementById('resident-zip-error'));
     });

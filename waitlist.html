@@ -462,27 +462,21 @@
   </nav>
 
   <div class="page">
-    <p class="page-eyebrow">Coming soon</p>
+    <p class="page-eyebrow">🎓 &nbsp;Student Waitlist</p>
     <h1>Get early access</h1>
-    <p class="subtitle">JobsU is launching in Boston, MA. Join the waitlist and be first in line.</p>
+    <p class="subtitle">JobsU is launching in Boston, MA. Join the waitlist and be the first student to get paid.</p>
 
-    <!-- TAB SWITCHER -->
-    <div class="tab-switcher" role="tablist">
-      <button class="tab-btn active" id="tab-student" role="tab" aria-selected="true" aria-controls="panel-student" onclick="switchTab('student')">
-        <span class="tab-label">I'm a Student</span>
-        <span class="tab-sub">Looking for work</span>
-      </button>
-      <button class="tab-btn" id="tab-resident" role="tab" aria-selected="false" aria-controls="panel-resident" onclick="switchTab('resident')">
-        <span class="tab-label">I'm a Resident</span>
-        <span class="tab-sub">Need help with tasks</span>
-      </button>
+    <!-- RESIDENT REDIRECT -->
+    <div style="background:white;border:1px solid var(--border);border-radius:16px;padding:14px 20px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+      <p style="font-size:14px;font-weight:700;color:var(--muted);margin:0;">🏡 &nbsp;Looking to hire a student? Residents can post jobs directly.</p>
+      <a href="https://app.jobsu.app/sign-up" style="font-size:14px;font-weight:900;color:var(--blue);text-decoration:none;white-space:nowrap;">Post a Job &rarr;</a>
     </div>
 
     <!-- FORM CARD -->
     <div class="form-card">
 
       <!-- ── STUDENT PANEL ── -->
-      <div class="form-panel active" id="panel-student" role="tabpanel" aria-labelledby="tab-student">
+      <div class="form-panel active" id="panel-student">
 
         <!-- Success state -->
         <div class="success-state" id="student-success">
@@ -575,67 +569,7 @@
         </form>
       </div>
 
-      <!-- ── RESIDENT PANEL ── -->
-      <div class="form-panel" id="panel-resident" role="tabpanel" aria-labelledby="tab-resident">
-
-        <!-- Success state -->
-        <div class="success-state" id="resident-success">
-          <div class="success-icon">&#10003;</div>
-          <h2>You're on the list!</h2>
-          <p>We'll be in touch when JobsU launches in your area. You'll be first to find great local students.</p>
-        </div>
-
-        <!-- Form -->
-        <form id="resident-form"
-              action="https://formspree.io/f/xvzvjgwv"
-              method="POST"
-              novalidate>
-
-          <input type="hidden" name="_subject" value="New Resident Waitlist Signup" />
-
-          <div class="field">
-            <label for="resident-name">Full name</label>
-            <input type="text" id="resident-name" name="name" placeholder="Sarah Chen" autocomplete="name" />
-            <span class="field-error" id="resident-name-error">Please enter your name.</span>
-          </div>
-
-          <div class="field">
-            <label for="resident-email">Email address</label>
-            <input type="email" id="resident-email" name="email" placeholder="sarah@email.com" autocomplete="email" />
-            <span class="field-error" id="resident-email-error">Please enter a valid email address.</span>
-          </div>
-
-          <div class="field">
-            <label for="resident-zip">ZIP code <span style="font-size:11px;font-weight:700;background:#EEF4FF;color:#1F4B99;padding:2px 8px;border-radius:6px;margin-left:4px;">MA only</span></label>
-            <input type="text" id="resident-zip" name="zip_code" placeholder="02115" maxlength="5" inputmode="numeric" pattern="[0-9]*" />
-            <div class="edu-hint">Must be in Massachusetts — JobsU is launching in Boston, MA.</div>
-            <span class="field-error" id="resident-zip-error">Please enter a valid Massachusetts ZIP code.</span>
-          </div>
-
-          <div class="form-divider"></div>
-
-          <div class="field">
-            <span class="checkbox-label">What kind of help do you need? <span class="opt">(optional)</span></span>
-            <div class="checkbox-grid">
-              <label class="checkbox-item"><input type="checkbox" name="help_types" value="Babysitting" /> Babysitting</label>
-              <label class="checkbox-item"><input type="checkbox" name="help_types" value="Tutoring" /> Tutoring</label>
-              <label class="checkbox-item"><input type="checkbox" name="help_types" value="Yard work" /> Yard work</label>
-              <label class="checkbox-item"><input type="checkbox" name="help_types" value="Moving help" /> Moving help</label>
-              <label class="checkbox-item"><input type="checkbox" name="help_types" value="Pet care" /> Pet care</label>
-              <label class="checkbox-item"><input type="checkbox" name="help_types" value="Cleaning" /> Cleaning</label>
-              <label class="checkbox-item"><input type="checkbox" name="help_types" value="Errands" /> Errands</label>
-              <label class="checkbox-item"><input type="checkbox" name="help_types" value="Tech help" /> Tech help</label>
-            </div>
-          </div>
-
-          <!--
-            OPTIONAL: Cloudflare Turnstile CAPTCHA
-            <div class="cf-turnstile" data-sitekey="YOUR_TURNSTILE_SITE_KEY"></div>
-          -->
-
-          <button type="submit" class="submit-btn" id="resident-submit">Join Resident Waitlist</button>
-        </form>
-      </div>
+      <!-- RESIDENT PANEL HIDDEN — restore tab switcher and uncomment to re-enable -->
 
     </div><!-- /form-card -->
 
@@ -668,25 +602,6 @@
   </footer>
 
   <script>
-    // ── TAB SWITCHING ──
-    function switchTab(tab) {
-      const panels = document.querySelectorAll('.form-panel');
-      const tabs   = document.querySelectorAll('.tab-btn');
-      panels.forEach(p => p.classList.remove('active'));
-      tabs.forEach(t => {
-        t.classList.remove('active');
-        t.setAttribute('aria-selected', 'false');
-      });
-      document.getElementById('panel-' + tab).classList.add('active');
-      const activeTab = document.getElementById('tab-' + tab);
-      activeTab.classList.add('active');
-      activeTab.setAttribute('aria-selected', 'true');
-    }
-
-    // Auto-switch tab based on ?tab=resident URL param
-    const urlTab = new URLSearchParams(window.location.search).get('tab');
-    if (urlTab === 'resident') switchTab('resident');
-
     // ── VALIDATION HELPERS ──
     function isValidEmail(email) {
       return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
@@ -1001,81 +916,6 @@
       clearError(this, document.getElementById('student-email-error'));
     });
 
-    // ── RESIDENT FORM ──
-    const residentForm    = document.getElementById('resident-form');
-    const residentSubmit  = document.getElementById('resident-submit');
-    const residentSuccess = document.getElementById('resident-success');
-
-    residentForm.addEventListener('submit', async function (e) {
-      e.preventDefault();
-      let valid = true;
-
-      const nameEl  = document.getElementById('resident-name');
-      const emailEl = document.getElementById('resident-email');
-      const zipEl   = document.getElementById('resident-zip');
-
-      // Name
-      if (!nameEl.value.trim()) {
-        showError(nameEl, document.getElementById('resident-name-error'), 'Please enter your name.');
-        valid = false;
-      } else {
-        clearError(nameEl, document.getElementById('resident-name-error'));
-      }
-
-      // Email
-      if (!isValidEmail(emailEl.value)) {
-        showError(emailEl, document.getElementById('resident-email-error'), 'Please enter a valid email address.');
-        valid = false;
-      } else {
-        clearError(emailEl, document.getElementById('resident-email-error'));
-      }
-
-      // MA ZIP
-      const zipVal = zipEl.value.trim();
-      if (!isMassachusettsZip(zipVal)) {
-        showError(zipEl, document.getElementById('resident-zip-error'), 'Must be a valid Massachusetts ZIP code (starts with 01 or 02).');
-        valid = false;
-      } else {
-        clearError(zipEl, document.getElementById('resident-zip-error'));
-      }
-
-      if (!valid) return;
-
-      residentSubmit.disabled = true;
-      residentSubmit.textContent = 'Joining…';
-
-      try {
-        const data = new FormData(residentForm);
-        const resp = await fetch(residentForm.action, {
-          method: 'POST',
-          body: data,
-          headers: { 'Accept': 'application/json' }
-        });
-
-        if (resp.ok) {
-          residentForm.style.display = 'none';
-          residentSuccess.classList.add('visible');
-        } else {
-          throw new Error('Submission failed');
-        }
-      } catch (err) {
-        residentSubmit.disabled = false;
-        residentSubmit.textContent = 'Join Resident Waitlist';
-        alert('Something went wrong. Please try again or email us at support@jobsu.app.');
-      }
-    });
-
-    // Clear errors on input
-    document.getElementById('resident-name').addEventListener('input', function () {
-      clearError(this, document.getElementById('resident-name-error'));
-    });
-    document.getElementById('resident-email').addEventListener('input', function () {
-      clearError(this, document.getElementById('resident-email-error'));
-    });
-    document.getElementById('resident-zip').addEventListener('input', function () {
-      this.value = this.value.replace(/\D/g, '').slice(0, 5);
-      clearError(this, document.getElementById('resident-zip-error'));
-    });
   </script>
 
 </body>

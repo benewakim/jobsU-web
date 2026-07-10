@@ -17,6 +17,13 @@
   <meta name="twitter:title" content="JobsU — Real help from college students near you" />
   <meta name="twitter:description" content="Trusted, .edu-verified college students for babysitting, tutoring, yard work, and more. Launching in Boston, MA — join the waitlist." />
   <meta name="twitter:image" content="https://jobsu.app/og-image.png" />
+  <script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+" (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureFlagEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset capture createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    posthog.init('phc_BnqZr3RbHoWJGBwEz626mvk9qAJLCxMctY974eawegpv', {
+      api_host: 'https://us.i.posthog.com',
+      defaults: '2026-01-30',
+    });
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
@@ -1005,7 +1012,7 @@
       <button class="modal-close" onclick="closePostJobModal()" aria-label="Close">&times;</button>
       <div class="modal-badge">Launching Soon</div>
       <h2 id="modal-title">Our students are ready&nbsp;for&nbsp;you.</h2>
-      <p>JobsU is putting the finishing touches on the app. In the meantime, Ben — our founder — will personally connect you with a vetted, .edu-verified Boston College student who can help get the job done.</p>
+      <p>JobsU is putting the finishing touches on the app. In the meantime, Ben — our founder — will personally connect you with an .edu-confirmed Boston College student who can help get the job done.</p>
       <div class="modal-actions">
         <a href="mailto:ben@jobsu.app?subject=I%27d%20like%20to%20post%20a%20job&body=Hi%20Ben%2C%0A%0AI%27m%20interested%20in%20getting%20help%20with%3A%0A%0A%5BPlease%20describe%20what%20you%20need%20here%5D%0A%0AThanks!" class="modal-btn-email">
           ✉️ &nbsp;Email Ben at ben@jobsu.app
@@ -1030,6 +1037,7 @@
     function openPostJobModal() {
       document.getElementById('post-job-modal').classList.add('open');
       document.body.style.overflow = 'hidden';
+      if (window.posthog) posthog.capture('post_job_clicked');
     }
     function closePostJobModal() {
       document.getElementById('post-job-modal').classList.remove('open');

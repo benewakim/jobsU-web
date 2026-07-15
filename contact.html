@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — JobsU</title>
+  <meta name="description" content="Get in touch with the JobsU team for support, questions, or feedback." />
+  <link rel="icon" type="image/png" href="JobsU-favicon-nobackground.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #F5F8FF; color: #0B1B3A; -webkit-font-smoothing: antialiased; }
+
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 64px;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(11,27,58,0.08);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo-img { height: 48px; display: block; }
+    .nav-back { font-size: 14px; font-weight: 700; color: rgba(11,27,58,0.5); text-decoration: none; }
+    .nav-back:hover { color: #0B1B3A; }
+
+    .page { max-width: 760px; margin: 0 auto; padding: 64px 40px 96px; }
+
+    .page-eyebrow { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 1.5px; color: #1F4B99; margin-bottom: 12px; }
+    h1 { font-size: 40px; font-weight: 900; letter-spacing: -1px; margin-bottom: 8px; }
+    .page-sub { font-size: 16px; font-weight: 600; color: #5B6B88; line-height: 1.65; margin-bottom: 48px; }
+    .page-sub a { color: #1F4B99; text-decoration: none; }
+    .page-sub a:hover { text-decoration: underline; }
+
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .contact-card { background: white; border: 1px solid #E6ECFF; border-radius: 14px; padding: 28px 24px; }
+    .contact-card-wide { grid-column: 1 / -1; }
+    .contact-card-label { font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 1.5px; color: #1F4B99; margin-bottom: 12px; }
+    .contact-card h3 { font-size: 16px; font-weight: 800; color: #0B1B3A; margin-bottom: 6px; }
+    .contact-card p { font-size: 14px; font-weight: 600; color: #5B6B88; line-height: 1.65; margin-bottom: 14px; }
+    .contact-card a.email-link { font-size: 14px; font-weight: 800; color: #1F4B99; text-decoration: none; }
+    .contact-card a.email-link:hover { text-decoration: underline; }
+
+    .hours-row { display: flex; justify-content: space-between; align-items: center; padding: 11px 0; border-bottom: 1px solid #F0F4FF; }
+    .hours-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .hours-day { font-size: 14px; font-weight: 700; color: #0B1B3A; }
+    .hours-time { font-size: 14px; font-weight: 600; color: #5B6B88; }
+
+    footer { background: #0B1B3A; padding: 56px 40px 28px; }
+    .footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; max-width: 1200px; margin: 0 auto 40px; }
+    .footer-brand img { height: 30px; background: white; border-radius: 8px; padding: 2px 8px; }
+    .footer-tagline { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.35); margin-top: 14px; line-height: 1.65; }
+    .footer-col { display: flex; flex-direction: column; }
+    .footer-col-label { font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,0.3); margin-bottom: 14px; }
+    .footer-col a { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.5); text-decoration: none; margin-bottom: 10px; }
+    .footer-col a:hover { color: white; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 20px; display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; }
+    .footer-copy { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.35); }
+    .footer-social { display: flex; gap: 20px; }
+    .footer-social a { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.4); text-decoration: none; }
+    .footer-social a:hover { color: white; }
+
+    @media (max-width: 768px) {
+      .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .footer-brand { grid-column: 1 / -1; }
+    }
+    @media (max-width: 600px) {
+      nav { padding: 0 20px; }
+      .page { padding: 48px 20px 72px; }
+      h1 { font-size: 30px; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .contact-card-wide { grid-column: auto; }
+      footer { padding: 40px 20px 24px; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="nav-logo" href="index.html">
+      <img src="JobsU-logo-nobackground.png" alt="JobsU" class="nav-logo-img" />
+    </a>
+    <a class="nav-back" href="index.html">← Back to home</a>
+  </nav>
+
+  <div class="page">
+    <p class="page-eyebrow">Get in Touch</p>
+    <h1>Contact Us</h1>
+    <p class="page-sub">We're a small, responsive team. Reach out by email and we'll get back to you quickly. Common questions are answered in our <a href="help.html">Help Center</a>.</p>
+
+    <div class="contact-grid">
+      <div class="contact-card">
+        <p class="contact-card-label">General Support</p>
+        <h3>Questions &amp; Help</h3>
+        <p>For general questions about how JobsU works, troubleshooting your account, or help with a specific job.</p>
+        <a href="mailto:support@jobsu.app" class="email-link">support@jobsu.app</a>
+      </div>
+      <div class="contact-card">
+        <p class="contact-card-label">Privacy &amp; Legal</p>
+        <h3>Privacy Requests</h3>
+        <p>To exercise your data rights, request account deletion, or reach our legal team with a formal inquiry.</p>
+        <a href="mailto:privacy@jobsu.app" class="email-link">privacy@jobsu.app</a>
+      </div>
+      <div class="contact-card">
+        <p class="contact-card-label">Security</p>
+        <h3>Report a Vulnerability</h3>
+        <p>Found a security issue on the platform? We take all reports seriously and respond within 5 business days.</p>
+        <a href="mailto:security@jobsu.app" class="email-link">security@jobsu.app</a>
+      </div>
+      <div class="contact-card">
+        <p class="contact-card-label">Mailing Address</p>
+        <h3>JobsU, Inc.</h3>
+        <p>2 Clifford Street<br>Norwalk, CT 06853</p>
+        <a href="mailto:support@jobsu.app" class="email-link">Send us an email</a>
+      </div>
+      <div class="contact-card contact-card-wide">
+        <p class="contact-card-label">Response Times</p>
+        <div class="hours-row">
+          <span class="hours-day">General inquiries</span>
+          <span class="hours-time">Within 24 hours</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Security reports</span>
+          <span class="hours-time">Within 5 business days</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Legal &amp; privacy requests</span>
+          <span class="hours-time">Within 30 days (as required by law)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html">
+          <img src="JobsU-logo.png" alt="JobsU" />
+        </a>
+        <p class="footer-tagline">Flexible work for students.<br>Trusted help for residents.</p>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-label">Platform</p>
+        <a href="index.html">Home</a>
+        <a href="https://app.jobsu.app/student/sign-up" target="_blank" rel="noopener">For Students</a>
+        <a href="https://app.jobsu.app" target="_blank" rel="noopener">Post a Job</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-label">Company</p>
+        <a href="about.html">About</a>
+        <a href="help.html">Help Center</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-label">Legal</p>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="acceptable-use.html">Acceptable Use</a>
+        <a href="cookie-policy.html">Cookie Policy</a>
+        <a href="cybersecurity.html">Cybersecurity</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2026 JobsU, Inc. All rights reserved.</p>
+      <div class="footer-social">
+        <a href="https://instagram.com/jobsu.app" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://tiktok.com/@jobsu.app" target="_blank" rel="noopener">TikTok</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

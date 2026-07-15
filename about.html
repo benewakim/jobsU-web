@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — JobsU</title>
+  <meta name="description" content="JobsU connects Boston-area residents with hand-picked college students for flexible, on-demand help. Learn about our mission, values, and story." />
+  <link rel="icon" type="image/png" href="JobsU-favicon-nobackground.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #F5F8FF; color: #0B1B3A; -webkit-font-smoothing: antialiased; }
+
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 64px;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(11,27,58,0.08);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo-img { height: 48px; display: block; }
+    .nav-back { font-size: 14px; font-weight: 700; color: rgba(11,27,58,0.5); text-decoration: none; }
+    .nav-back:hover { color: #0B1B3A; }
+
+    .page { max-width: 760px; margin: 0 auto; padding: 64px 40px 96px; }
+
+    .page-eyebrow { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 1.5px; color: #1F4B99; margin-bottom: 12px; }
+    h1 { font-size: 40px; font-weight: 900; letter-spacing: -1px; line-height: 1.1; margin-bottom: 24px; }
+
+    .prose h2 { font-size: 20px; font-weight: 900; margin-top: 56px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid #E6ECFF; }
+    .prose p { font-size: 15px; font-weight: 600; color: #2D3748; line-height: 1.8; margin-bottom: 16px; }
+    .prose a { color: #1F4B99; }
+
+    .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 20px 0 8px; }
+    .value-card { background: white; border: 1px solid #E6ECFF; border-radius: 14px; padding: 24px 20px; }
+    .value-card h3 { font-size: 15px; font-weight: 900; color: #0B1B3A; margin-bottom: 8px; }
+    .value-card p { font-size: 14px; font-weight: 600; color: #5B6B88; line-height: 1.65; }
+
+    .team-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin: 20px 0; }
+    .team-card { background: white; border: 1px solid #E6ECFF; border-radius: 14px; padding: 28px 20px; text-align: center; }
+    .team-avatar { width: 56px; height: 56px; border-radius: 50%; background: #EEF4FF; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 900; color: #1F4B99; margin: 0 auto 14px; letter-spacing: -1px; }
+    .team-name { font-size: 15px; font-weight: 800; color: #0B1B3A; margin-bottom: 4px; }
+    .team-title { font-size: 13px; font-weight: 700; color: #5B6B88; margin-bottom: 4px; }
+    .team-school { font-size: 12px; font-weight: 700; color: #1F4B99; }
+
+    .cta-block { background: #0B1B3A; border-radius: 16px; padding: 40px; margin-top: 56px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+    .cta-block-text h2 { font-size: 22px; font-weight: 900; color: white; letter-spacing: -0.5px; }
+    .cta-block-text p { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.5); margin-top: 6px; }
+    .cta-buttons { display: flex; gap: 12px; flex-wrap: wrap; flex-shrink: 0; }
+    .btn-primary { display: inline-block; background: #1F4B99; color: white; font-size: 14px; font-weight: 800; padding: 12px 22px; border-radius: 10px; text-decoration: none; }
+    .btn-primary:hover { background: #2D5FBF; }
+    .btn-ghost { display: inline-block; background: rgba(255,255,255,0.1); color: white; font-size: 14px; font-weight: 800; padding: 12px 22px; border-radius: 10px; text-decoration: none; }
+    .btn-ghost:hover { background: rgba(255,255,255,0.18); }
+
+    footer { background: #0B1B3A; padding: 56px 40px 28px; }
+    .footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; max-width: 1200px; margin: 0 auto 40px; }
+    .footer-brand img { height: 30px; background: white; border-radius: 8px; padding: 2px 8px; }
+    .footer-tagline { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.35); margin-top: 14px; line-height: 1.65; }
+    .footer-col { display: flex; flex-direction: column; }
+    .footer-col-label { font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,0.3); margin-bottom: 14px; }
+    .footer-col a { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.5); text-decoration: none; margin-bottom: 10px; }
+    .footer-col a:hover { color: white; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 20px; display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; }
+    .footer-copy { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.35); }
+    .footer-social { display: flex; gap: 20px; }
+    .footer-social a { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.4); text-decoration: none; }
+    .footer-social a:hover { color: white; }
+
+    @media (max-width: 768px) {
+      .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .footer-brand { grid-column: 1 / -1; }
+      .values-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      nav { padding: 0 20px; }
+      .page { padding: 48px 20px 72px; }
+      h1 { font-size: 30px; }
+      .values-grid { grid-template-columns: 1fr; }
+      .cta-block { padding: 28px 20px; }
+      footer { padding: 40px 20px 24px; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="nav-logo" href="index.html">
+      <img src="JobsU-logo-nobackground.png" alt="JobsU" class="nav-logo-img" />
+    </a>
+    <a class="nav-back" href="index.html">← Back to home</a>
+  </nav>
+
+  <div class="page">
+    <p class="page-eyebrow">Our Story</p>
+    <h1>Built for students.<br>Built for neighbors.</h1>
+
+    <div class="prose">
+      <p>JobsU is a marketplace platform connecting Boston-area residents with trusted, hand-picked college students for flexible, on-demand help — from babysitting and yard work to moving help, pet care, and tutoring.</p>
+
+      <h2>Our Mission</h2>
+      <p>To give students meaningful, flexible income that fits around their academic life — and to give residents a trusted, local alternative to impersonal gig platforms.</p>
+
+      <h2>Our Values</h2>
+    </div>
+
+    <div class="values-grid">
+      <div class="value-card">
+        <h3>Trust</h3>
+        <p>Every student on JobsU is hand-picked. Residents book knowing exactly who's showing up — no anonymous profiles.</p>
+      </div>
+      <div class="value-card">
+        <h3>Flexibility</h3>
+        <p>Students work on their own schedule, around classes, exams, and everything else college life demands.</p>
+      </div>
+      <div class="value-card">
+        <h3>Community</h3>
+        <p>JobsU connects campus to neighborhood, building real relationships between students and the people around them.</p>
+      </div>
+    </div>
+
+    <div class="prose">
+      <h2>Our Story</h2>
+      <!-- Edit this section with your personal story -->
+      <p>As a college student, I kept seeing the same gap: students who needed flexible income couldn't find work that fit around their schedule, and residents who needed reliable help had no easy way to find someone they could actually trust. National gig apps weren't the answer — they were built for a different market, without the local context that makes letting someone into your home feel okay.</p>
+      <p>I built JobsU to close that gap. A platform where every student is individually selected, where residents can see who they're hiring before committing, and where the entire experience — from posting to payment — happens in one place. Started in Boston. Built to grow.</p>
+      <p style="font-size:14px; color:#5B6B88; font-style:italic; margin-top: 4px;">— Ben Wakim, Founder</p>
+
+      <h2>Meet the Team</h2>
+    </div>
+
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar">BW</div>
+        <p class="team-name">Ben Wakim</p>
+        <p class="team-title">Founder</p>
+        <p class="team-school">Boston College</p>
+      </div>
+    </div>
+
+    <div class="cta-block">
+      <div class="cta-block-text">
+        <h2>Ready to get started?</h2>
+        <p>Post a job or sign up as a student.</p>
+      </div>
+      <div class="cta-buttons">
+        <a href="https://app.jobsu.app" target="_blank" rel="noopener" class="btn-primary">Post a Job</a>
+        <a href="https://app.jobsu.app/student/sign-up" target="_blank" rel="noopener" class="btn-ghost">For Students &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html">
+          <img src="JobsU-logo.png" alt="JobsU" />
+        </a>
+        <p class="footer-tagline">Flexible work for students.<br>Trusted help for residents.</p>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-label">Platform</p>
+        <a href="index.html">Home</a>
+        <a href="https://app.jobsu.app/student/sign-up" target="_blank" rel="noopener">For Students</a>
+        <a href="https://app.jobsu.app" target="_blank" rel="noopener">Post a Job</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-label">Company</p>
+        <a href="about.html">About</a>
+        <a href="help.html">Help Center</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-label">Legal</p>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="acceptable-use.html">Acceptable Use</a>
+        <a href="cookie-policy.html">Cookie Policy</a>
+        <a href="cybersecurity.html">Cybersecurity</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2026 JobsU, Inc. All rights reserved.</p>
+      <div class="footer-social">
+        <a href="https://instagram.com/jobsu.app" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://tiktok.com/@jobsu.app" target="_blank" rel="noopener">TikTok</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

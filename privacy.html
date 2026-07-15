@@ -57,18 +57,30 @@
     }
     .callout-warn p { margin-bottom: 0; color: #78350F; }
 
-    footer { background: #0B1B3A; padding: 24px 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-    .footer-copy { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.4); }
-    .footer-links { display: flex; gap: 24px; }
-    .footer-links a { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.5); text-decoration: none; }
-    .footer-links a:hover { color: white; }
+    footer { background: #0B1B3A; padding: 56px 40px 28px; }
+    .footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; max-width: 1200px; margin: 0 auto 40px; }
+    .footer-brand img { height: 30px; background: white; border-radius: 8px; padding: 2px 8px; }
+    .footer-tagline { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.35); margin-top: 14px; line-height: 1.65; }
+    .footer-col { display: flex; flex-direction: column; }
+    .footer-col-label { font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,0.3); margin-bottom: 14px; }
+    .footer-col a { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.5); text-decoration: none; margin-bottom: 10px; }
+    .footer-col a:hover { color: white; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 20px; display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; }
+    .footer-copy { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.35); }
+    .footer-social { display: flex; gap: 20px; }
+    .footer-social a { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.4); text-decoration: none; }
+    .footer-social a:hover { color: white; }
 
+    @media (max-width: 768px) {
+      .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .footer-brand { grid-column: 1 / -1; }
+    }
     @media (max-width: 600px) {
       nav { padding: 0 20px; }
       .page { padding: 48px 20px 72px; }
       h1 { font-size: 30px; }
-      footer { padding: 24px 20px; flex-direction: column; text-align: center; }
-      .footer-links { justify-content: center; }
+      footer { padding: 40px 20px 24px; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
     }
   </style>
 </head>
@@ -270,19 +282,38 @@
   </div>
 
   <footer>
-    <a href="index.html">
-      <img src="JobsU-logo.png" alt="JobsU" style="height:30px;background:white;border-radius:8px;padding:2px 8px;" />
-    </a>
-    <p class="footer-copy">&copy; 2026 JobsU. All rights reserved.</p>
-    <div class="footer-links">
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="terms.html">Terms of Service</a>
-      <a href="acceptable-use.html">Acceptable Use</a>
-      <a href="cookie-policy.html">Cookie Policy</a>
-      <a href="cybersecurity.html">Cybersecurity</a>
-      <a href="mailto:support@jobsu.app">Contact</a>
-      <a href="https://instagram.com/jobsu.app" target="_blank" rel="noopener">Instagram</a>
-      <a href="https://tiktok.com/@jobsu.app" target="_blank" rel="noopener">TikTok</a>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html"><img src="JobsU-logo.png" alt="JobsU" /></a>
+        <p class="footer-tagline">Flexible work for students.<br>Trusted help for residents.</p>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-label">Platform</p>
+        <a href="index.html">Home</a>
+        <a href="https://app.jobsu.app/student/sign-up" target="_blank" rel="noopener">For Students</a>
+        <a href="https://app.jobsu.app" target="_blank" rel="noopener">Post a Job</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-label">Company</p>
+        <a href="about.html">About</a>
+        <a href="help.html">Help Center</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-label">Legal</p>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="acceptable-use.html">Acceptable Use</a>
+        <a href="cookie-policy.html">Cookie Policy</a>
+        <a href="cybersecurity.html">Cybersecurity</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2026 JobsU, Inc. All rights reserved.</p>
+      <div class="footer-social">
+        <a href="https://instagram.com/jobsu.app" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://tiktok.com/@jobsu.app" target="_blank" rel="noopener">TikTok</a>
+      </div>
     </div>
   </footer>
 </body>

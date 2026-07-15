@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Help Center — JobsU</title>
+  <meta name="description" content="Answers to common questions about how JobsU works, payments, safety, and more." />
+  <link rel="icon" type="image/png" href="JobsU-favicon-nobackground.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #F5F8FF; color: #0B1B3A; -webkit-font-smoothing: antialiased; }
+
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 64px;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(11,27,58,0.08);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo-img { height: 48px; display: block; }
+    .nav-back { font-size: 14px; font-weight: 700; color: rgba(11,27,58,0.5); text-decoration: none; }
+    .nav-back:hover { color: #0B1B3A; }
+
+    .page { max-width: 760px; margin: 0 auto; padding: 64px 40px 96px; }
+
+    .page-eyebrow { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 1.5px; color: #1F4B99; margin-bottom: 12px; }
+    h1 { font-size: 40px; font-weight: 900; letter-spacing: -1px; margin-bottom: 8px; }
+    .page-sub { font-size: 16px; font-weight: 600; color: #5B6B88; line-height: 1.65; margin-bottom: 56px; }
+    .page-sub a { color: #1F4B99; text-decoration: none; }
+    .page-sub a:hover { text-decoration: underline; }
+
+    .faq-section { margin-bottom: 52px; }
+    .faq-section-label { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 1.5px; color: #1F4B99; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid #E6ECFF; }
+    .faq-list { display: flex; flex-direction: column; gap: 10px; }
+
+    details { background: white; border: 1px solid #E6ECFF; border-radius: 12px; overflow: hidden; }
+    details[open] { box-shadow: 0 4px 20px rgba(31,75,153,0.07); }
+
+    summary {
+      font-size: 15px; font-weight: 800; color: #0B1B3A;
+      padding: 18px 20px; cursor: pointer; list-style: none;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      user-select: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: '+'; font-size: 20px; font-weight: 400; color: #1F4B99; flex-shrink: 0; }
+    details[open] summary::after { content: '\2212'; }
+    details[open] summary { border-bottom: 1px solid #E6ECFF; }
+
+    .faq-answer { padding: 16px 20px 20px; }
+    .faq-answer p { font-size: 15px; font-weight: 600; color: #2D3748; line-height: 1.8; margin-bottom: 10px; }
+    .faq-answer p:last-child { margin-bottom: 0; }
+    .faq-answer ul { padding-left: 20px; margin-bottom: 10px; }
+    .faq-answer ul li { font-size: 15px; font-weight: 600; color: #2D3748; line-height: 1.8; margin-bottom: 4px; }
+    .faq-answer a { color: #1F4B99; }
+    .faq-answer strong { color: #0B1B3A; }
+
+    .callout {
+      background: #EFF6FF; border: 1px solid #BFDBFE;
+      border-left: 4px solid #1F4B99; border-radius: 10px;
+      padding: 14px 18px; margin-top: 12px;
+    }
+    .callout p { font-size: 14px !important; color: #1E3A5F !important; margin-bottom: 0 !important; }
+
+    .still-need-help { background: white; border: 1px solid #E6ECFF; border-radius: 14px; padding: 36px; text-align: center; margin-top: 56px; }
+    .still-need-help h2 { font-size: 20px; font-weight: 900; color: #0B1B3A; margin-bottom: 8px; }
+    .still-need-help p { font-size: 15px; font-weight: 600; color: #5B6B88; margin-bottom: 20px; line-height: 1.65; }
+    .contact-btn { display: inline-block; background: #1F4B99; color: white; font-size: 14px; font-weight: 800; padding: 13px 26px; border-radius: 10px; text-decoration: none; }
+    .contact-btn:hover { background: #2D5FBF; }
+
+    footer { background: #0B1B3A; padding: 56px 40px 28px; }
+    .footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; max-width: 1200px; margin: 0 auto 40px; }
+    .footer-brand img { height: 30px; background: white; border-radius: 8px; padding: 2px 8px; }
+    .footer-tagline { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.35); margin-top: 14px; line-height: 1.65; }
+    .footer-col { display: flex; flex-direction: column; }
+    .footer-col-label { font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,0.3); margin-bottom: 14px; }
+    .footer-col a { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.5); text-decoration: none; margin-bottom: 10px; }
+    .footer-col a:hover { color: white; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 20px; display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; }
+    .footer-copy { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.35); }
+    .footer-social { display: flex; gap: 20px; }
+    .footer-social a { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.4); text-decoration: none; }
+    .footer-social a:hover { color: white; }
+
+    @media (max-width: 768px) {
+      .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .footer-brand { grid-column: 1 / -1; }
+    }
+    @media (max-width: 600px) {
+      nav { padding: 0 20px; }
+      .page { padding: 48px 20px 72px; }
+      h1 { font-size: 30px; }
+      footer { padding: 40px 20px 24px; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="nav-logo" href="index.html">
+      <img src="JobsU-logo-nobackground.png" alt="JobsU" class="nav-logo-img" />
+    </a>
+    <a class="nav-back" href="index.html">← Back to home</a>
+  </nav>
+
+  <div class="page">
+    <p class="page-eyebrow">Help Center</p>
+    <h1>How can we help?</h1>
+    <p class="page-sub">Answers to the most common questions about JobsU. Can't find what you're looking for? <a href="contact.html">Contact us</a>.</p>
+
+    <!-- Getting Started -->
+    <div class="faq-section">
+      <p class="faq-section-label">Getting Started</p>
+      <div class="faq-list">
+        <details>
+          <summary>What is JobsU?</summary>
+          <div class="faq-answer">
+            <p>JobsU is a marketplace platform connecting Boston-area residents with hand-picked college students for flexible, on-demand local help — including babysitting, yard work, moving assistance, pet care, tutoring, and general errands. Residents post jobs; students apply and get paid through the app.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Who can use JobsU?</summary>
+          <div class="faq-answer">
+            <p><strong>Residents</strong> are anyone in the Greater Boston area looking for trusted, local help. No college affiliation required — just create an account and post your first job.</p>
+            <p><strong>Students</strong> must be enrolled at a participating Boston-area college and verify their enrollment with a valid .edu email address. Students are individually reviewed before they can begin accepting jobs.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Which colleges are included?</summary>
+          <div class="faq-answer">
+            <p>JobsU is launching with Boston College, Harvard, Boston University, Northeastern, Tufts, and Wellesley. Additional schools will be added as the platform grows.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- For Residents -->
+    <div class="faq-section">
+      <p class="faq-section-label">For Residents</p>
+      <div class="faq-list">
+        <details>
+          <summary>How do I post a job?</summary>
+          <div class="faq-answer">
+            <p>Create an account at <a href="https://app.jobsu.app" target="_blank" rel="noopener">app.jobsu.app</a>, then tap "Post a Job." Describe what you need, set a date, time, and rate — it takes under two minutes. Students at nearby colleges are notified immediately and can apply in one tap.</p>
+          </div>
+        </details>
+        <details>
+          <summary>What kinds of tasks can I post?</summary>
+          <div class="faq-answer">
+            <p>You can post any local task a college student can reasonably help with, including:</p>
+            <ul>
+              <li>Babysitting and childcare</li>
+              <li>Yard work, raking, gardening, snow shoveling</li>
+              <li>Moving help, furniture assembly, light hauling</li>
+              <li>Pet care and dog walking</li>
+              <li>Grocery runs and general errands</li>
+              <li>In-person tutoring</li>
+              <li>Tech help, home organization, event setup</li>
+            </ul>
+            <p>See our <a href="acceptable-use.html">Acceptable Use Policy</a> for tasks that are not permitted on the platform.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Does JobsU guarantee the quality of work?</summary>
+          <div class="faq-answer">
+            <p>JobsU carefully selects every student on the platform and takes care in building a community of trustworthy, capable people. However, JobsU operates as a marketplace — we connect you with students, but we do not perform, supervise, direct, or warrant the services provided.</p>
+            <p>We strongly encourage residents to communicate clearly with the student about expectations before they arrive, and to use the in-app rating system after every job. If you experience an issue, contact us at <a href="mailto:support@jobsu.app">support@jobsu.app</a>.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Are students employees of JobsU?</summary>
+          <div class="faq-answer">
+            <p>No. Students who complete jobs through JobsU are independent contractors — not employees, agents, or representatives of JobsU, Inc. JobsU does not direct or supervise how services are performed, set the methods or hours of work, or guarantee the results of any task.</p>
+            <p>When you book a student through JobsU, you are entering into a direct arrangement with that individual. JobsU's role is to facilitate the connection and handle secure payment — not to employ or dispatch workers on your behalf.</p>
+            <div class="callout">
+              <p>For more detail, see Section 15 of our <a href="terms.html">Terms of Service</a>, which addresses the platform's relationship to service providers.</p>
+            </div>
+          </div>
+        </details>
+        <details>
+          <summary>How much does it cost to post a job?</summary>
+          <div class="faq-answer">
+            <p>Posting a job is free. A small platform fee is charged when a job is completed and paid through the app. You'll always see the full breakdown before confirming payment — no hidden charges, no surprises.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- For Students -->
+    <div class="faq-section">
+      <p class="faq-section-label">For Students</p>
+      <div class="faq-list">
+        <details>
+          <summary>How do I sign up as a student?</summary>
+          <div class="faq-answer">
+            <p>Create your profile at <a href="https://app.jobsu.app/student/sign-up" target="_blank" rel="noopener">app.jobsu.app/student/sign-up</a> using your .edu email address. After your account is reviewed and approved, you'll be able to browse and apply to nearby jobs. We'll notify you once your profile is confirmed.</p>
+          </div>
+        </details>
+        <details>
+          <summary>When and how do I get paid?</summary>
+          <div class="faq-answer">
+            <p>After a job is marked complete, payment is processed through Stripe and deposited directly to your connected bank account. The rate is always visible before you apply — you'll never be surprised about what a job pays. No job on JobsU pays below minimum wage.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Am I an employee of JobsU?</summary>
+          <div class="faq-answer">
+            <p>No. Students on JobsU are independent contractors. You set your own availability, choose which jobs to apply for, and are free to work for other platforms or employers at the same time. JobsU does not set your hours, direct how you perform tasks, or restrict you from working elsewhere.</p>
+            <p>As an independent contractor, you are responsible for reporting your earnings and paying any applicable taxes. If your annual earnings through the platform reach $600 or more, you may receive a 1099-NEC form for tax purposes.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- Payments -->
+    <div class="faq-section">
+      <p class="faq-section-label">Payments</p>
+      <div class="faq-list">
+        <details>
+          <summary>How does payment work?</summary>
+          <div class="faq-answer">
+            <p>Residents pay through the app after a job is completed. A small platform fee is deducted, and the remainder is sent directly to the student's connected bank account via Stripe. No cash, no awkward conversations — everything is handled in the app.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Is my payment information secure?</summary>
+          <div class="faq-answer">
+            <p>Yes. All payments are processed by Stripe, which is PCI-DSS Level 1 certified — the highest level of payment security certification available. JobsU never stores full card numbers or bank account details on our servers. For more, see our <a href="cybersecurity.html">Cybersecurity Policy</a>.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- Trust & Safety -->
+    <div class="faq-section">
+      <p class="faq-section-label">Trust &amp; Safety</p>
+      <div class="faq-list">
+        <details>
+          <summary>How does JobsU select students?</summary>
+          <div class="faq-answer">
+            <p>Every student on JobsU must verify their enrollment with a valid .edu email address and is individually reviewed before being approved to take jobs. You'll never encounter an anonymous or unreviewed profile. After every completed job, both residents and students leave ratings — keeping the community accountable.</p>
+          </div>
+        </details>
+        <details>
+          <summary>What should I do if something goes wrong?</summary>
+          <div class="faq-answer">
+            <p>Contact us at <a href="mailto:support@jobsu.app">support@jobsu.app</a> and we'll respond as quickly as possible. You can also report a user directly within the app using the report button on any profile or listing.</p>
+            <p>In the case of an emergency or immediate safety concern, please contact local emergency services (911) before reaching out to JobsU.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Can I block or report another user?</summary>
+          <div class="faq-answer">
+            <p>Yes. You can report any user or content directly in the app using the report button on their profile or listing. You can also email <a href="mailto:support@jobsu.app">support@jobsu.app</a> at any time. We investigate all reports. Users who violate our <a href="acceptable-use.html">Acceptable Use Policy</a> may be suspended or permanently removed from the platform.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <div class="still-need-help">
+      <h2>Still have questions?</h2>
+      <p>Our team is here to help. Reach out and we'll get back to you within 24 hours.</p>
+      <a href="contact.html" class="contact-btn">Contact Us</a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html">
+          <img src="JobsU-logo.png" alt="JobsU" />
+        </a>
+        <p class="footer-tagline">Flexible work for students.<br>Trusted help for residents.</p>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-label">Platform</p>
+        <a href="index.html">Home</a>
+        <a href="https://app.jobsu.app/student/sign-up" target="_blank" rel="noopener">For Students</a>
+        <a href="https://app.jobsu.app" target="_blank" rel="noopener">Post a Job</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-label">Company</p>
+        <a href="about.html">About</a>
+        <a href="help.html">Help Center</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-label">Legal</p>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="acceptable-use.html">Acceptable Use</a>
+        <a href="cookie-policy.html">Cookie Policy</a>
+        <a href="cybersecurity.html">Cybersecurity</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2026 JobsU, Inc. All rights reserved.</p>
+      <div class="footer-social">
+        <a href="https://instagram.com/jobsu.app" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://tiktok.com/@jobsu.app" target="_blank" rel="noopener">TikTok</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

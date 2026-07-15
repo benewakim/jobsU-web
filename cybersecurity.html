@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cybersecurity Policy — JobsU</title>
+  <meta name="description" content="JobsU's Cybersecurity Policy describes our security commitments, incident response procedures, and how to report vulnerabilities." />
+  <link rel="icon" type="image/png" href="JobsU-favicon-nobackground.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #F5F8FF; color: #0B1B3A; -webkit-font-smoothing: antialiased; }
+
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 64px;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(11,27,58,0.08);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo-img { height: 48px; display: block; }
+    .nav-back { font-size: 14px; font-weight: 700; color: rgba(11,27,58,0.5); text-decoration: none; }
+    .nav-back:hover { color: #0B1B3A; }
+
+    .page { max-width: 760px; margin: 0 auto; padding: 64px 40px 96px; }
+
+    .page-eyebrow { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 1.5px; color: #1F4B99; margin-bottom: 12px; }
+    h1 { font-size: 40px; font-weight: 900; letter-spacing: -1px; margin-bottom: 8px; }
+    .updated { font-size: 13px; font-weight: 600; color: #5B6B88; margin-bottom: 48px; }
+
+    .prose h2 { font-size: 20px; font-weight: 900; margin-top: 48px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid #E6ECFF; }
+    .prose h3 { font-size: 16px; font-weight: 800; margin-top: 28px; margin-bottom: 10px; color: #0B1B3A; }
+    .prose p { font-size: 15px; font-weight: 600; color: #2D3748; line-height: 1.8; margin-bottom: 16px; }
+    .prose ul { padding-left: 20px; margin-bottom: 16px; }
+    .prose ul li { font-size: 15px; font-weight: 600; color: #2D3748; line-height: 1.8; margin-bottom: 6px; }
+    .prose a { color: #1F4B99; }
+
+    .callout {
+      background: #EFF6FF;
+      border: 1px solid #BFDBFE;
+      border-left: 4px solid #1F4B99;
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+    }
+    .callout p { margin-bottom: 0; color: #1E3A5F; font-size: 14px; }
+
+    footer { background: #0B1B3A; padding: 24px 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .footer-copy { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.4); }
+    .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+    .footer-links a { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.5); text-decoration: none; }
+    .footer-links a:hover { color: white; }
+
+    @media (max-width: 600px) {
+      nav { padding: 0 20px; }
+      .page { padding: 48px 20px 72px; }
+      h1 { font-size: 30px; }
+      footer { padding: 24px 20px; flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="nav-logo" href="index.html">
+      <img src="JobsU-logo-nobackground.png" alt="JobsU" class="nav-logo-img" />
+    </a>
+    <a class="nav-back" href="index.html">← Back to home</a>
+  </nav>
+
+  <div class="page">
+    <p class="page-eyebrow">Legal</p>
+    <h1>Cybersecurity Policy</h1>
+    <p class="updated">Effective Date: July 13, 2026</p>
+
+    <div class="prose">
+      <p>JobsU, Inc. ("JobsU," "we," "our," or "us") is committed to protecting the security of your personal information and the integrity of the JobsU platform. This Cybersecurity Policy describes the security measures we implement, how we respond to security incidents, and how you can help protect your account. This policy should be read in conjunction with our <a href="privacy.html">Privacy Policy</a> and <a href="terms.html">Terms of Service</a>.</p>
+
+      <h2>1. Scope</h2>
+      <p>This policy applies to all systems, applications, and infrastructure operated by or on behalf of JobsU, Inc. in connection with the JobsU platform, including:</p>
+      <ul>
+        <li>The JobsU mobile application (iOS)</li>
+        <li>The JobsU website at jobsu.app and app.jobsu.app</li>
+        <li>Backend infrastructure, including databases, authentication systems, and APIs</li>
+        <li>Internal administrative tools and systems used by JobsU personnel</li>
+        <li>Third-party services integrated into the platform (as described in Section 6)</li>
+      </ul>
+
+      <h2>2. Our Security Commitments</h2>
+      <p>JobsU implements commercially reasonable technical, administrative, and organizational safeguards designed to protect the confidentiality, integrity, and availability of user data.</p>
+
+      <h3>2.1 Encryption</h3>
+      <p>All data transmitted between your device and our servers is encrypted using TLS (Transport Layer Security). Sensitive data stored in our database infrastructure is encrypted at rest using AES-256 or equivalent encryption standards provided by our infrastructure partners.</p>
+
+      <h3>2.2 Access Controls</h3>
+      <p>Access to user data is restricted on a need-to-know basis. JobsU personnel who require access to production systems or user data are subject to role-based access controls and are required to use multi-factor authentication (MFA). Administrative access is logged and subject to periodic review.</p>
+
+      <h3>2.3 Authentication</h3>
+      <p>User accounts are protected by password-based authentication and, where supported, multi-factor authentication. Passwords are hashed using industry-standard algorithms and are never stored in plaintext. Session tokens are time-limited and revocable.</p>
+
+      <h3>2.4 Security Assessments</h3>
+      <p>We conduct regular reviews of our security posture, including dependency audits, code review practices, and monitoring of our infrastructure for known vulnerabilities. As the platform scales, we will expand our assessment program to include third-party penetration testing and formal security audits.</p>
+
+      <h3>2.5 Monitoring and Logging</h3>
+      <p>We maintain security logs for authentication events, administrative actions, and system access. These logs are monitored for anomalous activity and retained in accordance with our data retention practices described in the Privacy Policy.</p>
+
+      <h2>3. Security Incident Response</h2>
+      <p>JobsU maintains an incident response process to identify, contain, and remediate security incidents that may affect user data or platform integrity.</p>
+
+      <h3>3.1 Detection and Containment</h3>
+      <p>Upon identification of a suspected security incident, JobsU will take immediate steps to contain the incident, assess its scope and impact, and preserve evidence for investigation.</p>
+
+      <h3>3.2 Breach Notification</h3>
+      <p>In the event of a confirmed data breach affecting your personal information, JobsU will notify affected users in accordance with applicable law, including the New York SHIELD Act, Massachusetts data breach notification law (M.G.L. ch. 93H), and any other applicable state or federal breach notification requirements. Notifications will include:</p>
+      <ul>
+        <li>A description of the incident and the types of information involved</li>
+        <li>The date or estimated date of the incident</li>
+        <li>Steps JobsU is taking in response</li>
+        <li>Steps you can take to protect yourself</li>
+        <li>Contact information for questions</li>
+      </ul>
+
+      <h3>3.3 Remediation</h3>
+      <p>Following any confirmed incident, JobsU will conduct a root cause analysis, implement corrective measures to prevent recurrence, and update security procedures as appropriate.</p>
+
+      <h2>4. Responsible Disclosure and Vulnerability Reporting</h2>
+      <p>We value the work of independent security researchers and welcome responsible reports of potential vulnerabilities in the JobsU platform. If you believe you have found a security vulnerability, please report it to us at <a href="mailto:security@jobsu.app">security@jobsu.app</a>.</p>
+
+      <h3>4.1 What to Include</h3>
+      <p>When reporting a vulnerability, please provide:</p>
+      <ul>
+        <li>A clear description of the vulnerability and its potential impact</li>
+        <li>Steps to reproduce the issue, if applicable</li>
+        <li>Any supporting evidence (screenshots, logs, proof-of-concept code)</li>
+        <li>Your contact information so we can follow up</li>
+      </ul>
+
+      <h3>4.2 Our Commitments to Reporters</h3>
+      <p>We will acknowledge receipt of your report within 5 business days and provide a timeline for resolution. We will not pursue legal action against individuals who report vulnerabilities in good faith, in compliance with this policy, and who do not access, modify, or delete user data beyond what is necessary to demonstrate the vulnerability. We ask that reporters refrain from publicly disclosing a vulnerability until we have had a reasonable opportunity to investigate and address it.</p>
+
+      <h3>4.3 Out of Scope</h3>
+      <p>The following are not within scope for this responsible disclosure policy: social engineering attacks (including phishing) against JobsU employees or users, denial-of-service testing, physical security testing, and any testing that degrades, disrupts, or damages the platform or user data.</p>
+
+      <h2>5. Protecting Your Account</h2>
+      <p>Users play an important role in maintaining the security of the platform. We encourage all users to:</p>
+      <ul>
+        <li><strong>Use a strong, unique password</strong> for your JobsU account that you do not reuse across other services</li>
+        <li><strong>Enable multi-factor authentication</strong> where available</li>
+        <li><strong>Do not share your account credentials</strong> with anyone or allow others to access your account</li>
+        <li><strong>Keep your device and software up to date</strong> with the latest security patches</li>
+        <li><strong>Be cautious of phishing attempts.</strong> JobsU will never ask for your password via email, text message, or phone call</li>
+        <li><strong>Report suspicious activity immediately.</strong> If you believe your account has been compromised or you have received a suspicious communication purporting to be from JobsU, contact us at <a href="mailto:security@jobsu.app">security@jobsu.app</a></li>
+      </ul>
+
+      <h2>6. Third-Party Service Security</h2>
+      <p>JobsU relies on established third-party service providers for critical platform functions. These providers maintain their own security certifications and compliance programs:</p>
+      <ul>
+        <li><strong>Stripe, Inc.</strong> processes all payment transactions and student payouts via Stripe Connect. Stripe is PCI-DSS Level 1 certified and maintains SOC 2 Type II compliance. JobsU does not store full payment card numbers or bank account details.</li>
+        <li><strong>Supabase</strong> provides database, authentication, and backend infrastructure hosted on AWS with encryption at rest and in transit, role-based access controls, and SOC 2 Type II compliance.</li>
+        <li><strong>Apple Push Notification service (APNs) and Firebase Cloud Messaging (FCM)</strong> are used for push notification delivery. Device tokens are transmitted to these services solely for notification delivery purposes.</li>
+        <li><strong>Google Maps Platform</strong> is used for address autocomplete and location services. Address data entered on the platform is processed by Google's APIs under Google's Privacy Policy.</li>
+      </ul>
+      <div class="callout">
+        <p>JobsU selects third-party providers that meet our security standards and enters into data processing agreements where required. However, JobsU does not control and is not responsible for the security practices of third-party providers.</p>
+      </div>
+
+      <h2>7. Data Protection Practices</h2>
+      <p>For comprehensive information about how we collect, use, retain, and protect your personal information, please refer to our <a href="privacy.html">Privacy Policy</a>. For information about your rights regarding your personal data — including rights of access, correction, deletion, and portability — see Section 7 of the Privacy Policy.</p>
+
+      <h2>8. Changes to This Policy</h2>
+      <p>We may update this Cybersecurity Policy from time to time to reflect changes in our security practices, technology, or legal requirements. When we make material changes, we will post the updated policy on the platform with a new effective date and, where practicable, notify users through email or in-app notification.</p>
+
+      <h2>9. Contact Us</h2>
+      <p>If you have any questions about this Cybersecurity Policy, our security practices, or wish to report a security concern, please contact us:</p>
+      <p>JobsU, Inc. — Attn: Security<br />2 Clifford Street, Norwalk, CT 06853<br />Security reports: <a href="mailto:security@jobsu.app">security@jobsu.app</a><br />General inquiries: <a href="mailto:support@jobsu.app">support@jobsu.app</a><br />Website: jobsu.app</p>
+    </div>
+  </div>
+
+  <footer>
+    <a href="index.html">
+      <img src="JobsU-logo.png" alt="JobsU" style="height:30px;background:white;border-radius:8px;padding:2px 8px;" />
+    </a>
+    <p class="footer-copy">&copy; 2026 JobsU. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+      <a href="acceptable-use.html">Acceptable Use</a>
+      <a href="cookie-policy.html">Cookie Policy</a>
+      <a href="cybersecurity.html">Cybersecurity</a>
+      <a href="mailto:support@jobsu.app">Contact</a>
+      <a href="https://instagram.com/jobsu.app" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://tiktok.com/@jobsu.app" target="_blank" rel="noopener">TikTok</a>
+    </div>
+  </footer>
+</body>
+</html>

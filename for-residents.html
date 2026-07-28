@@ -1,5 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+<!--
+  ============================================================================
+  TEMPORARY CONCIERGE INTERSTITIAL — put up 2026-07-28
+  ============================================================================
+  While app.jobsu.app is NOT publicly live, every resident "Post a Job" CTA
+  routes here (a manual, founder-run concierge flow) instead of to signup.
+  REVERT ALL OF THIS WHEN THE PLATFORM GOES LIVE:
+
+  1. Repoint all 15 resident "Post a Job" CTAs from "for-residents.html" back to
+     "https://app.jobsu.app" (re-add target="_blank" rel="noopener"; the
+     onclick post_job_clicked event can stay). Locations (grep: for-residents.html):
+       index.html   — nav CTA, hero button, "How it Works" resident button,
+                      bottom CTA, footer "Post a Job"                       (5)
+       about.html   — body CTA, footer "Post a Job"                         (2)
+       help.html    — footer "Post a Job"                                   (1)
+       contact.html, terms.html, privacy.html, cookie-policy.html,
+       cybersecurity.html, acceptable-use.html — footer "Post a Job"        (6)
+       for-residents.html — footer "Post a Job" (self; moot once deleted)   (1)
+
+  2. Restore help.html's "How do I post a job?" answer to the account-based
+     instructions (see git history — original text):
+       'Create an account at app.jobsu.app, then tap "Post a Job." Describe
+        what you need, set a date, time, and rate — it takes under two minutes.
+        Students at nearby colleges are notified immediately and can apply in
+        one tap.'
+     (The reworded answer also contains an in-text "Post a Job" link to
+      for-residents.html — replace the whole paragraph.)
+
+  3. Restore "Sign In" to the index.html header nav. It was moved OUT of
+     <ul class="nav-links"> into the footer Legal column (labeled "Resident
+     Sign In"). Remove it from the footer and put it back in the nav (as an
+     <li>) before the "Post a Job" nav-cta. Target unchanged:
+     https://app.jobsu.app/sign-in
+
+  4. Delete or archive this file (for-residents.html).
+
+  KEEPERS — do NOT revert: the ".edu-confirmed" student language and the
+  site-wide posthog.init. Full summary is also in README.md.
+  ============================================================================
+-->
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />

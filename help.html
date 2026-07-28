@@ -97,6 +97,13 @@
       .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
     }
   </style>
+  <script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+" (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureFlagEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset capture createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    posthog.init('phc_BnqZr3RbHoWJGBwEz626mvk9qAJLCxMctY974eawegpv', {
+      api_host: 'https://us.i.posthog.com',
+      defaults: '2026-01-30',
+    });
+  </script>
 </head>
 <body>
   <nav>
@@ -118,14 +125,14 @@
         <details>
           <summary>What is JobsU?</summary>
           <div class="faq-answer">
-            <p>JobsU is a marketplace platform connecting Boston-area residents with hand-picked college students for flexible, on-demand local help — including babysitting, yard work, moving assistance, pet care, tutoring, and general errands. Residents post jobs; students apply and get paid through the app.</p>
+            <p>JobsU is a marketplace platform connecting Boston-area residents with .edu-confirmed college students for flexible, on-demand local help — including babysitting, yard work, moving assistance, pet care, tutoring, and general errands. Residents post jobs; students apply and get paid through the app.</p>
           </div>
         </details>
         <details>
           <summary>Who can use JobsU?</summary>
           <div class="faq-answer">
             <p><strong>Residents</strong> are anyone in the Greater Boston area looking for trusted, local help. No college affiliation required — just create an account and post your first job.</p>
-            <p><strong>Students</strong> must be enrolled at a participating Boston-area college and verify their enrollment with a valid .edu email address. Students are individually reviewed before they can begin accepting jobs.</p>
+            <p><strong>Students</strong> must be enrolled at a participating Boston-area college and confirm their enrollment with a valid .edu email address. That .edu confirmation ties every profile to a real, enrolled student.</p>
           </div>
         </details>
         <details>
@@ -144,7 +151,7 @@
         <details>
           <summary>How do I post a job?</summary>
           <div class="faq-answer">
-            <p>Create an account at <a href="https://app.jobsu.app" target="_blank" rel="noopener">app.jobsu.app</a>, then tap "Post a Job." Describe what you need, set a date, time, and rate — it takes under two minutes. Students at nearby colleges are notified immediately and can apply in one tap.</p>
+            <p>We're putting the final touches on the platform. In the meantime, head to <a href="for-residents.html">Post a Job</a> and our founder will personally connect you with a Boston College student for whatever you need done. Just send a quick email with your neighborhood, what you need, and when you need it.</p>
           </div>
         </details>
         <details>
@@ -196,7 +203,7 @@
         <details>
           <summary>How do I sign up as a student?</summary>
           <div class="faq-answer">
-            <p>Create your profile at <a href="https://app.jobsu.app/student/sign-up" target="_blank" rel="noopener">app.jobsu.app/student/sign-up</a> using your .edu email address. After your account is reviewed and approved, you'll be able to browse and apply to nearby jobs. We'll notify you once your profile is confirmed.</p>
+            <p>Create your profile at <a href="https://app.jobsu.app/student/sign-up" target="_blank" rel="noopener">app.jobsu.app/student/sign-up</a> using your .edu email address. Once you confirm your .edu email, you'll be able to browse and apply to nearby jobs.</p>
           </div>
         </details>
         <details>
@@ -241,7 +248,7 @@
         <details>
           <summary>How does JobsU select students?</summary>
           <div class="faq-answer">
-            <p>Every student on JobsU must verify their enrollment with a valid .edu email address and is individually reviewed before being approved to take jobs. You'll never encounter an anonymous or unreviewed profile. After every completed job, both residents and students leave ratings — keeping the community accountable.</p>
+            <p>Every student on JobsU confirms their enrollment with a valid .edu email address, so every profile is tied to a real, enrolled student — never anonymous. After every completed job, both residents and students leave ratings, keeping the community accountable.</p>
           </div>
         </details>
         <details>
@@ -279,7 +286,7 @@
         <p class="footer-col-label">Platform</p>
         <a href="index.html">Home</a>
         <a href="https://app.jobsu.app/student/sign-up" target="_blank" rel="noopener">For Students</a>
-        <a href="https://app.jobsu.app" target="_blank" rel="noopener">Post a Job</a>
+        <a href="for-residents.html" onclick="if(window.posthog)posthog.capture('post_job_clicked')">Post a Job</a>
       </div>
       <div class="footer-col">
         <p class="footer-col-label">Company</p>

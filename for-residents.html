@@ -34,7 +34,9 @@
      <li>) before the "Post a Job" nav-cta. Target unchanged:
      https://app.jobsu.app/sign-in
 
-  4. Delete or archive this file (for-residents.html).
+  4. Remove the phone .contact-row (tel:+16173839449 / concierge_phone_clicked).
+
+  5. Delete or archive this file (for-residents.html).
 
   KEEPERS — do NOT revert: the ".edu-confirmed" student language and the
   site-wide posthog.init. Full summary is also in README.md.
@@ -77,8 +79,7 @@
     .lede { font-size: 17px; font-weight: 600; color: #5B6B88; line-height: 1.7; margin-bottom: 36px; }
     .lede strong { color: #0B1B3A; font-weight: 800; }
 
-    /* Concierge contact card. Add a phone line later by uncommenting the
-       .contact-row template below — it's a one-line edit. */
+    /* Concierge contact card. */
     .contact-card { background: white; border: 1px solid #E6ECFF; border-radius: 16px; padding: 12px 8px; margin-bottom: 28px; }
     .contact-row { display: flex; align-items: center; gap: 16px; padding: 18px 20px; text-decoration: none; border-radius: 12px; transition: background 0.15s; }
     .contact-row:hover { background: #F5F8FF; }
@@ -137,15 +138,15 @@
     </p>
 
     <div class="contact-card">
-      <!-- To add a phone line later, uncomment and fill in the number:
-      <a class="contact-row" href="tel:+1XXXXXXXXXX" onclick="if(window.posthog)posthog.capture('concierge_phone_clicked')">
+      <a class="contact-row"
+         href="tel:+16173839449"
+         onclick="if(window.posthog)posthog.capture('concierge_phone_clicked')">
         <span class="contact-icon">📞</span>
         <span class="contact-text">
           <span class="contact-label">Call or text Ben</span>
-          <span class="contact-value">(XXX) XXX-XXXX</span>
+          <span class="contact-value">(617) 383-9449</span>
         </span>
       </a>
-      -->
       <a class="contact-row"
          href="mailto:ben@jobsu.app?subject=JobsU%20%E2%80%94%20I%20need%20help%20with%20a%20task&body=Hi%20Ben%2C%0D%0A%0D%0AName%3A%0D%0ANeighborhood%3A%0D%0AWhat%20I%20need%20done%3A%0D%0AWhen%20I%20need%20it%3A%0D%0A%0D%0AThanks!"
          onclick="if(window.posthog)posthog.capture('concierge_email_clicked')">

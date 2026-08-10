@@ -89,6 +89,7 @@
     .contact-label { font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; color: #9BAFCD; margin-bottom: 3px; }
     .contact-value { font-size: 17px; font-weight: 800; color: #1F4B99; }
 
+    .contact-hint { font-size: 14px; font-weight: 600; color: #5B6B88; padding: 10px 20px 14px; line-height: 1.6; }
     .signin-note { font-size: 14px; font-weight: 600; color: #5B6B88; }
     .signin-note a { color: #1F4B99; font-weight: 800; text-decoration: none; }
     .signin-note a:hover { text-decoration: underline; }
@@ -148,7 +149,7 @@
         </span>
       </a>
       <a class="contact-row"
-         href="mailto:ben@jobsu.app?subject=JobsU%20%E2%80%94%20I%20need%20help%20with%20a%20task&body=Hi%20Ben%2C%0D%0A%0D%0AName%3A%0D%0ANeighborhood%3A%0D%0AWhat%20I%20need%20done%3A%0D%0AWhen%20I%20need%20it%3A%0D%0A%0D%0AThanks!"
+         href="mailto:ben@jobsu.app?subject=JobsU%20%E2%80%94%20I%20need%20help%20with%20a%20task&body=Hi%20Ben%2C%0A%0AName%3A%0ATown%3A%0APhone%20(optional)%3A%0AWhat%20I%20need%20done%3A%0AWhen%20I%20need%20it%3A%0AHow%20often%20(one-time%2C%20weekly%2C%20or%20recurring)%3A%0ARate%20you%20have%20in%20mind%20(optional)%3A%0AAnything%20else%20I%20should%20know%3A%0A%0AThanks!"
          onclick="if(window.posthog)posthog.capture('concierge_email_clicked')">
         <span class="contact-icon">✉️</span>
         <span class="contact-text">
@@ -156,6 +157,7 @@
           <span class="contact-value">ben@jobsu.app</span>
         </span>
       </a>
+      <p class="contact-hint">Most jobs in the area run $25 to $30 per hour. Not sure what to offer? Send it over without a rate and I'll give you a range.</p>
     </div>
 
     <p class="signin-note">

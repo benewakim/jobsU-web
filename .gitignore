@@ -1,0 +1,7 @@
+# Keep internal docs out of the public repo.
+# GitHub Pages serves everything committed here, so any file
+# added below is immediately public at jobsu.app/<path>.
+
+docs/
+*.md
+!README.md

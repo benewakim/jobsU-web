@@ -137,7 +137,7 @@
       font-weight: normal;
       line-height: 1.3;
       color: var(--ink);
-      margin: 5px 0 8px;
+      margin: 0 0 8px;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
@@ -584,13 +584,6 @@
       }
     ];
 
-    /**
-      * Section order on the board. Any category not listed here is appended
-      * alphabetically, so a new category still shows up without an edit.
-      * @type {string[]}
-      */
-    var CATEGORY_ORDER = ['Babysitting', 'Tutoring', 'Moving Help', 'Sports Lessons'];
-
     var CONTACT = 'ben@jobsu.app';
 
     /**
@@ -613,13 +606,9 @@
       jobs.forEach(function (job) {
         (groups[job.category] = groups[job.category] || []).push(job);
       });
+      // Biggest section first; same size falls back to alphabetical.
       var names = Object.keys(groups).sort(function (a, b) {
-        var ia = CATEGORY_ORDER.indexOf(a);
-        var ib = CATEGORY_ORDER.indexOf(b);
-        if (ia !== -1 && ib !== -1) return ia - ib;
-        if (ia !== -1) return -1;
-        if (ib !== -1) return 1;
-        return a.localeCompare(b);
+        return groups[b].length - groups[a].length || a.localeCompare(b);
       });
       return names.map(function (name) {
         // Stable sort: jobs on the same rate keep their order in JOBS.
@@ -681,7 +670,6 @@
       card.setAttribute('aria-haspopup', 'dialog');
       card.setAttribute('aria-label', job.title + ' — view details');
 
-      card.appendChild(el('span', 'micro', job.category));
       card.appendChild(el('h3', 'card-title', job.title));
       card.appendChild(rateBlock(job, 'card-rate'));
       card.appendChild(el('p', 'card-teaser', job.description[0]));

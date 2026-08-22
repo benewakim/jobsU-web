@@ -74,12 +74,34 @@
       color: var(--maroon);
     }
 
+    /* ── Category sections ── */
+    .board { margin-bottom: 48px; }
+
+    .job-section + .job-section { margin-top: 36px; }
+
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      padding-bottom: 10px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: normal;
+      color: var(--ink);
+    }
+
+    .section-count { font-size: 12px; color: var(--muted); }
+
     /* ── Card grid ── */
     .job-grid {
       display: grid;
       grid-template-columns: minmax(0, 1fr);
       gap: 16px;
-      margin-bottom: 48px;
     }
 
     @media (min-width: 640px)  { .job-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
@@ -327,7 +349,7 @@
       <p class="page-updated" id="page-updated"></p>
     </header>
 
-    <div class="job-grid" id="job-grid"></div>
+    <div class="board" id="board"></div>
 
     <noscript>
       <p class="noscript-note">This board needs JavaScript to load. Email <a href="mailto:ben@jobsu.app">ben@jobsu.app</a> and I will send you the open jobs directly.</p>
@@ -362,6 +384,8 @@
      * @property {string}   hoursPerWeek
      * @property {string[]} description    one entry per paragraph
      * @property {string} [requirements]   optional, rendered after the description
+     * @property {number} [sortRate]       optional override for the within-category
+     *                                     sort; defaults to the midpoint of `rate`
      */
 
     /** Shown in the header next to the job count. @type {string} */
@@ -560,7 +584,51 @@
       }
     ];
 
+    /**
+      * Section order on the board. Any category not listed here is appended
+      * alphabetically, so a new category still shows up without an edit.
+      * @type {string[]}
+      */
+    var CATEGORY_ORDER = ['Babysitting', 'Tutoring', 'Moving Help', 'Sports Lessons'];
+
     var CONTACT = 'ben@jobsu.app';
+
+    /**
+     * Numeric key for sorting a category's jobs, highest paid first: the
+     * midpoint of the dollar figures in `rate` ("$25 to $30" -> 27.5).
+     * Note this compares the stated numbers, not an hourly equivalent, so a
+     * weekly or flat rate sorts on its own figure. Set `sortRate` on a job to
+     * place it manually.
+     */
+    function rateSortValue(job) {
+      if (typeof job.sortRate === 'number') return job.sortRate;
+      var nums = (job.rate.match(/[0-9]+(?:\.[0-9]+)?/g) || []).map(Number);
+      if (!nums.length) return 0;
+      return nums.reduce(function (a, b) { return a + b; }, 0) / nums.length;
+    }
+
+    /** Jobs grouped into sections, categories and jobs both in display order. */
+    function groupByCategory(jobs) {
+      var groups = {};
+      jobs.forEach(function (job) {
+        (groups[job.category] = groups[job.category] || []).push(job);
+      });
+      var names = Object.keys(groups).sort(function (a, b) {
+        var ia = CATEGORY_ORDER.indexOf(a);
+        var ib = CATEGORY_ORDER.indexOf(b);
+        if (ia !== -1 && ib !== -1) return ia - ib;
+        if (ia !== -1) return -1;
+        if (ib !== -1) return 1;
+        return a.localeCompare(b);
+      });
+      return names.map(function (name) {
+        // Stable sort: jobs on the same rate keep their order in JOBS.
+        var jobsInCategory = groups[name].slice().sort(function (a, b) {
+          return rateSortValue(b) - rateSortValue(a);
+        });
+        return { name: name, jobs: jobsInCategory };
+      });
+    }
 
     function mailtoHref(job) {
       var subject = 'Interested: ' + job.title;
@@ -614,7 +682,7 @@
       card.setAttribute('aria-label', job.title + ' — view details');
 
       card.appendChild(el('span', 'micro', job.category));
-      card.appendChild(el('h2', 'card-title', job.title));
+      card.appendChild(el('h3', 'card-title', job.title));
       card.appendChild(rateBlock(job, 'card-rate'));
       card.appendChild(el('p', 'card-teaser', job.description[0]));
 
@@ -649,8 +717,24 @@
     }
 
     function renderBoard() {
-      var grid = document.getElementById('job-grid');
-      JOBS.forEach(function (job) { grid.appendChild(buildCard(job)); });
+      var board = document.getElementById('board');
+
+      groupByCategory(JOBS).forEach(function (group) {
+        var section = el('section', 'job-section');
+
+        var head = el('div', 'section-head');
+        head.appendChild(el('h2', 'section-title', group.name));
+        head.appendChild(el('span', 'section-count',
+          group.jobs.length + (group.jobs.length === 1 ? ' job' : ' jobs')));
+        section.appendChild(head);
+
+        var grid = el('div', 'job-grid');
+        group.jobs.forEach(function (job) { grid.appendChild(buildCard(job)); });
+        section.appendChild(grid);
+
+        board.appendChild(section);
+      });
+
       document.getElementById('page-updated').textContent =
         JOBS.length + ' open jobs · Updated ' + UPDATED;
     }

@@ -47,11 +47,17 @@ function doPost(e) {
       return json({ ok: true, duplicate: true });
     }
 
+    var draft = buildDraft(payload);
+    var flags = draftFlags(payload, draft);
+
     // The sheet is written first: if mail fails, the lead is still captured.
-    appendRow(sheet, payload);
+    appendRow(sheet, payload, {
+      draftCard: JSON.stringify(draft, null, 2),
+      needsAttention: flags.join(' ')
+    });
 
     try {
-      sendNotification(payload);
+      sendNotification(payload, draft, flags);
     } catch (mailErr) {
       console.error('mail failed: ' + mailErr);
       return json({ ok: true, mailed: false });
@@ -105,11 +111,17 @@ function headerRow(sheet) {
  * Writes the submission, adding a column for any field it has not seen
  * before. Editing the form on the site therefore cannot break intake.
  */
-function appendRow(sheet, payload) {
+function appendRow(sheet, payload, extras) {
   var headers = headerRow(sheet);
+  var row = {};
 
   Object.keys(payload).forEach(function (key) {
     if (HIDDEN_FIELDS[key]) return;
+    row[key] = payload[key];
+  });
+  Object.keys(extras || {}).forEach(function (key) { row[key] = extras[key]; });
+
+  Object.keys(row).forEach(function (key) {
     if (headers.indexOf(key) === -1) headers.push(key);
   });
   if (headers.indexOf('Received') === -1) headers.unshift('Received');
@@ -117,15 +129,13 @@ function appendRow(sheet, payload) {
   sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
   sheet.setFrozenRows(1);
 
-  var row = headers.map(function (key) {
+  sheet.appendRow(headers.map(function (key) {
     if (key === 'Received') return new Date();
-    return payload[key] == null ? '' : payload[key];
-  });
-
-  sheet.appendRow(row);
+    return row[key] == null ? '' : row[key];
+  }));
 }
 
-function sendNotification(payload) {
+function sendNotification(payload, draft, flags) {
   var who = [payload.firstName, payload.lastName].filter(String).join(' ').trim() || 'Someone';
   var where = payload.town ? ' — ' + payload.town : '';
   var subject = 'New job request: ' + payload.category + where;
@@ -144,6 +154,16 @@ function sendNotification(payload) {
     lines.push(label(key) + ': ' + value);
   });
 
+  lines.push('');
+  lines.push('──────────────────────────────────────────');
+  lines.push('DRAFT CARD — paste into the JOBS array in jobs/index.html');
+  lines.push('──────────────────────────────────────────');
+  lines.push('');
+  lines.push(JSON.stringify(draft, null, 2));
+  lines.push('');
+  lines.push('Before it goes live:');
+  flags.forEach(function (f) { lines.push('  • ' + f); });
+
   MailApp.sendEmail({
     to: NOTIFY_EMAIL,
     subject: subject,
@@ -157,6 +177,145 @@ function sendNotification(payload) {
 function label(key) {
   var spaced = key.replace(/([A-Z])/g, ' $1').replace(/[_-]+/g, ' ').toLowerCase().trim();
   return spaced.charAt(0).toUpperCase() + spaced.slice(1);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   Draft card generator
+
+   Turns a submission into a job object shaped exactly like the ones
+   in jobs/index.html, so a posting is copy, edit, paste. It fills what
+   the form actually asked and marks the rest TODO rather than guessing.
+   ────────────────────────────────────────────────────────────── */
+
+/** Category -> the role word used in a board title. */
+var ROLE_WORDS = {
+  'Babysitting': 'After-School Care',
+  'Tutoring': 'Tutoring',
+  'Driving': 'Driving Role',
+  'Moving Help': 'Moving Help',
+  'Sports Lessons': 'Coaching',
+  'Yard Work': 'Yard Work',
+  'Tech Setup': 'Tech Setup',
+  'Something else': 'Help'
+};
+
+/** Free text -> the board's rate + rateUnit pair. */
+function parseRate(raw) {
+  var text = String(raw || '');
+  var nums = text.match(/\d+(?:\.\d+)?/g) || [];
+
+  var unit = 'per hour';
+  if (/week/i.test(text)) unit = 'per week';
+  else if (/day/i.test(text)) unit = 'per day';
+  else if (/ride/i.test(text)) unit = 'per ride';
+  else if (/session|visit/i.test(text)) unit = 'per session';
+  else if (/flat|total|job/i.test(text)) unit = /person|each/i.test(text) ? 'flat per person' : 'flat';
+
+  if (!nums.length) return { rate: 'TODO', rateUnit: unit };
+  if (nums.length === 1) return { rate: '$' + nums[0], rateUnit: unit };
+  return { rate: '$' + nums[0] + ' to $' + nums[1], rateUnit: unit };
+}
+
+function slug(text) {
+  return String(text).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
+function sentence(text) {
+  var t = String(text || '').trim();
+  if (!t) return '';
+  return /[.!?]$/.test(t) ? t : t + '.';
+}
+
+/** The answers that describe the work, in the order they read best. */
+function describe(p) {
+  var byCategory = {
+    'Babysitting': [p.kidsAges, p.householdNotes],
+    'Tutoring': [p.subjects && 'Subjects: ' + p.subjects, p.gradeLevel && 'Student is in ' + p.gradeLevel,
+                 p.format, p.learningNotes],
+    'Driving': [p.pickupLocation && p.dropoffLocation
+                  ? 'Pickup at ' + p.pickupLocation + ', drop-off at ' + p.dropoffLocation
+                  : (p.pickupLocation || p.dropoffLocation)],
+    'Moving Help': [p.peopleNeeded && p.peopleNeeded + ' people needed', p.access,
+                    p.truckProvided && 'Truck: ' + p.truckProvided.toLowerCase()],
+    'Sports Lessons': [p.sport && p.sport + ' lessons', p.childAge && 'Child is ' + p.childAge,
+                       p.skillLevel, p.lessonLocation],
+    'Yard Work': [p.yardTasks, p.yardSize && p.yardSize + ' yard', p.toolsProvided],
+    'Tech Setup': [p.techTasks, p.devices && 'Devices: ' + p.devices, p.techNotes],
+    'Something else': [p.whatYouNeed]
+  };
+
+  var parts = (byCategory[p.category] || [])
+    .filter(function (x) { return x; })
+    .map(sentence)
+    .filter(function (x) { return x; });
+  var first = parts.join(' ').trim();
+  var out = [];
+  if (first) out.push(first);
+  if (p.notes) out.push(sentence(p.notes));
+  if (!out.length) out.push('TODO: describe the job.');
+  return out;
+}
+
+/** Whatever the form learned about a car, tools, or access. */
+function requirementsFor(p) {
+  var bits = [];
+  p = p || {};
+  if (/own car|student uses/i.test(p.drivingNeeded || '')) bits.push('Own car needed');
+  if (/own/i.test(p.carProvided || '')) bits.push('Own car needed');
+  if (/student brings/i.test(p.toolsProvided || '')) bits.push('Student brings their own tools');
+  return bits.length ? bits.join('. ') + '.' : null;
+}
+
+function buildDraft(p) {
+  var money = parseRate(p.rate);
+  var role = ROLE_WORDS[p.category] || 'Help';
+  var town = p.town || 'TODO town';
+  var title = role + ', ' + town;
+
+  var schedule = p.daysTimes || p.dateAndTime || 'TODO';
+
+  var draft = {
+    id: slug(title),
+    title: title,
+    category: p.category,
+    rate: money.rate,
+    rateUnit: money.rateUnit,
+    area: town,
+    start: p.startDate || 'TODO',
+    schedule: schedule,
+    hoursPerWeek: 'TODO',
+    description: describe(p)
+  };
+
+  var reqs = requirementsFor(p);
+  if (reqs) draft.requirements = reqs;
+  return draft;
+}
+
+/** Things a person should look at before this goes on a public page. */
+function draftFlags(p, draft) {
+  var flags = [];
+  var publicText = draft.description.join(' ') + ' ' + (draft.requirements || '');
+
+  if (draft.rate === 'TODO') flags.push('No rate given — ask before posting.');
+  flags.push('Hours/week is not asked on the form — work it out from the schedule.');
+  if (draft.schedule === 'TODO') flags.push('No schedule given.');
+  if (draft.start === 'TODO') flags.push('No start date given.');
+  if (!p.town) flags.push('No town given — the title and area both need one.');
+
+  if (/\b(school|elementary|middle|high|academy|preschool)\b/i.test(publicText)) {
+    flags.push('Mentions a school. Board convention is to name the town, not the school.');
+  }
+  if (/\d{3}[\s.-]?\d{3}[\s.-]?\d{4}/.test(publicText)) flags.push('Contains a phone number — take it out.');
+  if (/@/.test(publicText)) flags.push('Contains an email address — take it out.');
+  if (/\d+\s+[A-Z][a-z]+\s+(St|Street|Ave|Avenue|Rd|Road|Ln|Lane|Dr|Drive|Way|Ct|Court)\b/.test(publicText)) {
+    flags.push('Looks like a street address — take it out.');
+  }
+  if (/allerg|adhd|dyslex|autis|neurodiver|anxiet|medical|diagnos/i.test(publicText)) {
+    flags.push('Mentions a health detail. Keep it only if a student needs it to do the job safely.');
+  }
+  flags.push('Rewrite the description in the board\'s voice before pasting.');
+  return flags;
 }
 
 /** Run once from the editor to confirm the sheet and email both work. */

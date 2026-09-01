@@ -30,6 +30,22 @@ Unlimited submissions, no third-party service, no monthly cost.
    ```
    Commit and push. Submit a real request through the live page to confirm.
 
+## The draft card in every email
+
+Each notification ends with a **DRAFT CARD** block: a job object shaped like the
+ones in the `JOBS` array in `jobs/index.html`, built from the submission. Copy
+it, fix the `TODO`s, rewrite the description in the board's voice, and paste it
+into the array.
+
+The same JSON is stored in the sheet's `draftCard` column, so nothing is lost if
+the email is deleted.
+
+Under the block is a short **Before it goes live** list. It always calls out
+`hoursPerWeek` (the form does not ask for it) and flags anything that should not
+appear on a public page: a school name, a phone number, an email address, a
+street address, or a health detail. The flags are prompts for a human, not
+decisions — publishing is still a deliberate act.
+
 ## Changing the script later
 
 Edit the code, then **Deploy → Manage deployments → ✏️ Edit → Version: New

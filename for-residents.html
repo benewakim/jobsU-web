@@ -510,12 +510,16 @@
        ENDPOINT is the Apps Script web app URL (see apps-script/README.md).
        While it is empty the form still works: it falls back to a prefilled
        email, so a resident is never left with nowhere to send their request. */
-    var ENDPOINT = '';
+    var ENDPOINT = 'https://script.google.com/macros/s/AKfycbyh5uwj_0CBw73j0DRKtIiDnk7H-O7MVJY8wgfiLFrEjwQY-5uGuSlGs12PYUCq2PNr/exec';
     var SHARED_TOKEN = 'jobsu-request-v1';
     var CONTACT = 'ben@jobsu.app';
     var DRAFT_KEY = 'jobsu:request-draft:v1';
     var TIMEOUT_MS = 12000;
     var ATTEMPTS = 2;
+    /* The server drops anything submitted faster than this as a bot. Autofill
+       plus a quick click can beat it, so the page holds the request back
+       rather than letting a real person's request be silently discarded. */
+    var MIN_FILL_MS = 3500;
 
     var form = document.getElementById('request-form');
     var categorySelect = document.getElementById('category');
@@ -657,6 +661,10 @@
         });
     }
 
+    function wait(ms) {
+      return new Promise(function (resolve) { setTimeout(resolve, ms); });
+    }
+
     function send(payload, tries) {
       return attempt(payload).catch(function (err) {
         if (tries > 1) return send(payload, tries - 1);
@@ -718,7 +726,12 @@
       submitBtn.disabled = true;
       submitBtn.textContent = 'Sending…';
 
-      send(payload, ATTEMPTS)
+      var holdBack = Math.max(0, MIN_FILL_MS - payload.elapsedMs);
+      wait(holdBack)
+        .then(function () {
+          payload.elapsedMs = Date.now() - openedAt;
+          return send(payload, ATTEMPTS);
+        })
         .then(function (result) {
           if (result && result.ok) {
             showSuccess(result.mailed);

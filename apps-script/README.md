@@ -45,7 +45,10 @@ mints a *different* URL and the site keeps posting to the old code.
 - **Duplicate-proof.** Every submission carries a `submissionId`; a retry or a
   double click updates nothing and returns success.
 - **Spam-resistant.** A shared token, a hidden honeypot field, and a minimum
-  fill time are all checked server-side.
+  fill time are all checked server-side. The 3-second floor in `doPost` is
+  mirrored by `MIN_FILL_MS` in `for-residents.html`, which holds a fast
+  submission back rather than letting it be silently dropped &mdash; raise one
+  and you must raise the other.
 - **The site degrades gracefully.** If this script is unreachable, times out, or
   returns an error, the page hands the resident a prefilled email containing
   everything they typed, so no request is ever lost.

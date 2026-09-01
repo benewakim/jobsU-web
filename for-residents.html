@@ -69,7 +69,8 @@
     .form-intro { font-size: 14px; font-weight: 600; color: #5B6B88; line-height: 1.6; margin-bottom: 22px; }
     .field { margin-bottom: 16px; }
     .field label { display: block; font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.8px; color: #5B6B88; margin-bottom: 6px; }
-    .field .opt { font-weight: 700; text-transform: none; letter-spacing: 0; color: #9BAFCD; }
+    .field .req { color: #DC2626; margin-left: 3px; }
+    .field-hint { font-size: 12px; font-weight: 600; color: #9BAFCD; margin-top: 6px; letter-spacing: 0; text-transform: none; }
     .field input, .field select, .field textarea {
       width: 100%; font-family: inherit; font-size: 15px; font-weight: 600; color: #0B1B3A;
       background: #FBFCFF; border: 1px solid #E6ECFF; border-radius: 10px; padding: 12px 14px;
@@ -147,37 +148,37 @@
     </p>
 
     <form class="form-card" id="request-form" novalidate>
-      <p class="form-intro">Tell me what you need and I&rsquo;ll get back to you the same day. Only your name, email, and job type are required &mdash; fill in whatever else you can.</p>
+      <p class="form-intro">Tell me what you need and I&rsquo;ll get back to you the same day. Fields marked <span class="req" aria-hidden="true">*</span> are required &mdash; fill in whatever else you can.</p>
 
       <div class="field-row">
         <div class="field">
-          <label for="firstName">First name</label>
+          <label for="firstName">First name<span class="req" aria-hidden="true">*</span></label>
           <input type="text" id="firstName" name="firstName" autocomplete="given-name" required />
         </div>
         <div class="field">
-          <label for="lastName">Last name</label>
+          <label for="lastName">Last name<span class="req" aria-hidden="true">*</span></label>
           <input type="text" id="lastName" name="lastName" autocomplete="family-name" required />
         </div>
       </div>
 
       <div class="field-row">
         <div class="field">
-          <label for="email">Email</label>
+          <label for="email">Email<span class="req" aria-hidden="true">*</span></label>
           <input type="email" id="email" name="email" autocomplete="email" required />
         </div>
         <div class="field">
-          <label for="phone">Phone <span class="opt">(optional)</span></label>
+          <label for="phone">Phone</label>
           <input type="tel" id="phone" name="phone" autocomplete="tel" />
         </div>
       </div>
 
       <div class="field">
-        <label for="town">Town or neighborhood <span class="opt">(optional)</span></label>
+        <label for="town">Town or neighborhood</label>
         <input type="text" id="town" name="town" placeholder="Newtonville, Beacon Hill, Brookline&hellip;" />
       </div>
 
       <div class="field">
-        <label for="category">What do you need?</label>
+        <label for="category">What do you need?<span class="req" aria-hidden="true">*</span></label>
         <select id="category" name="category" required>
           <option value="" selected>Choose a job type&hellip;</option>
           <option>Babysitting</option>
@@ -185,6 +186,8 @@
           <option>Driving</option>
           <option>Moving Help</option>
           <option>Sports Lessons</option>
+          <option>Yard Work</option>
+          <option>Tech Setup</option>
           <option>Something else</option>
         </select>
       </div>
@@ -192,11 +195,11 @@
       <div class="cat-fields" data-cat="Babysitting" hidden>
         <p class="cat-legend">About the babysitting</p>
         <div class="field">
-          <label for="bs-days">Days and times you need <span class="opt">(optional)</span></label>
+          <label for="bs-days">Days and times you need</label>
           <input type="text" id="bs-days" name="daysTimes" placeholder="Tuesdays and Fridays, 2 to 6pm" />
         </div>
         <div class="field">
-          <label for="bs-freq">Recurring or occasional? <span class="opt">(optional)</span></label>
+          <label for="bs-freq">Recurring or occasional?</label>
           <select id="bs-freq" name="frequency">
             <option value="">No preference yet</option>
             <option>Recurring</option>
@@ -204,11 +207,11 @@
           </select>
         </div>
         <div class="field">
-          <label for="bs-kids">Number of kids and ages <span class="opt">(optional)</span></label>
+          <label for="bs-kids">Number of kids and ages</label>
           <input type="text" id="bs-kids" name="kidsAges" placeholder="Two kids, 5 and 8" />
         </div>
         <div class="field">
-          <label for="bs-driving">Driving involved? <span class="opt">(optional)</span></label>
+          <label for="bs-driving">Driving involved?</label>
           <select id="bs-driving" name="drivingNeeded">
             <option value="">Not sure yet</option>
             <option>No driving needed</option>
@@ -217,7 +220,7 @@
           </select>
         </div>
         <div class="field">
-          <label for="bs-extras">Pets, allergies, homework help, bedtime routine <span class="opt">(optional)</span></label>
+          <label for="bs-extras">Pets, allergies, homework help, bedtime routine</label>
           <textarea id="bs-extras" name="householdNotes"></textarea>
         </div>
       </div>
@@ -225,15 +228,15 @@
       <div class="cat-fields" data-cat="Tutoring" hidden>
         <p class="cat-legend">About the tutoring</p>
         <div class="field">
-          <label for="tu-subjects">Subject or subjects <span class="opt">(optional)</span></label>
+          <label for="tu-subjects">Subject or subjects</label>
           <input type="text" id="tu-subjects" name="subjects" placeholder="Algebra, writing, SAT prep&hellip;" />
         </div>
         <div class="field">
-          <label for="tu-grade">Student&rsquo;s grade or age <span class="opt">(optional)</span></label>
+          <label for="tu-grade">Student&rsquo;s grade or age</label>
           <input type="text" id="tu-grade" name="gradeLevel" />
         </div>
         <div class="field">
-          <label for="tu-format">In person or virtual? <span class="opt">(optional)</span></label>
+          <label for="tu-format">In person or virtual?</label>
           <select id="tu-format" name="format">
             <option value="">Either works</option>
             <option>In person</option>
@@ -241,11 +244,11 @@
           </select>
         </div>
         <div class="field">
-          <label for="tu-days">Days and times you need <span class="opt">(optional)</span></label>
+          <label for="tu-days">Days and times you need</label>
           <input type="text" id="tu-days" name="daysTimes" placeholder="Once a week after school" />
         </div>
         <div class="field">
-          <label for="tu-learning">Anything about how the student learns <span class="opt">(optional)</span></label>
+          <label for="tu-learning">Anything about how the student learns</label>
           <textarea id="tu-learning" name="learningNotes"></textarea>
         </div>
       </div>
@@ -253,19 +256,19 @@
       <div class="cat-fields" data-cat="Driving" hidden>
         <p class="cat-legend">About the driving</p>
         <div class="field">
-          <label for="dr-from">Pickup location <span class="opt">(optional)</span></label>
+          <label for="dr-from">Pickup location</label>
           <input type="text" id="dr-from" name="pickupLocation" />
         </div>
         <div class="field">
-          <label for="dr-to">Drop-off location <span class="opt">(optional)</span></label>
+          <label for="dr-to">Drop-off location</label>
           <input type="text" id="dr-to" name="dropoffLocation" />
         </div>
         <div class="field">
-          <label for="dr-days">Days and times <span class="opt">(optional)</span></label>
+          <label for="dr-days">Days and times</label>
           <input type="text" id="dr-days" name="daysTimes" placeholder="Weekday afternoons, 2 to 3 times a week" />
         </div>
         <div class="field">
-          <label for="dr-car">Whose car? <span class="opt">(optional)</span></label>
+          <label for="dr-car">Whose car?</label>
           <select id="dr-car" name="carProvided">
             <option value="">Not sure yet</option>
             <option>Student uses their own car</option>
@@ -277,21 +280,21 @@
       <div class="cat-fields" data-cat="Moving Help" hidden>
         <p class="cat-legend">About the move</p>
         <div class="field">
-          <label for="mv-when">Date and time <span class="opt">(optional)</span></label>
+          <label for="mv-when">Date and time</label>
           <input type="text" id="mv-when" name="dateAndTime" placeholder="Saturday the 12th, morning" />
         </div>
         <div class="field-row">
           <div class="field">
-            <label for="mv-people">People needed <span class="opt">(optional)</span></label>
+            <label for="mv-people">People needed</label>
             <input type="text" id="mv-people" name="peopleNeeded" placeholder="2" />
           </div>
           <div class="field">
-            <label for="mv-hours">Rough hours <span class="opt">(optional)</span></label>
+            <label for="mv-hours">Rough hours</label>
             <input type="text" id="mv-hours" name="estimatedHours" placeholder="2 to 3" />
           </div>
         </div>
         <div class="field">
-          <label for="mv-access">Stairs or elevator? <span class="opt">(optional)</span></label>
+          <label for="mv-access">Stairs or elevator?</label>
           <select id="mv-access" name="access">
             <option value="">Not sure yet</option>
             <option>Ground floor</option>
@@ -300,7 +303,7 @@
           </select>
         </div>
         <div class="field">
-          <label for="mv-truck">Is a truck or van provided? <span class="opt">(optional)</span></label>
+          <label for="mv-truck">Is a truck or van provided?</label>
           <select id="mv-truck" name="truckProvided">
             <option value="">Not sure yet</option>
             <option>Yes, already rented</option>
@@ -313,29 +316,79 @@
       <div class="cat-fields" data-cat="Sports Lessons" hidden>
         <p class="cat-legend">About the lessons</p>
         <div class="field">
-          <label for="sp-sport">Sport <span class="opt">(optional)</span></label>
+          <label for="sp-sport">Sport</label>
           <input type="text" id="sp-sport" name="sport" />
         </div>
         <div class="field-row">
           <div class="field">
-            <label for="sp-age">Child&rsquo;s age <span class="opt">(optional)</span></label>
+            <label for="sp-age">Child&rsquo;s age</label>
             <input type="text" id="sp-age" name="childAge" />
           </div>
           <div class="field">
-            <label for="sp-level">Skill level <span class="opt">(optional)</span></label>
+            <label for="sp-level">Skill level</label>
             <input type="text" id="sp-level" name="skillLevel" placeholder="Just starting out" />
           </div>
         </div>
         <div class="field">
-          <label for="sp-where">Where would it happen? <span class="opt">(optional)</span></label>
+          <label for="sp-where">Where would it happen?</label>
           <input type="text" id="sp-where" name="lessonLocation" placeholder="Local pool, our yard, a nearby field&hellip;" />
+        </div>
+      </div>
+
+      <div class="cat-fields" data-cat="Yard Work" hidden>
+        <p class="cat-legend">About the yard work</p>
+        <div class="field">
+          <label for="yw-what">What needs doing?</label>
+          <input type="text" id="yw-what" name="yardTasks" placeholder="Mowing, leaves, weeding, mulch, general cleanup&hellip;" />
+        </div>
+        <div class="field">
+          <label for="yw-size">Size of the yard</label>
+          <select id="yw-size" name="yardSize">
+            <option value="">Not sure yet</option>
+            <option>Small &mdash; city yard or patio</option>
+            <option>Medium &mdash; typical suburban lot</option>
+            <option>Large &mdash; half an acre or more</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="yw-tools">Tools and equipment</label>
+          <select id="yw-tools" name="toolsProvided">
+            <option value="">Not sure yet</option>
+            <option>We provide everything</option>
+            <option>Student brings their own</option>
+            <option>Some of each</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="yw-freq">One-time or recurring?</label>
+          <select id="yw-freq" name="frequency">
+            <option value="">No preference yet</option>
+            <option>One-time</option>
+            <option>Recurring</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="cat-fields" data-cat="Tech Setup" hidden>
+        <p class="cat-legend">About the tech setup</p>
+        <div class="field">
+          <label for="ts-what">What needs setting up?</label>
+          <input type="text" id="ts-what" name="techTasks" placeholder="Wi-Fi, TV mounting, printer, new phone or laptop&hellip;" />
+        </div>
+        <div class="field">
+          <label for="ts-devices">Devices involved</label>
+          <input type="text" id="ts-devices" name="devices" placeholder="iPhone, MacBook, Samsung TV&hellip;" />
+        </div>
+        <div class="field">
+          <label for="ts-notes">Anything worth knowing</label>
+          <textarea id="ts-notes" name="techNotes" placeholder="Whether you want to be walked through it, existing equipment, account access&hellip;"></textarea>
         </div>
       </div>
 
       <div class="cat-fields" data-cat="Something else" hidden>
         <p class="cat-legend">About the job</p>
         <div class="field">
-          <label for="ot-what">What do you need done?</label>
+          <label for="ot-what">What do you need done?<span class="req" aria-hidden="true">*</span></label>
           <textarea id="ot-what" name="whatYouNeed" required></textarea>
         </div>
       </div>
@@ -343,15 +396,16 @@
       <div class="cat-fields" data-cat="_common" hidden>
         <p class="cat-legend">A few last things</p>
         <div class="field">
-          <label for="startDate">Ideal start date <span class="opt">(optional)</span></label>
+          <label for="startDate">Ideal start date</label>
           <input type="text" id="startDate" name="startDate" placeholder="Early September, as soon as possible&hellip;" />
         </div>
         <div class="field">
-          <label for="rate">Rate you have in mind <span class="opt">(optional)</span></label>
-          <input type="text" id="rate" name="rate" placeholder="$25 to $30 an hour" />
+          <label for="rate">Rate you have in mind<span class="req" aria-hidden="true">*</span></label>
+          <input type="text" id="rate" name="rate" placeholder="$25 to $30 an hour" required />
+          <p class="field-hint">A range is fine. Not sure? Put &ldquo;not sure&rdquo; and Ben will suggest one.</p>
         </div>
         <div class="field">
-          <label for="notes">Anything else worth knowing <span class="opt">(optional)</span></label>
+          <label for="notes">Anything else worth knowing</label>
           <textarea id="notes" name="notes"></textarea>
         </div>
       </div>
@@ -555,7 +609,7 @@
       var wrap = el && el.closest ? el.closest('.field') : null;
       var label = wrap ? wrap.querySelector('label') : null;
       if (!label) return name;
-      return label.textContent.replace(/\(optional\)/i, '').trim();
+      return label.textContent.replace(/\*/g, '').trim();
     }
 
     function mailtoFor(values) {

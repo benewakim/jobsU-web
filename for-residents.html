@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Post a Job — JobsU</title>
+  <title>Request a Job — JobsU</title>
   <meta name="description" content="We're putting the final touches on JobsU. In the meantime, our founder will personally connect you with an .edu-confirmed Boston College student for whatever you need done." />
   <link rel="icon" type="image/png" href="JobsU-favicon-nobackground.png" />
   <script>
@@ -63,6 +63,59 @@
     .footer-social a { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.4); text-decoration: none; }
     .footer-social a:hover { color: white; }
 
+
+    /* ── Request form ── */
+    .form-card { background: white; border: 1px solid #E6ECFF; border-radius: 16px; padding: 26px 24px; margin-bottom: 28px; }
+    .form-intro { font-size: 14px; font-weight: 600; color: #5B6B88; line-height: 1.6; margin-bottom: 22px; }
+    .field { margin-bottom: 16px; }
+    .field label { display: block; font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.8px; color: #5B6B88; margin-bottom: 6px; }
+    .field .opt { font-weight: 700; text-transform: none; letter-spacing: 0; color: #9BAFCD; }
+    .field input, .field select, .field textarea {
+      width: 100%; font-family: inherit; font-size: 15px; font-weight: 600; color: #0B1B3A;
+      background: #FBFCFF; border: 1px solid #E6ECFF; border-radius: 10px; padding: 12px 14px;
+      -webkit-appearance: none; appearance: none;
+    }
+    .field select { background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%235B6B88' d='M1 1l5 5 5-5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+    .field textarea { min-height: 88px; resize: vertical; line-height: 1.6; }
+    .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: #1F4B99; background: white; box-shadow: 0 0 0 3px rgba(31,75,153,0.12); }
+    /* Only flag a field once the visitor has actually interacted with it. */
+    .field input:user-invalid, .field textarea:user-invalid, .field select:user-invalid { border-color: #C2410C; background: #FFFBF8; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .cat-fields { border-top: 1px solid #F0F4FF; margin-top: 22px; padding-top: 22px; }
+    .cat-fields[hidden] { display: none; }
+    .cat-legend { font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; color: #9BAFCD; margin-bottom: 14px; }
+    .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+    .btn-submit {
+      width: 100%; min-height: 52px; margin-top: 6px;
+      background: #1F4B99; color: white; font-family: inherit; font-size: 16px; font-weight: 800;
+      border: none; border-radius: 12px; cursor: pointer; transition: background 0.15s;
+    }
+    .btn-submit:hover { background: #0D2D6B; }
+    .btn-submit:disabled { background: #9BAFCD; cursor: default; }
+    .form-note { font-size: 13px; font-weight: 600; color: #9BAFCD; line-height: 1.6; margin-top: 14px; text-align: center; }
+
+    .form-state { border-radius: 16px; padding: 26px 24px; margin-bottom: 28px; line-height: 1.65; }
+    .form-state[hidden] { display: none; }
+    .form-state h2 { font-size: 22px; font-weight: 900; margin-bottom: 10px; }
+    .form-state p { font-size: 15px; font-weight: 600; margin-bottom: 14px; }
+    .state-ok { background: white; border: 1px solid #CDE3D3; }
+    .state-ok h2 { color: #14683C; }
+    .state-ok p { color: #5B6B88; }
+    .state-warn { background: #FFF8F1; border: 1px solid #F3D9BE; }
+    .state-warn h2 { color: #9A3412; }
+    .state-warn p { color: #7C4A21; }
+    .state-btn { display: inline-block; background: #0B1B3A; color: white; font-size: 15px; font-weight: 800; padding: 13px 22px; border-radius: 10px; text-decoration: none; }
+    .state-btn:hover { background: #0D2D6B; }
+    .state-alt { font-size: 13px; font-weight: 600; color: #7C4A21; margin-top: 14px; margin-bottom: 0; }
+    .state-alt a { color: #9A3412; }
+
+    .contact-heading { font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; color: #9BAFCD; margin-bottom: 12px; }
+
+    @media (max-width: 600px) {
+      .field-row { grid-template-columns: 1fr; gap: 0; }
+      .form-card { padding: 22px 18px; }
+    }
+
     @media (max-width: 768px) {
       .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; }
       .footer-brand { grid-column: 1 / -1; }
@@ -93,6 +146,247 @@
       Boston College student</strong> for whatever you need: yard work, moving help, tech setup, tutoring, and more.
     </p>
 
+    <form class="form-card" id="request-form" novalidate>
+      <p class="form-intro">Tell me what you need and I&rsquo;ll get back to you the same day. Only your name, email, and job type are required &mdash; fill in whatever else you can.</p>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="firstName">First name</label>
+          <input type="text" id="firstName" name="firstName" autocomplete="given-name" required />
+        </div>
+        <div class="field">
+          <label for="lastName">Last name</label>
+          <input type="text" id="lastName" name="lastName" autocomplete="family-name" required />
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" autocomplete="email" required />
+        </div>
+        <div class="field">
+          <label for="phone">Phone <span class="opt">(optional)</span></label>
+          <input type="tel" id="phone" name="phone" autocomplete="tel" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="town">Town or neighborhood <span class="opt">(optional)</span></label>
+        <input type="text" id="town" name="town" placeholder="Newtonville, Beacon Hill, Brookline&hellip;" />
+      </div>
+
+      <div class="field">
+        <label for="category">What do you need?</label>
+        <select id="category" name="category" required>
+          <option value="" selected>Choose a job type&hellip;</option>
+          <option>Babysitting</option>
+          <option>Tutoring</option>
+          <option>Driving</option>
+          <option>Moving Help</option>
+          <option>Sports Lessons</option>
+          <option>Something else</option>
+        </select>
+      </div>
+
+      <div class="cat-fields" data-cat="Babysitting" hidden>
+        <p class="cat-legend">About the babysitting</p>
+        <div class="field">
+          <label for="bs-days">Days and times you need <span class="opt">(optional)</span></label>
+          <input type="text" id="bs-days" name="daysTimes" placeholder="Tuesdays and Fridays, 2 to 6pm" />
+        </div>
+        <div class="field">
+          <label for="bs-freq">Recurring or occasional? <span class="opt">(optional)</span></label>
+          <select id="bs-freq" name="frequency">
+            <option value="">No preference yet</option>
+            <option>Recurring</option>
+            <option>Occasional</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="bs-kids">Number of kids and ages <span class="opt">(optional)</span></label>
+          <input type="text" id="bs-kids" name="kidsAges" placeholder="Two kids, 5 and 8" />
+        </div>
+        <div class="field">
+          <label for="bs-driving">Driving involved? <span class="opt">(optional)</span></label>
+          <select id="bs-driving" name="drivingNeeded">
+            <option value="">Not sure yet</option>
+            <option>No driving needed</option>
+            <option>Yes &mdash; student uses their own car</option>
+            <option>Yes &mdash; we provide a car</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="bs-extras">Pets, allergies, homework help, bedtime routine <span class="opt">(optional)</span></label>
+          <textarea id="bs-extras" name="householdNotes"></textarea>
+        </div>
+      </div>
+
+      <div class="cat-fields" data-cat="Tutoring" hidden>
+        <p class="cat-legend">About the tutoring</p>
+        <div class="field">
+          <label for="tu-subjects">Subject or subjects <span class="opt">(optional)</span></label>
+          <input type="text" id="tu-subjects" name="subjects" placeholder="Algebra, writing, SAT prep&hellip;" />
+        </div>
+        <div class="field">
+          <label for="tu-grade">Student&rsquo;s grade or age <span class="opt">(optional)</span></label>
+          <input type="text" id="tu-grade" name="gradeLevel" />
+        </div>
+        <div class="field">
+          <label for="tu-format">In person or virtual? <span class="opt">(optional)</span></label>
+          <select id="tu-format" name="format">
+            <option value="">Either works</option>
+            <option>In person</option>
+            <option>Virtual</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="tu-days">Days and times you need <span class="opt">(optional)</span></label>
+          <input type="text" id="tu-days" name="daysTimes" placeholder="Once a week after school" />
+        </div>
+        <div class="field">
+          <label for="tu-learning">Anything about how the student learns <span class="opt">(optional)</span></label>
+          <textarea id="tu-learning" name="learningNotes"></textarea>
+        </div>
+      </div>
+
+      <div class="cat-fields" data-cat="Driving" hidden>
+        <p class="cat-legend">About the driving</p>
+        <div class="field">
+          <label for="dr-from">Pickup location <span class="opt">(optional)</span></label>
+          <input type="text" id="dr-from" name="pickupLocation" />
+        </div>
+        <div class="field">
+          <label for="dr-to">Drop-off location <span class="opt">(optional)</span></label>
+          <input type="text" id="dr-to" name="dropoffLocation" />
+        </div>
+        <div class="field">
+          <label for="dr-days">Days and times <span class="opt">(optional)</span></label>
+          <input type="text" id="dr-days" name="daysTimes" placeholder="Weekday afternoons, 2 to 3 times a week" />
+        </div>
+        <div class="field">
+          <label for="dr-car">Whose car? <span class="opt">(optional)</span></label>
+          <select id="dr-car" name="carProvided">
+            <option value="">Not sure yet</option>
+            <option>Student uses their own car</option>
+            <option>We provide a car</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="cat-fields" data-cat="Moving Help" hidden>
+        <p class="cat-legend">About the move</p>
+        <div class="field">
+          <label for="mv-when">Date and time <span class="opt">(optional)</span></label>
+          <input type="text" id="mv-when" name="dateAndTime" placeholder="Saturday the 12th, morning" />
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="mv-people">People needed <span class="opt">(optional)</span></label>
+            <input type="text" id="mv-people" name="peopleNeeded" placeholder="2" />
+          </div>
+          <div class="field">
+            <label for="mv-hours">Rough hours <span class="opt">(optional)</span></label>
+            <input type="text" id="mv-hours" name="estimatedHours" placeholder="2 to 3" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="mv-access">Stairs or elevator? <span class="opt">(optional)</span></label>
+          <select id="mv-access" name="access">
+            <option value="">Not sure yet</option>
+            <option>Ground floor</option>
+            <option>Stairs, no elevator</option>
+            <option>Elevator building</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="mv-truck">Is a truck or van provided? <span class="opt">(optional)</span></label>
+          <select id="mv-truck" name="truckProvided">
+            <option value="">Not sure yet</option>
+            <option>Yes, already rented</option>
+            <option>No truck needed</option>
+            <option>Need help arranging one</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="cat-fields" data-cat="Sports Lessons" hidden>
+        <p class="cat-legend">About the lessons</p>
+        <div class="field">
+          <label for="sp-sport">Sport <span class="opt">(optional)</span></label>
+          <input type="text" id="sp-sport" name="sport" />
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="sp-age">Child&rsquo;s age <span class="opt">(optional)</span></label>
+            <input type="text" id="sp-age" name="childAge" />
+          </div>
+          <div class="field">
+            <label for="sp-level">Skill level <span class="opt">(optional)</span></label>
+            <input type="text" id="sp-level" name="skillLevel" placeholder="Just starting out" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="sp-where">Where would it happen? <span class="opt">(optional)</span></label>
+          <input type="text" id="sp-where" name="lessonLocation" placeholder="Local pool, our yard, a nearby field&hellip;" />
+        </div>
+      </div>
+
+      <div class="cat-fields" data-cat="Something else" hidden>
+        <p class="cat-legend">About the job</p>
+        <div class="field">
+          <label for="ot-what">What do you need done?</label>
+          <textarea id="ot-what" name="whatYouNeed" required></textarea>
+        </div>
+      </div>
+
+      <div class="cat-fields" data-cat="_common" hidden>
+        <p class="cat-legend">A few last things</p>
+        <div class="field">
+          <label for="startDate">Ideal start date <span class="opt">(optional)</span></label>
+          <input type="text" id="startDate" name="startDate" placeholder="Early September, as soon as possible&hellip;" />
+        </div>
+        <div class="field">
+          <label for="rate">Rate you have in mind <span class="opt">(optional)</span></label>
+          <input type="text" id="rate" name="rate" placeholder="$25 to $30 an hour" />
+        </div>
+        <div class="field">
+          <label for="notes">Anything else worth knowing <span class="opt">(optional)</span></label>
+          <textarea id="notes" name="notes"></textarea>
+        </div>
+      </div>
+
+      <div class="hp" aria-hidden="true">
+        <label for="company">Company</label>
+        <input type="text" id="company" name="company" tabindex="-1" autocomplete="off" />
+      </div>
+
+      <button type="submit" class="btn-submit" id="submit-btn">Send to Ben</button>
+      <p class="form-note">Goes straight to Ben&rsquo;s inbox. No account, no spam, and your details are never shared with anyone but the student you choose.</p>
+    </form>
+
+    <div class="form-state state-ok" id="state-ok" role="status" hidden>
+      <h2>Got it &mdash; thank you!</h2>
+      <p id="ok-detail">Your request is with Ben. He reads every one personally and will get back to you today with next steps.</p>
+      <p class="form-note" style="text-align:left;margin-top:0">Need it sooner? Call or text <strong>(617) 383-9449</strong>.</p>
+    </div>
+
+    <div class="form-state state-warn" id="state-warn" role="alert" hidden>
+      <h2>Let&rsquo;s send that by email instead</h2>
+      <p>Something on our end did not go through, and I don&rsquo;t want to lose your details. The button below opens an email with everything you just typed &mdash; press send and it lands in the same inbox.</p>
+      <a class="state-btn" id="fallback-mailto" href="#">Open the email</a>
+      <p class="state-alt">Or call or text Ben at <a href="tel:+16173839449">(617) 383-9449</a>.</p>
+    </div>
+
+    <noscript>
+      <div class="form-state state-warn">
+        <h2>Send Ben an email</h2>
+        <p>This form needs JavaScript. You can email your request instead and Ben will take it from there.</p>
+        <a class="state-btn" href="mailto:ben@jobsu.app?subject=JobsU%20%E2%80%94%20I%20need%20help%20with%20a%20task&body=Hi%20Ben%2C%0A%0AName%3A%0ATown%3A%0APhone%3A%0AWhat%20I%20need%20done%3A%0AWhen%20I%20need%20it%3A%0AHow%20often%3A%0ARate%20you%20have%20in%20mind%3A%0AAnything%20else%3A%0A%0AThanks!">Email ben@jobsu.app</a>
+      </div>
+    </noscript>
+
+    <p class="contact-heading">Prefer to talk it through?</p>
     <div class="contact-card">
       <a class="contact-row"
          href="tel:+16173839449"
@@ -129,7 +423,7 @@
         <p class="footer-col-label">Platform</p>
         <a href="index.html">Home</a>
         <a href="https://app.jobsu.app/student/sign-up" target="_blank" rel="noopener">For Students</a>
-        <a href="for-residents.html" onclick="if(window.posthog)posthog.capture('post_job_clicked')">Post a Job</a>
+        <a href="for-residents.html" onclick="if(window.posthog)posthog.capture('post_job_clicked')">Request a Job</a>
       </div>
       <div class="footer-col">
         <p class="footer-col-label">Company</p>
@@ -154,5 +448,238 @@
       </div>
     </div>
   </footer>
+  <script>
+  (function () {
+    'use strict';
+
+    /* ── Config ──
+       ENDPOINT is the Apps Script web app URL (see apps-script/README.md).
+       While it is empty the form still works: it falls back to a prefilled
+       email, so a resident is never left with nowhere to send their request. */
+    var ENDPOINT = '';
+    var SHARED_TOKEN = 'jobsu-request-v1';
+    var CONTACT = 'ben@jobsu.app';
+    var DRAFT_KEY = 'jobsu:request-draft:v1';
+    var TIMEOUT_MS = 12000;
+    var ATTEMPTS = 2;
+
+    var form = document.getElementById('request-form');
+    var categorySelect = document.getElementById('category');
+    var submitBtn = document.getElementById('submit-btn');
+    var okState = document.getElementById('state-ok');
+    var warnState = document.getElementById('state-warn');
+    var fallbackLink = document.getElementById('fallback-mailto');
+    var blocks = [].slice.call(document.querySelectorAll('.cat-fields'));
+    var openedAt = Date.now();
+    var sending = false;
+
+    /* ── Category-driven fields ── */
+
+    function fieldsIn(block) {
+      return [].slice.call(block.querySelectorAll('input, select, textarea'));
+    }
+
+    function syncCategory() {
+      var chosen = categorySelect.value;
+      blocks.forEach(function (block) {
+        var cat = block.getAttribute('data-cat');
+        var show = chosen !== '' && (cat === chosen || cat === '_common');
+        block.hidden = !show;
+        // Disabled fields are neither validated nor submitted, so a hidden
+        // required field can never block the form.
+        fieldsIn(block).forEach(function (el) { el.disabled = !show; });
+      });
+    }
+
+    categorySelect.addEventListener('change', function () {
+      syncCategory();
+      saveDraft();
+      if (window.posthog) posthog.capture('job_request_category_selected', { category: categorySelect.value });
+    });
+
+    /* ── Draft persistence, so a stray back button costs nothing ── */
+
+    function saveDraft() {
+      try {
+        localStorage.setItem(DRAFT_KEY, JSON.stringify({ at: Date.now(), values: readValues(true) }));
+      } catch (e) { /* private mode, quota — not worth interrupting anyone over */ }
+    }
+
+    function restoreDraft() {
+      var raw;
+      try { raw = localStorage.getItem(DRAFT_KEY); } catch (e) { return; }
+      if (!raw) return;
+      var draft;
+      try { draft = JSON.parse(raw); } catch (e) { return; }
+      if (!draft || !draft.values || Date.now() - draft.at > 7 * 24 * 60 * 60 * 1000) return;
+
+      if (draft.values.category) {
+        categorySelect.value = draft.values.category;
+        syncCategory();
+      }
+      Object.keys(draft.values).forEach(function (name) {
+        var el = form.elements[name];
+        if (el && !el.disabled && typeof el.value === 'string') el.value = draft.values[name];
+      });
+    }
+
+    function clearDraft() {
+      try { localStorage.removeItem(DRAFT_KEY); } catch (e) {}
+    }
+
+    form.addEventListener('input', saveDraft);
+
+    /* ── Reading the form ── */
+
+    function readValues(includeEmpty) {
+      var out = {};
+      [].slice.call(form.elements).forEach(function (el) {
+        if (!el.name || el.disabled) return;
+        if (el.type === 'submit' || el.type === 'button') return;
+        if (el.name === 'company') return;
+        var value = (el.value || '').trim();
+        if (value || includeEmpty) out[el.name] = value;
+      });
+      return out;
+    }
+
+    function uuid() {
+      if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+      return 'r-' + Date.now() + '-' + Math.random().toString(16).slice(2);
+    }
+
+    /* ── The email escape hatch ── */
+
+    function labelFor(name) {
+      var el = form.elements[name];
+      var wrap = el && el.closest ? el.closest('.field') : null;
+      var label = wrap ? wrap.querySelector('label') : null;
+      if (!label) return name;
+      return label.textContent.replace(/\(optional\)/i, '').trim();
+    }
+
+    function mailtoFor(values) {
+      var subject = 'JobsU — ' + (values.category || 'Job request');
+      if (values.town) subject += ' — ' + values.town;
+
+      var lines = ['Hi Ben,', '', 'I would like to request a job through jobsu.app.', ''];
+      Object.keys(values).forEach(function (name) {
+        if (!values[name]) return;
+        lines.push(labelFor(name) + ': ' + values[name]);
+      });
+      lines.push('', 'Thanks!');
+
+      return 'mailto:' + CONTACT +
+        '?subject=' + encodeURIComponent(subject) +
+        '&body=' + encodeURIComponent(lines.join('\n'));
+    }
+
+    /* ── Submission ── */
+
+    function post(payload, signal) {
+      return fetch(ENDPOINT, {
+        method: 'POST',
+        // text/plain keeps the browser from sending a CORS preflight, which
+        // an Apps Script web app cannot answer.
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload),
+        redirect: 'follow',
+        signal: signal
+      });
+    }
+
+    function attempt(payload) {
+      var controller = new AbortController();
+      var timer = setTimeout(function () { controller.abort(); }, TIMEOUT_MS);
+      return post(payload, controller.signal)
+        .then(function (res) {
+          clearTimeout(timer);
+          if (!res.ok) throw new Error('http ' + res.status);
+          return res.json();
+        })
+        .catch(function (err) {
+          clearTimeout(timer);
+          throw err;
+        });
+    }
+
+    function send(payload, tries) {
+      return attempt(payload).catch(function (err) {
+        if (tries > 1) return send(payload, tries - 1);
+        throw err;
+      });
+    }
+
+    function showSuccess(mailed) {
+      form.hidden = true;
+      warnState.hidden = true;
+      okState.hidden = false;
+      if (mailed === false) {
+        document.getElementById('ok-detail').textContent =
+          'Your request is saved and Ben will see it shortly. If you need him today, call or text (617) 383-9449.';
+      }
+      okState.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      clearDraft();
+    }
+
+    function showFallback(values, reason) {
+      fallbackLink.href = mailtoFor(values);
+      warnState.hidden = false;
+      warnState.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Try sending again';
+      sending = false;
+      if (window.posthog) posthog.capture('job_request_fallback', { reason: reason });
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (sending) return;
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      var values = readValues(false);
+      var payload = {};
+      Object.keys(values).forEach(function (k) { payload[k] = values[k]; });
+      payload.token = SHARED_TOKEN;
+      payload.submissionId = uuid();
+      payload.elapsedMs = Date.now() - openedAt;
+      payload.company = (form.elements.company && form.elements.company.value) || '';
+      payload.source = 'for-residents';
+
+      if (window.posthog) posthog.capture('job_request_submitted', { category: values.category });
+
+      // No endpoint configured yet: hand them the prefilled email directly.
+      if (!ENDPOINT) {
+        window.location.href = mailtoFor(values);
+        showFallback(values, 'no-endpoint');
+        return;
+      }
+
+      sending = true;
+      warnState.hidden = true;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+
+      send(payload, ATTEMPTS)
+        .then(function (result) {
+          if (result && result.ok) {
+            showSuccess(result.mailed);
+          } else {
+            showFallback(values, (result && result.error) || 'rejected');
+          }
+        })
+        .catch(function (err) {
+          showFallback(values, String(err && err.message || err));
+        });
+    });
+
+    syncCategory();
+    restoreDraft();
+  })();
+  </script>
 </body>
 </html>

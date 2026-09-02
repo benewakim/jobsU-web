@@ -168,9 +168,45 @@ function sendNotification(payload, draft, flags) {
     to: NOTIFY_EMAIL,
     subject: subject,
     body: lines.join('\n'),
+    // Plain text gets hard-wrapped at ~72 characters by mail clients, which
+    // puts line breaks inside the JSON strings and makes the draft unpastable.
+    // A <pre> block in the HTML part survives intact.
+    htmlBody: htmlVersion(lines, draft, flags),
     replyTo: payload.email,
     name: 'JobsU job requests'
   });
+}
+
+function escapeHtml(text) {
+  return String(text)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+/** Same content as the plain-text part, with the draft kept copy-pasteable. */
+function htmlVersion(lines, draft, flags) {
+  var answers = [];
+  for (var i = 0; i < lines.length; i++) {
+    if (lines[i].indexOf('─') === 0) break;
+    answers.push(escapeHtml(lines[i]));
+  }
+
+  var html = [
+    '<div style="font-family:system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.6;color:#0B1B3A">',
+    '<p>' + answers.join('<br>') + '</p>',
+    '<p style="font-weight:700;margin-bottom:6px">Draft card &mdash; paste into the JOBS array in jobs/index.html</p>',
+    '<pre style="background:#F5F8FF;border:1px solid #E6ECFF;border-radius:8px;padding:14px;',
+    'font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;line-height:1.5;',
+    'white-space:pre;overflow-x:auto">',
+    escapeHtml(JSON.stringify(draft, null, 2)),
+    '</pre>',
+    '<p style="font-weight:700;margin-bottom:6px">Before it goes live</p>',
+    '<ul style="margin-top:0;padding-left:20px">'
+  ];
+  flags.forEach(function (f) { html.push('<li>' + escapeHtml(f) + '</li>'); });
+  html.push('</ul></div>');
+  return html.join('');
 }
 
 /** camelCase field name -> "Camel case" label for the email body. */

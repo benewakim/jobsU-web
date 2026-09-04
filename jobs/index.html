@@ -730,36 +730,19 @@
       // These fields map one-for-one onto the profile card Ben sends the
       // resident, so a complete reply can go straight out without a
       // back-and-forth. Photo has to be an attachment: mailto cannot carry one.
+      // Deliberately short. The full profile questionnaire goes out in Ben's
+      // reply, to students he is actually putting forward: the profile card is
+      // per-student, not per-job, so collecting it on every apply would make a
+      // repeat applicant fill it in again for the same card.
       var body = [
         'Hi Ben,',
         '',
-        "I'd like to apply for this job: " + job.title,
+        "I'm interested in this job: " + job.title,
         '',
-        'ABOUT ME',
-        'First name:',
-        'Last initial:',
-        'Hometown:',
-        'School:',
-        'Class year:',
-        'Studying:',
-        'Bio (two or three sentences):',
+        'Name:',
+        'School and class year:',
         '',
-        'CAN HELP WITH (delete the ones that do not interest you)',
-        'Babysitting, Tutoring, Pet Care, Yard work, Private Sports Lessons, Music Lessons, Moving, Errands, Art Lessons, Photography, Tech Help.',
-        '',
-        'If there are any other job ideas you are interested in list them here (ex. Gardening, Logo Design, etc.)',
-        '',
-        'A FEW MORE THINGS',
-        'Interests (comma separated):',
-        'Fun fact 1:',
-        'Fun fact 2:',
-        'Getting around (car, T, bike, walking):',
-        '',
-        'WHY I AM A FIT FOR THIS JOB',
-        '(A couple of lines tied to what this family asked for.)',
-        '',
-        'PHOTO',
-        'Attached. A clear head and shoulders photo is perfect.',
+        'What are the next steps?',
         '',
         'Thanks,'
       ].join('\n');

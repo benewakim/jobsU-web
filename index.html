@@ -396,6 +396,41 @@
     .why-card p  { font-size: 14px; font-weight: 600; color: var(--muted); line-height: 1.65; }
 
     /* ── TESTIMONIALS ── */
+    .quote-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 24px; margin-top: 52px;
+    }
+
+    .quote-card {
+      background: white; border-radius: 20px;
+      border: 1px solid var(--border); padding: 32px;
+      display: flex; flex-direction: column;
+    }
+
+    .quote-stars {
+      color: #F59E0B; font-size: 15px; letter-spacing: 2px; margin-bottom: 14px;
+    }
+
+    .quote-text {
+      font-size: 15px; font-weight: 600; color: var(--navy);
+      line-height: 1.7; margin-bottom: 20px; flex: 1;
+    }
+
+    .quote-by {
+      display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap;
+      padding-top: 18px; border-top: 1px solid var(--border);
+    }
+
+    .quote-name { font-size: 14px; font-weight: 900; color: var(--navy); }
+    .quote-meta { font-size: 13px; font-weight: 600; color: var(--muted); }
+
+    .quote-job {
+      font-size: 11px; font-weight: 900; text-transform: uppercase;
+      letter-spacing: 1px; color: var(--blue);
+      background: var(--ice); border-radius: 999px; padding: 4px 10px;
+    }
+
+    /* ── TESTIMONIALS ── */
     .testimonials-grid {
       display: grid; grid-template-columns: repeat(3, 1fr);
       gap: 24px; margin-top: 52px;
@@ -527,6 +562,7 @@
     /* ── RESPONSIVE ── */
     @media (max-width: 960px) {
       .why-grid { grid-template-columns: 1fr 1fr; }
+      .quote-grid { grid-template-columns: 1fr; }
       .categories-grid { grid-template-columns: repeat(3, 1fr); }
       .hiw-card { grid-template-columns: 1fr; }
       .hiw-divider { height: 1px; width: auto; }
@@ -767,6 +803,56 @@
   </section>
 
   <!-- TESTIMONIALS -->
+  <section class="section" id="reviews">
+    <div class="section-inner">
+      <p class="section-eyebrow">Reviews</p>
+      <h2 class="section-title">What residents say</h2>
+      <p class="section-sub">Every job ends with a rating. These are real reviews from people who have hired through JobsU.</p>
+
+      <div class="quote-grid">
+        <div class="quote-card">
+          <p class="quote-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</p>
+          <p class="quote-text">&ldquo;I had such a great experience with JobsU! They made the entire moving process easy and stress-free from start to finish. The team was professional, efficient, and careful with all of my belongings. This was by far the easiest move I&rsquo;ve ever had. I would absolutely use them again!&rdquo;</p>
+          <div class="quote-by">
+            <span class="quote-name">Danielle B.</span>
+            <span class="quote-meta">South Boston</span>
+            <span class="quote-job">Moving</span>
+          </div>
+        </div>
+
+        <div class="quote-card">
+          <p class="quote-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</p>
+          <p class="quote-text">&ldquo;Excellent! JobsU matched with a very nice and helpful young man that was able to assist me with carrying heavy boxes, dressers, large furniture and more. Very professional and handled all of my belongings with care.&rdquo;</p>
+          <div class="quote-by">
+            <span class="quote-name">Niall S.</span>
+            <span class="quote-meta">Cambridge</span>
+            <span class="quote-job">Heavy lifting</span>
+          </div>
+        </div>
+
+        <div class="quote-card">
+          <p class="quote-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</p>
+          <p class="quote-text">&ldquo;Very smooth and efficient on a short time frame. Thank you Ben!&rdquo;</p>
+          <div class="quote-by">
+            <span class="quote-name">Reynolds J.</span>
+            <span class="quote-meta">Brookline</span>
+            <span class="quote-job">Moving</span>
+          </div>
+        </div>
+
+        <div class="quote-card">
+          <p class="quote-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</p>
+          <p class="quote-text">&ldquo;Ben come on Sunday morning and help me do the works I need to help with. He is nice and work hard and get the things done. The service is helpful when you needed.&rdquo;</p>
+          <div class="quote-by">
+            <span class="quote-name">Ying W.</span>
+            <span class="quote-meta">Newton Center</span>
+            <span class="quote-job">Yard work</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- FAQ -->
   <section class="section bg-ice" id="faq">
     <div class="section-inner">

@@ -74,6 +74,71 @@
       color: var(--maroon);
     }
 
+    .visually-hidden {
+      position: absolute; width: 1px; height: 1px; overflow: hidden;
+      clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+    }
+
+    /* ── Job alerts signup ── */
+    .alerts {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px 24px;
+      margin-bottom: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .alerts-copy { flex: 1 1 300px; min-width: 0; }
+
+    .alerts-title {
+      font-family: var(--serif);
+      font-size: 19px;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .alerts-sub { font-size: 14px; color: var(--muted); line-height: 1.55; }
+
+    .alerts-form { display: flex; gap: 10px; flex: 0 1 auto; flex-wrap: wrap; }
+
+    .alerts-input {
+      font-family: var(--sans);
+      font-size: 15px;
+      color: var(--ink);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 11px 14px;
+      min-width: 240px;
+      min-height: 44px;
+    }
+
+    .alerts-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: var(--surface);
+      box-shadow: 0 0 0 3px rgba(31, 75, 153, 0.12);
+    }
+
+    .alerts-note { font-size: 13px; color: var(--muted); flex-basis: 100%; }
+    .alerts-note.err { color: var(--maroon); }
+    .alerts-note a { color: var(--accent); }
+
+    .alerts.done { display: block; }
+    .alerts.done .alerts-title { margin-bottom: 2px; }
+
+    @media (max-width: 639px) {
+      .alerts { padding: 20px; }
+      .alerts-form { width: 100%; }
+      .alerts-input { flex: 1 1 100%; }
+      .alerts .btn { width: 100%; }
+    }
+
     /* ── Category sections ── */
     .board { margin-bottom: 48px; }
 
@@ -348,6 +413,20 @@
       <p class="page-sub">Paid work with local families and residents, within 8 miles of campus.</p>
       <p class="page-updated" id="page-updated"></p>
     </header>
+
+    <section class="alerts" id="alerts" aria-labelledby="alerts-title">
+      <div class="alerts-copy">
+        <p class="alerts-title" id="alerts-title">Nothing here for you yet?</p>
+        <p class="alerts-sub">Drop your email and I will send you new jobs as they come in.</p>
+      </div>
+      <form class="alerts-form" id="alerts-form">
+        <label for="alerts-email" class="visually-hidden">Your email</label>
+        <input class="alerts-input" type="email" id="alerts-email" name="email" placeholder="you@bc.edu" autocomplete="email" required />
+        <input type="text" id="alerts-company" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px" />
+        <button type="submit" class="btn" id="alerts-btn">Notify me</button>
+        <p class="alerts-note" id="alerts-note" role="status"></p>
+      </form>
+    </section>
 
     <div class="board" id="board"></div>
 
@@ -877,6 +956,96 @@
         e.preventDefault();
         first.focus();
       }
+    });
+
+    /* ── Job alerts signup ──
+       Posts to the same Apps Script web app the resident form uses, so this
+       needs no new backend. If the request fails for any reason the student is
+       handed a prefilled email instead, exactly like the resident form. */
+
+    var ALERTS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyh5uwj_0CBw73j0DRKtIiDnk7H-O7MVJY8wgfiLFrEjwQY-5uGuSlGs12PYUCq2PNr/exec';
+    var ALERTS_TOKEN = 'jobsu-request-v1';
+    var ALERTS_MIN_FILL_MS = 3500;
+
+    var alertsSection = document.getElementById('alerts');
+    var alertsForm = document.getElementById('alerts-form');
+    var alertsEmail = document.getElementById('alerts-email');
+    var alertsBtn = document.getElementById('alerts-btn');
+    var alertsNote = document.getElementById('alerts-note');
+    var alertsOpenedAt = Date.now();
+    var alertsSending = false;
+
+    function alertsMailto(email) {
+      var body = [
+        'Hi Ben,',
+        '',
+        'I would like to hear about new JobsU jobs as they are posted.',
+        '',
+        'Email: ' + (email || ''),
+        'School / class year:',
+        '',
+        'Thanks,'
+      ].join('\n');
+      return 'mailto:' + CONTACT +
+        '?subject=' + encodeURIComponent('Add me to the JobsU job list') +
+        '&body=' + encodeURIComponent(body);
+    }
+
+    function alertsFallback(email) {
+      alertsNote.className = 'alerts-note err';
+      alertsNote.innerHTML = 'That did not go through. ' +
+        '<a href="' + alertsMailto(email) + '">Send it as an email instead</a> and I will add you.';
+      alertsBtn.disabled = false;
+      alertsBtn.textContent = 'Try again';
+      alertsSending = false;
+    }
+
+    function alertsDone(email) {
+      alertsSection.className = 'alerts done';
+      alertsSection.innerHTML =
+        '<p class="alerts-title">You are on the list.</p>' +
+        '<p class="alerts-sub">New jobs go to ' + email.replace(/[<>&]/g, '') +
+        ' as they come in. Nothing else, and you can reply to any of them to be taken off.</p>';
+    }
+
+    alertsForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (alertsSending) return;
+      if (!alertsForm.checkValidity()) { alertsForm.reportValidity(); return; }
+
+      var email = alertsEmail.value.trim();
+      alertsSending = true;
+      alertsBtn.disabled = true;
+      alertsBtn.textContent = 'Adding…';
+      alertsNote.className = 'alerts-note';
+      alertsNote.textContent = '';
+
+      var payload = {
+        token: ALERTS_TOKEN,
+        submissionId: (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : 'a-' + Date.now(),
+        source: 'jobs-board-alerts',
+        category: 'Student job alerts',
+        email: email,
+        company: document.getElementById('alerts-company').value || '',
+        elapsedMs: Date.now() - alertsOpenedAt
+      };
+
+      var hold = Math.max(0, ALERTS_MIN_FILL_MS - payload.elapsedMs);
+      setTimeout(function () {
+        payload.elapsedMs = Date.now() - alertsOpenedAt;
+        var controller = new AbortController();
+        var timer = setTimeout(function () { controller.abort(); }, 12000);
+        fetch(ALERTS_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload),
+          redirect: 'follow',
+          signal: controller.signal
+        })
+          .then(function (res) { clearTimeout(timer); return res.json(); })
+          .then(function (r) { if (r && r.ok) alertsDone(email); else alertsFallback(email); })
+          .catch(function () { clearTimeout(timer); alertsFallback(email); });
+      }, hold);
     });
 
     renderBoard();

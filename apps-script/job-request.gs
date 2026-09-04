@@ -15,6 +15,12 @@ var NOTIFY_EMAIL = 'ben@jobsu.app';
 /** Tab inside the bound spreadsheet. Created automatically if missing. */
 var SHEET_NAME = 'Job requests';
 
+/** Students asking to hear about new jobs land here instead. */
+var ALERTS_SHEET_NAME = 'Student job alerts';
+
+/** Marks a signup from the board rather than a resident job request. */
+var ALERTS_SOURCE = 'jobs-board-alerts';
+
 /** Must match SHARED_TOKEN in for-residents.html. Blocks drive-by posts. */
 var SHARED_TOKEN = 'jobsu-request-v1';
 
@@ -40,24 +46,27 @@ function doPost(e) {
     if (Number(payload.elapsedMs) < 3000) return json({ ok: true, skipped: 'too fast' });
     if (!payload.email || !payload.category) return json({ ok: false, error: 'missing fields' });
 
-    var sheet = getSheet();
+    var isAlert = payload.source === ALERTS_SOURCE;
+    var sheet = getSheet(isAlert ? ALERTS_SHEET_NAME : SHEET_NAME);
 
     // Retries and double clicks resolve to the same row rather than duplicates.
     if (payload.submissionId && hasSubmission(sheet, payload.submissionId)) {
       return json({ ok: true, duplicate: true });
     }
 
-    var draft = buildDraft(payload);
-    var flags = draftFlags(payload, draft);
+    // A signup is an email address, not a job: no draft card, no checklist.
+    var draft = isAlert ? null : buildDraft(payload);
+    var flags = isAlert ? null : draftFlags(payload, draft);
 
     // The sheet is written first: if mail fails, the lead is still captured.
-    appendRow(sheet, payload, {
+    appendRow(sheet, payload, isAlert ? {} : {
       draftCard: JSON.stringify(draft, null, 2),
       needsAttention: flags.join(' ')
     });
 
     try {
-      sendNotification(payload, draft, flags);
+      if (isAlert) sendAlertNotification(payload);
+      else sendNotification(payload, draft, flags);
     } catch (mailErr) {
       console.error('mail failed: ' + mailErr);
       return json({ ok: true, mailed: false });
@@ -81,11 +90,11 @@ function json(obj) {
     .setMimeType(ContentService.MimeType.JSON);
 }
 
-function getSheet() {
+function getSheet(name) {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var sheet = ss.getSheetByName(SHEET_NAME);
+  var sheet = ss.getSheetByName(name);
   if (!sheet) {
-    sheet = ss.insertSheet(SHEET_NAME);
+    sheet = ss.insertSheet(name);
     sheet.appendRow(['Received', 'submissionId']);
     sheet.setFrozenRows(1);
   }
@@ -133,6 +142,23 @@ function appendRow(sheet, payload, extras) {
     if (key === 'Received') return new Date();
     return row[key] == null ? '' : row[key];
   }));
+}
+
+/** A student asking to hear about new jobs. Short, and replyable. */
+function sendAlertNotification(payload) {
+  MailApp.sendEmail({
+    to: NOTIFY_EMAIL,
+    subject: 'Job alerts signup: ' + payload.email,
+    body: [
+      payload.email + ' asked to hear about new jobs from the board.',
+      '',
+      'Reply to this email and it goes straight to them.',
+      '',
+      'They are on the "' + ALERTS_SHEET_NAME + '" tab of the requests sheet.'
+    ].join('\n'),
+    replyTo: payload.email,
+    name: 'JobsU job alerts'
+  });
 }
 
 function sendNotification(payload, draft, flags) {

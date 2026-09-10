@@ -173,6 +173,39 @@
     @media (min-width: 1024px) { .job-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
     @media (min-width: 1280px) { .job-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 
+    /* ── Featured (JobsU's own) ── */
+    .job-section.featured .section-head { border-bottom-color: #E0C4AC; }
+    .job-section.featured .section-title { color: var(--maroon); }
+
+    .job-card.featured {
+      background: #FDF6EF;
+      border-color: #E0C4AC;
+    }
+
+    .job-card.featured:hover {
+      border-color: #D2B096;
+      box-shadow: 0 2px 8px rgba(123, 26, 26, 0.08);
+    }
+
+    .job-card.featured .rate-amount { color: var(--maroon); }
+
+    .card-flag {
+      display: inline-block;
+      align-self: flex-start;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--maroon);
+      background: #F6E7DA;
+      border-radius: 999px;
+      padding: 3px 9px;
+      margin-bottom: 8px;
+    }
+
+    .job-card.featured .btn { background: var(--maroon); }
+    .job-card.featured .btn:hover { background: #5E1414; }
+
     /* ── Compact card ── */
     .job-card {
       display: flex;
@@ -463,15 +496,34 @@
      * @property {string}   hoursPerWeek
      * @property {string[]} description    one entry per paragraph
      * @property {string} [requirements]   optional, rendered after the description
+     * @property {boolean} [featured]      JobsU's own job: renders in its own
+     *                                     highlighted section above the categories
      * @property {number} [sortRate]       optional override for the within-category
      *                                     sort; defaults to the midpoint of `rate`
      */
 
     /** Shown in the header next to the job count. @type {string} */
-    var UPDATED = 'September 9';
+    var UPDATED = 'September 10';
 
     /** The whole board. Cards and the detail modal both render from this. @type {Job[]} */
     var JOBS = [
+      {
+        "id": "flyer-team-jobsu-bc-campus",
+        "title": "Hand Out Flyers for JobsU, BC Campus",
+        "category": "Promo",
+        "featured": true,
+        "rate": "$25",
+        "rateUnit": "per hour",
+        "area": "BC campus",
+        "start": "As soon as possible",
+        "schedule": "Flexible, whenever you have a gap between classes",
+        "hoursPerWeek": "Flexible",
+        "description": [
+          "Hand out JobsU flyers around campus and get students to scan the QR code for easy jobs near campus.",
+          "No experience needed. Good fit if you are comfortable walking up to people and can explain in ten seconds what JobsU is. Flyers are provided.",
+          "This one is working directly for JobsU rather than for a local family."
+        ]
+      },
       {
         "id": "after-school-pickup-and-activities-waban",
         "title": "After-School Pickup and Activities, Waban",
@@ -913,12 +965,13 @@
     /* ── Cards ── */
 
     function buildCard(job) {
-      var card = el('article', 'job-card');
+      var card = el('article', 'job-card' + (job.featured ? ' featured' : ''));
       card.setAttribute('role', 'button');
       card.setAttribute('tabindex', '0');
       card.setAttribute('aria-haspopup', 'dialog');
       card.setAttribute('aria-label', job.title + ' — view details');
 
+      if (job.featured) card.appendChild(el('span', 'card-flag', 'From JobsU'));
       card.appendChild(el('h3', 'card-title', job.title));
       card.appendChild(rateBlock(job, 'card-rate'));
       card.appendChild(el('p', 'card-teaser', job.description[0]));
@@ -953,24 +1006,31 @@
       return card;
     }
 
+    function renderSection(board, group, isFeatured) {
+      var section = el('section', 'job-section' + (isFeatured ? ' featured' : ''));
+
+      var head = el('div', 'section-head');
+      head.appendChild(el('h2', 'section-title', group.name));
+      head.appendChild(el('span', 'section-count',
+        group.jobs.length + (group.jobs.length === 1 ? ' job' : ' jobs')));
+      section.appendChild(head);
+
+      var grid = el('div', 'job-grid');
+      group.jobs.forEach(function (job) { grid.appendChild(buildCard(job)); });
+      section.appendChild(grid);
+
+      board.appendChild(section);
+    }
+
     function renderBoard() {
       var board = document.getElementById('board');
 
-      groupByCategory(JOBS).forEach(function (group) {
-        var section = el('section', 'job-section');
+      // JobsU's own jobs sit above the categories rather than inside one.
+      var featured = JOBS.filter(function (j) { return j.featured; });
+      var rest = JOBS.filter(function (j) { return !j.featured; });
 
-        var head = el('div', 'section-head');
-        head.appendChild(el('h2', 'section-title', group.name));
-        head.appendChild(el('span', 'section-count',
-          group.jobs.length + (group.jobs.length === 1 ? ' job' : ' jobs')));
-        section.appendChild(head);
-
-        var grid = el('div', 'job-grid');
-        group.jobs.forEach(function (job) { grid.appendChild(buildCard(job)); });
-        section.appendChild(grid);
-
-        board.appendChild(section);
-      });
+      if (featured.length) renderSection(board, { name: 'Work for JobsU', jobs: featured }, true);
+      groupByCategory(rest).forEach(function (group) { renderSection(board, group, false); });
 
       document.getElementById('page-updated').textContent =
         JOBS.length + ' open jobs · Updated ' + UPDATED;

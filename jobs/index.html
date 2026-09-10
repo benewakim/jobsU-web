@@ -173,6 +173,61 @@
     @media (min-width: 1024px) { .job-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
     @media (min-width: 1280px) { .job-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 
+    /* ── Category filters ── */
+    .filters {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      background: var(--bg);
+      padding: 12px 0;
+      margin-bottom: 22px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .filters::-webkit-scrollbar { display: none; }
+
+    .chip {
+      flex: 0 0 auto;
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 9px 15px;
+      min-height: 40px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: border-color 0.15s, background 0.15s, color 0.15s;
+    }
+
+    .chip:hover { border-color: var(--border-hover); }
+
+    .chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+    .chip[aria-pressed="true"] {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: #FFFFFF;
+    }
+
+    .chip[aria-pressed="true"].chip-featured {
+      background: var(--maroon);
+      border-color: var(--maroon);
+    }
+
+    .chip .n { opacity: 0.55; margin-left: 3px; }
+
+    .job-section[hidden] { display: none; }
+
+    @media (prefers-reduced-motion: reduce) { .chip { transition: none; } }
+
     /* ── Featured (JobsU's own) ── */
     .job-section.featured .section-head { border-bottom-color: #E0C4AC; }
     .job-section.featured .section-title { color: var(--maroon); }
@@ -460,6 +515,8 @@
         <p class="alerts-note" id="alerts-note" role="status"></p>
       </form>
     </section>
+
+    <div class="filters" id="filters" role="group" aria-label="Filter jobs by category"></div>
 
     <div class="board" id="board"></div>
 
@@ -1029,11 +1086,54 @@
       var featured = JOBS.filter(function (j) { return j.featured; });
       var rest = JOBS.filter(function (j) { return !j.featured; });
 
-      if (featured.length) renderSection(board, { name: 'Work for JobsU', jobs: featured }, true);
-      groupByCategory(rest).forEach(function (group) { renderSection(board, group, false); });
+      var groups = [];
+      if (featured.length) groups.push({ name: 'Work for JobsU', jobs: featured, featured: true });
+      groupByCategory(rest).forEach(function (g) { groups.push(g); });
+
+      groups.forEach(function (g) { renderSection(board, g, !!g.featured); });
+      renderFilters(groups);
 
       document.getElementById('page-updated').textContent =
         JOBS.length + ' open jobs · Updated ' + UPDATED;
+    }
+
+    /* ── Category filters ── */
+
+    function renderFilters(groups) {
+      var bar = document.getElementById('filters');
+      var sections = [].slice.call(document.querySelectorAll('.job-section'));
+      var chips = [];
+
+      function select(name) {
+        sections.forEach(function (section, i) {
+          section.hidden = name !== null && groups[i].name !== name;
+        });
+        chips.forEach(function (chip) {
+          chip.setAttribute('aria-pressed', String(chip.dataset.name === (name === null ? '' : name)));
+        });
+        // Filtering while scrolled down would otherwise leave the reader
+        // staring at whitespace where the hidden sections used to be.
+        if (bar.getBoundingClientRect().top < 0) {
+          bar.scrollIntoView({ block: 'start', behavior: 'smooth' });
+        }
+      }
+
+      function addChip(label, count, name, isFeatured) {
+        var chip = el('button', 'chip' + (isFeatured ? ' chip-featured' : ''));
+        chip.type = 'button';
+        chip.dataset.name = name === null ? '' : name;
+        // The space matters: without it a screen reader says "All23".
+        chip.appendChild(document.createTextNode(label + ' '));
+        chip.appendChild(el('span', 'n', String(count)));
+        chip.addEventListener('click', function () { select(name); });
+        bar.appendChild(chip);
+        chips.push(chip);
+      }
+
+      addChip('All', JOBS.length, null, false);
+      groups.forEach(function (g) { addChip(g.name, g.jobs.length, g.name, !!g.featured); });
+
+      select(null);
     }
 
     /* ── Modal ── */

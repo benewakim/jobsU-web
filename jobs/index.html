@@ -174,6 +174,47 @@
     @media (min-width: 1024px) { .job-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
     @media (min-width: 1280px) { .job-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 
+    /* ── Peek: a slice of the real board behind a veil ── */
+    .peek {
+      position: relative;
+      overflow: hidden;
+      max-height: 430px;
+      margin-bottom: 28px;
+    }
+
+    .peek[hidden] { display: none; }
+
+    /* Teasers, not targets: no clicks, no tab stops, no hover state. */
+    .peek .job-grid { pointer-events: none; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+    @media (min-width: 900px)  { .peek .job-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+    .peek-veil {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(to bottom,
+        rgba(245, 241, 232, 0.10) 0%,
+        rgba(245, 241, 232, 0.72) 45%,
+        rgba(245, 241, 232, 0.96) 78%,
+        rgba(245, 241, 232, 1) 100%);
+    }
+
+    .peek-gate {
+      position: absolute;
+      left: 50%;
+      bottom: 14px;
+      transform: translateX(-50%);
+      width: min(560px, calc(100% - 24px));
+    }
+
+    .peek-gate .gate { margin: 0; box-shadow: 0 8px 30px rgba(11, 27, 58, 0.10); }
+
+    @media (max-width: 639px) {
+      .peek { max-height: 500px; }
+      .peek-gate { bottom: 10px; width: calc(100% - 16px); }
+    }
+
     /* ── Gate ── */
     .gate {
       background: var(--surface);
@@ -248,6 +289,8 @@
       margin-bottom: 22px;
       border-bottom: 1px solid var(--border);
     }
+
+    .filters[hidden] { display: none; }
 
     .filters::-webkit-scrollbar { display: none; }
 
@@ -562,16 +605,22 @@
       <p class="page-updated" id="page-updated"></p>
     </header>
 
-    <section class="gate" id="gate" aria-labelledby="gate-title">
-      <p class="gate-title" id="gate-title">See every job near campus</p>
-      <p class="gate-sub">This board is for Boston College students. Enter your BC email to see all <span id="gate-count">22</span> jobs.</p>
-      <form class="gate-form" id="gate-form">
-        <label for="gate-email" class="visually-hidden">Your BC email</label>
-        <input class="gate-input" type="email" id="gate-email" name="email" placeholder="you@bc.edu" autocomplete="email" required />
-        <button type="submit" class="btn" id="gate-btn">Show me the jobs</button>
-        <p class="gate-note" id="gate-note" role="status">Your address is only used to tell you about new jobs. Nothing else.</p>
-      </form>
-    </section>
+    <div class="peek" id="peek">
+      <div class="job-grid" id="peek-grid" aria-hidden="true"></div>
+      <div class="peek-veil"></div>
+      <div class="peek-gate">
+        <section class="gate" id="gate" aria-labelledby="gate-title">
+          <p class="gate-title" id="gate-title">See every job near campus</p>
+          <p class="gate-sub">This board is for Boston College students. Enter your BC email to see all <span id="gate-count">22</span> jobs.</p>
+          <form class="gate-form" id="gate-form">
+            <label for="gate-email" class="visually-hidden">Your BC email</label>
+            <input class="gate-input" type="email" id="gate-email" name="email" placeholder="you@bc.edu" autocomplete="email" required />
+            <button type="submit" class="btn" id="gate-btn">Show me the jobs</button>
+            <p class="gate-note" id="gate-note" role="status">Your address is only used to tell you about new jobs. Nothing else.</p>
+          </form>
+        </section>
+      </div>
+    </div>
 
     <section class="alerts" id="alerts" aria-labelledby="alerts-title" hidden>
       <div class="alerts-copy">
@@ -869,8 +918,29 @@
     function renderBoard() {
       var board = document.getElementById('board');
       var bar = document.getElementById('filters');
+      var peek = document.getElementById('peek');
       board.textContent = '';
       bar.textContent = '';
+
+      // Locked: a cut-off slice of the real board under a veil, so it reads as
+      // a board that continues rather than a board with four jobs on it.
+      if (!unlocked) {
+        var peekGrid = document.getElementById('peek-grid');
+        peekGrid.textContent = '';
+        PREVIEW_JOBS.forEach(function (job) {
+          var card = buildCard(job);
+          card.removeAttribute('role');
+          card.setAttribute('tabindex', '-1');
+          peekGrid.appendChild(card);
+        });
+        peek.hidden = false;
+        bar.hidden = true;
+        document.getElementById('page-updated').textContent =
+          TOTAL_JOBS + ' open jobs · Updated ' + UPDATED;
+        return;
+      }
+
+      peek.hidden = true;
 
       // JobsU's own jobs sit above the categories rather than inside one.
       var featured = JOBS.filter(function (j) { return j.featured; });

@@ -616,7 +616,7 @@
             <label for="gate-email" class="visually-hidden">Your BC email</label>
             <input class="gate-input" type="email" id="gate-email" name="email" placeholder="you@bc.edu" autocomplete="email" required />
             <button type="submit" class="btn" id="gate-btn">Show me the jobs</button>
-            <p class="gate-note" id="gate-note" role="status">Your address is only used to tell you about new jobs. Nothing else.</p>
+            <p class="gate-note" id="gate-note" role="status">You will get new jobs and the occasional JobsU update. Unsubscribe any time.</p>
           </form>
         </section>
       </div>
@@ -625,7 +625,7 @@
     <section class="alerts" id="alerts" aria-labelledby="alerts-title" hidden>
       <div class="alerts-copy">
         <p class="alerts-title" id="alerts-title">Nothing here for you yet?</p>
-        <p class="alerts-sub">Drop your email and I will send you new jobs as they come in.</p>
+        <p class="alerts-sub">Drop your email and I will send you new jobs as they come in, plus the occasional JobsU update.</p>
       </div>
       <form class="alerts-form" id="alerts-form">
         <label for="alerts-email" class="visually-hidden">Your email</label>
@@ -1142,8 +1142,8 @@
       alertsSection.className = 'alerts done';
       alertsSection.innerHTML =
         '<p class="alerts-title">You are on the list.</p>' +
-        '<p class="alerts-sub">New jobs go to ' + email.replace(/[<>&]/g, '') +
-        ' as they come in. Nothing else, and you can reply to any of them to be taken off.</p>';
+        '<p class="alerts-sub">New jobs and the occasional JobsU update go to ' +
+        email.replace(/[<>&]/g, '') + '. Reply to any of them to be taken off.</p>';
     }
 
     alertsForm.addEventListener('submit', function (e) {

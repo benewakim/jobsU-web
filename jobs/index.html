@@ -635,9 +635,10 @@
 
     /**
      * The cards shown before a student identifies themselves. The full list
-     * is deliberately absent from this page: it lives in _data/jobs.json,
-     * which Pages never serves, and reaches the browser only through the
-     * Apps Script once a bc.edu address has been entered.
+     * is deliberately absent from this page and reaches the browser only
+     * through the Apps Script, once a bc.edu address has been entered.
+     * Where it is stored is documented in apps-script/job-request.gs, not
+     * here: this file is public.
      * @type {Job[]}
      */
     var PREVIEW_JOBS = [

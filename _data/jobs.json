@@ -1,0 +1,351 @@
+[
+  {
+    "id": "flyer-team-jobsu-bc-campus",
+    "title": "Hand Out Flyers for JobsU, BC Campus",
+    "category": "Promo",
+    "featured": true,
+    "rate": "$25",
+    "rateUnit": "per hour",
+    "area": "BC campus",
+    "start": "As soon as possible",
+    "schedule": "Flexible, whenever you have a gap between classes",
+    "hoursPerWeek": "Flexible",
+    "description": [
+      "Hand out JobsU flyers around campus and get students to scan the QR code for easy jobs near campus.",
+      "No experience needed. Good fit if you are comfortable walking up to people and can explain in ten seconds what JobsU is. Flyers are provided.",
+      "This one is working directly for JobsU rather than for a local family."
+    ]
+  },
+  {
+    "id": "after-school-pickup-and-activities-waban",
+    "title": "After-School Pickup and Activities, Waban",
+    "category": "Babysitting",
+    "rate": "$25 to $27",
+    "rateUnit": "per hour",
+    "area": "Waban (Newton)",
+    "start": "September 7 or earlier",
+    "schedule": "M/T/F 2:00 to 6:00pm, Th 4:00 to 7:00pm",
+    "hoursPerWeek": "~15",
+    "description": [
+      "Two kids, an 8-year-old boy and a 10-year-old girl. School pickup and driving to activities, then keeping them busy through the afternoon. A car for local driving is ideal, and the family covers gas on top of the hourly rate. Thursdays can end at 6:00pm if that works better for your schedule. Recurring through the school year."
+    ]
+  },
+  {
+    "id": "robotics-and-coding-tutoring",
+    "title": "Robotics and coding tutoring",
+    "category": "Tutoring",
+    "rate": "$30",
+    "rateUnit": "per hour",
+    "area": "Newton Centre",
+    "start": "ASAP",
+    "schedule": "Flexible",
+    "hoursPerWeek": "Flexible",
+    "description": [
+      "Teaching the basics of coding and 3D printing to a young student through hands-on projects. All equipment is already at the house. Good fit if you are in CS or engineering. Apply even if you are not back at school yet."
+    ]
+  },
+  {
+    "id": "after-school-childcare-driving-needham",
+    "title": "After-School Childcare + Driving, Needham",
+    "category": "Babysitting",
+    "rate": "$25 to $30",
+    "rateUnit": "per hour",
+    "area": "Needham",
+    "start": "Around 9/1, flexible",
+    "schedule": "M/W/Th/F 3:00 to 6:30pm",
+    "hoursPerWeek": "~14",
+    "description": [
+      "Two boys, ages 6 and 8. After-school care, driving to and from hockey, football, and other activities, light dinner prep, and keeping them busy. Recurring commitment through the school year. Family is looking for someone energetic, reliable, and outgoing. Must be a confident driver with a reliable car to get to Needham. A family car is available once there for driving the kids. Occasional early-release days start at 12:30pm, one to two times per month."
+    ]
+  },
+  {
+    "id": "after-school-nanny-needham",
+    "title": "After-School Nanny, Needham",
+    "category": "Babysitting",
+    "rate": "$25 to $30",
+    "rateUnit": "per hour",
+    "area": "Needham",
+    "start": "First week of September",
+    "schedule": "3 to 5 weekday afternoons, 2:15 to 6:00pm",
+    "hoursPerWeek": "12 to 19",
+    "description": [
+      "Two kids, ages 4 and 6. School pickup, driving to after-school activities, and afternoon care. A family car is provided for driving the kids. Consistent weekly schedule with guaranteed hours once set, and the family is flexible on which days to work around your class schedule. Vegetarian household, no pets. Additional hours available for household help like meal prep and laundry if you want them. Recurring through the school year with the option to continue into summer 2027."
+    ]
+  },
+  {
+    "id": "wednesday-afternoon-sitter-dedham",
+    "title": "Wednesday Afternoon Sitter, Dedham",
+    "category": "Babysitting",
+    "rate": "$30",
+    "rateUnit": "per hour",
+    "area": "Dedham",
+    "start": "September 9",
+    "schedule": "Wednesdays 2:00 to 5:00pm",
+    "hoursPerWeek": "3",
+    "description": [
+      "Two kids, ages 5 and 7. Some of the time is one-on-one with one child at the house or in the backyard, and some is working alongside mom when both kids are home. Recurring weekly through the school year. A car is needed to get there.",
+      "Both kids are neurodivergent and benefit from one-on-one adult time. The family is looking for someone creative and patient who is curious about the different ways kids communicate. Past fits have been students in speech pathology, occupational therapy, music, arts, or theatre.",
+      "The family starts with a short phone call before setting up an in-person meeting, and the first visit to the house is paid."
+    ]
+  },
+  {
+    "id": "after-school-care-and-driving-west-newton",
+    "title": "After-School Care and Driving, West Newton",
+    "category": "Babysitting",
+    "rate": "$25 to $30",
+    "rateUnit": "per hour",
+    "area": "West Newton",
+    "start": "Early September",
+    "schedule": "M/W/Th 2:45 to 6:30 or 7:00pm",
+    "hoursPerWeek": "~12",
+    "description": [
+      "Two kids, ages 7 and 8. Pickup in Chestnut Hill and drive back to the house in West Newton, then homework help and keeping them busy until dinner. The son is into basketball and being outside, the daughter likes arts and crafts. A parent is usually home, so this is an extra set of hands rather than solo care. There is also a friendly one year old Cavalier King Charles Spaniel who needs an occasional walk. Recurring through the school year, with occasional Fridays."
+    ],
+    "requirements": "You must have your own car and be comfortable driving the kids. The family has a strict no-phone rule while driving or while you are with the kids."
+  },
+  {
+    "id": "water-polo-and-swim-coaching-newton-centre",
+    "title": "Water Polo and Swim Coaching, Newton Centre",
+    "category": "Sports Lessons",
+    "rate": "$30",
+    "rateUnit": "per hour",
+    "area": "Newton Centre",
+    "start": "ASAP",
+    "schedule": "Flexible",
+    "hoursPerWeek": "Flexible",
+    "description": [
+      "Introducing a young student to water polo through pool time and play. The goal is less about formal instruction and more about making the water fun and building interest in the sport. Experience with water polo or competitive swimming is ideal, and comfort working with kids who are new to a sport matters more than elite credentials.",
+      "You would drive the student to and from a local pool, so you need your own car. Flexible on days and times."
+    ]
+  },
+  {
+    "id": "after-school-help-newtonville",
+    "title": "After-School Help, Newtonville",
+    "category": "Babysitting",
+    "rate": "$25 to $30",
+    "rateUnit": "per hour",
+    "area": "Newtonville",
+    "start": "First week of September",
+    "schedule": "M/W/Th 3:30 to 7:30pm",
+    "hoursPerWeek": "~12",
+    "description": [
+      "Two kids, ages 8 and 12, plus light household work. Activity drop-offs and keeping the kids' schedule on track, along with meal prep, cleaning, laundry, and folding. No homework help or bedtime routine needed.",
+      "There is some flexibility on exact times as long as there is general overlap, and you can start sooner than September if you are around. Rate depends on experience and fit."
+    ],
+    "requirements": "Own car and clean driving record, with mileage reimbursed at 33 cents per mile. Comfortable with basic meal prep. The son has mild tree nut allergies (hazelnut, pecan, walnut), so no nuts in the food you prepare."
+  },
+  {
+    "id": "recurring-driving-role-needham",
+    "title": "Recurring Driving Role, Needham",
+    "category": "Driving",
+    "rate": "$25",
+    "rateUnit": "per ride",
+    "area": "Needham",
+    "start": "As soon as possible",
+    "schedule": "Weekday afternoons, 2 to 3 times per week",
+    "hoursPerWeek": "2 to 3 rides",
+    "description": [
+      "Pick up a 6th grader from his middle school in Needham and drive him home in Needham or to the JCC in Newton. Purely a driving role, no babysitting needed.",
+      "The family is looking for someone reliable who wants a consistent, recurring arrangement through the school year."
+    ],
+    "requirements": "Own car, clean driving record, and auto insurance."
+  },
+  {
+    "id": "tuesday-and-friday-sitter-newtonville",
+    "title": "Tuesday and Friday Sitter, Newtonville",
+    "category": "Babysitting",
+    "rate": "$25 to $30",
+    "rateUnit": "per hour",
+    "area": "Newtonville",
+    "start": "September 2",
+    "schedule": "Tuesdays and Fridays, about 1 or 2 to 6:00pm",
+    "hoursPerWeek": "~8 to 10",
+    "description": [
+      "Two kids, a 2.5-year-old boy and a 5.5-year-old girl. On most recurring days you would have one kid at a time, and flex time would likely be with both. Preschool pickup and some driving to activities. The family has a dog, and one parent works from home full time.",
+      "There is light household help available during the hours the kids are at school if you want the extra time, including organizing, laundry, and emptying the dishwasher. Additional flexible hours come up for evenings, early release and no-school days, and vacations. Newtonville is on several bus lines and close to the commuter rail. Rate depends on experience and responsibilities."
+    ],
+    "requirements": "A car for preschool pickup and driving to activities."
+  },
+  {
+    "id": "school-pickup-driving-brookline-to-newtonville",
+    "title": "School Pickup Driving, Brookline to Newtonville",
+    "category": "Driving",
+    "rate": "$20",
+    "rateUnit": "flat per day",
+    "area": "Brookline to Newtonville",
+    "start": "As soon as possible",
+    "schedule": "School days, 3:45pm car line for a 4:00pm dismissal",
+    "hoursPerWeek": "5 school days",
+    "description": [
+      "Pick up an 11-year-old from school in Brookline and drive her home to Newtonville. You would arrive at the car line around 3:45pm for a 4:00pm dismissal, and the drive is roughly 20 to 25 minutes.",
+      "Every school week, with a few exceptions. You would also need to cover December and January, including between semesters, so this works best if you are staying in the area. Paid over the table with a 1099 at the end of the year."
+    ],
+    "requirements": "Your own car and a clean driving record, ideally with some experience driving kids or younger siblings. The family is counting on you every day, so reliability matters."
+  },
+  {
+    "id": "furniture-moving-help-two-visits-near-bc",
+    "title": "Furniture moving help, two visits, near BC",
+    "category": "Moving Help",
+    "rate": "$50",
+    "rateUnit": "per hour",
+    "area": "About 20 minutes from campus",
+    "start": "Friday October 2 or Saturday October 3",
+    "schedule": "About 1.5 hours per visit, two visits",
+    "hoursPerWeek": "Two visits",
+    "description": [
+      "Help move furniture off the main level of a single story home so the hardwood floors can be replaced. Everything goes either into a pod in the driveway or down to the basement.",
+      "What is being moved: 3 beds, 2 small desks, 3 large chairs, 3 couches, a dining table, and some smaller items.",
+      "Expect about an hour and a half with the full crew. Two students are needed for this one.",
+      "This job has a second visit about two weeks later to bring everything back inside. The exact date for that one gets confirmed a day or two in advance and timing is flexible, so you should be available for both.",
+      "Date: Friday October 2 or Saturday October 3, 2026. Exact day confirmed shortly. Location: About 20 minutes from campus. Full address shared once you are assigned."
+    ],
+    "requirements": "Good fit if you can lift and carry furniture with a partner, are comfortable on stairs, and show up on time."
+  },
+  {
+    "id": "after-school-care-jamaica-plain",
+    "title": "After-School Pickup, Jamaica Plain",
+    "category": "Babysitting",
+    "rate": "$25 to $30",
+    "rateUnit": "per hour",
+    "area": "Jamaica Plain",
+    "start": "September 9",
+    "schedule": "Specific afternoons, 3pm start, roughly 1 to 2 hours. 14 dates through the end of October.",
+    "hoursPerWeek": "2 to 4",
+    "description": [
+      "One kid, age 7.",
+      "Pick up a 7 year old from school in Jamaica Plain at 3pm, then either take him to the playground or bring him back to the family's house nearby until a parent gets home. Usually one to two hours.",
+      "This is not a fixed weekly schedule. The family has 14 specific dates through September and October, generally two afternoons a week. A car is helpful but not required.",
+      "September: 9, 10, 14, 16, 17, 23, 24, 30. October: 8, 13, 15, 19, 28, 29."
+    ]
+  },
+  {
+    "id": "date-night-sitter-newton-centre",
+    "title": "Date Night Babysitting, Newton Centre",
+    "category": "Babysitting",
+    "rate": "$30",
+    "rateUnit": "per hour",
+    "area": "Newton Centre",
+    "start": "September",
+    "schedule": "Weekend evenings, mostly Saturdays and Sundays. Not every weekend.",
+    "hoursPerWeek": "3 to 5",
+    "description": [
+      "Two kids, a 5 year old girl and a 7 year old boy.",
+      "Recurring date night sitter for a Newton Centre family. Evenings on weekends, typically Saturday or Sunday, whenever the parents go out.",
+      "The family would especially like someone studying education or psychology, or with experience working with young kids.",
+      "Ongoing through the school year. Not a fixed weekly schedule."
+    ]
+  },
+  {
+    "id": "errands-and-daily-help-south-boston",
+    "title": "Errands and Daily Help, South Boston",
+    "category": "Errands",
+    "rate": "$25",
+    "rateUnit": "per hour",
+    "area": "South Boston",
+    "start": "September",
+    "schedule": "4 to 5 hours at a time, 2 to 3 times a week. Flexible on which days.",
+    "hoursPerWeek": "8 to 15",
+    "description": [
+      "Helping two people in South Boston with day to day tasks: online shopping, errands, basic meal prep, home organizing, and accompanying them on trips around the city by Uber or Lyft.",
+      "One of the two has a disability. The role involves guiding and accompanying, for example steadying a walker. No lifting and no personal care, and no certification needed.",
+      "Also includes help at the gym.",
+      "The family is looking for a few students so they can match needs to different class schedules and cover last minute requests. You do not need to be available for every shift."
+    ]
+  },
+  {
+    "id": "music-instructor-preschool-west-roxbury",
+    "title": "Music Instructor at a Preschool, West Roxbury",
+    "category": "Lessons",
+    "rate": "$70",
+    "rateUnit": "per hour",
+    "area": "West Roxbury",
+    "start": "September",
+    "schedule": "One hour session, recurring if it goes well. Weekday mornings.",
+    "hoursPerWeek": "1 to 2",
+    "description": [
+      "Lead an hour of music with a group of preschoolers at a West Roxbury preschool, about 15 minutes from campus.",
+      "Think singalongs, rhythm and clapping games, and a simple introduction to an instrument you play. No formal music education background required, just comfort performing in front of a room and enough patience for a group of three and four year olds.",
+      "Starts as a single session so the school can see how it goes, with the option to make it recurring."
+    ]
+  },
+  {
+    "id": "art-instructor-preschool-west-roxbury",
+    "title": "Art Instructor at a Preschool, West Roxbury",
+    "category": "Lessons",
+    "rate": "$70",
+    "rateUnit": "per hour",
+    "area": "West Roxbury",
+    "start": "September",
+    "schedule": "One hour session, recurring if it goes well. Weekday mornings.",
+    "hoursPerWeek": "1 to 2",
+    "description": [
+      "Run an hour long art project with preschoolers at a West Roxbury preschool, about 15 minutes from campus.",
+      "Plan something hands on and age appropriate: painting, collage, printmaking with household objects. The school has space indoors and out. You bring the idea, they can help with materials.",
+      "Great fit for anyone in studio art or fine arts, or anyone who just likes making things with kids."
+    ]
+  },
+  {
+    "id": "movement-and-sports-preschool-west-roxbury",
+    "title": "Movement and Sports at a Preschool, West Roxbury",
+    "category": "Lessons",
+    "rate": "$70",
+    "rateUnit": "per hour",
+    "area": "West Roxbury",
+    "start": "September",
+    "schedule": "One hour session, recurring if it goes well. Weekday mornings.",
+    "hoursPerWeek": "1 to 2",
+    "description": [
+      "Run an hour of movement and games with preschoolers at a West Roxbury preschool, about 15 minutes from campus.",
+      "The school has a great outdoor space. Think obstacle courses, tag style games, and the very basics of soccer or basketball at a three and four year old level. Energy matters more than technical coaching here.",
+      "Good fit for student athletes or anyone who has coached or run a camp."
+    ]
+  },
+  {
+    "id": "stem-instructor-preschool-west-roxbury",
+    "title": "STEM Instructor at a Preschool, West Roxbury",
+    "category": "Lessons",
+    "rate": "$70",
+    "rateUnit": "per hour",
+    "area": "West Roxbury",
+    "start": "September",
+    "schedule": "One hour session, recurring if it goes well. Weekday mornings.",
+    "hoursPerWeek": "1 to 2",
+    "description": [
+      "Plan and run an hour long science experience for preschoolers at a West Roxbury preschool, about 15 minutes from campus.",
+      "The bar is wonder, not curriculum. Baking soda volcanoes, sink or float, magnets, growing something in a cup. Anything visual and hands on that holds the attention of a three or four year old for a few minutes at a time.",
+      "Good fit for anyone in the sciences who wants teaching experience, or anyone who liked doing this stuff as a kid."
+    ]
+  },
+  {
+    "id": "spanish-instructor-preschool-west-roxbury",
+    "title": "Spanish Instructor at a Preschool, West Roxbury",
+    "category": "Lessons",
+    "rate": "$70",
+    "rateUnit": "per hour",
+    "area": "West Roxbury",
+    "start": "September",
+    "schedule": "One hour session, recurring if it goes well. Weekday mornings.",
+    "hoursPerWeek": "1 to 2",
+    "description": [
+      "Introduce preschoolers to Spanish at a West Roxbury preschool, about 15 minutes from campus.",
+      "An hour of songs, colors, counting, and simple vocabulary. This is early exposure, not instruction, so the goal is making the language fun and familiar rather than teaching grammar.",
+      "You should be fluent or a native speaker. Teaching experience is not required."
+    ]
+  },
+  {
+    "id": "photographer-preschool-west-roxbury",
+    "title": "Photographer at a Preschool, West Roxbury",
+    "category": "Photography",
+    "rate": "$50",
+    "rateUnit": "per hour",
+    "area": "West Roxbury",
+    "start": "September",
+    "schedule": "One session, roughly one to two hours.",
+    "hoursPerWeek": "One time",
+    "description": [
+      "Shoot photos at a West Roxbury preschool, about 15 minutes from campus, for use on their website and in communications to parents.",
+      "Mostly candids of kids at play plus a sense of the space, indoors and in the outdoor area. Bring your own camera. You would deliver edited images afterward.",
+      "Good fit for anyone in the photography club or with a portfolio of event or documentary work."
+    ]
+  }
+]

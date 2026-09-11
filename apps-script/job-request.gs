@@ -21,6 +21,20 @@ var ALERTS_SHEET_NAME = 'Student job alerts';
 /** Marks a signup from the board rather than a resident job request. */
 var ALERTS_SOURCE = 'jobs-board-alerts';
 
+/** Students who unlocked the board with a .edu address land here. */
+var UNLOCK_SHEET_NAME = 'Board unlocks';
+
+/** Only this domain may unlock the board. */
+var ALLOWED_DOMAIN = 'bc.edu';
+
+/**
+ * The full job list, which deliberately does NOT live on jobsu.app. Pages
+ * runs Jekyll, and Jekyll never publishes a folder beginning with an
+ * underscore, so _data/jobs.json is in the repo but not on the site. This
+ * script fetches it server-side, which keeps the URL out of the page too.
+ */
+var JOBS_URL = 'https://raw.githubusercontent.com/benewakim/jobsU-web/main/_data/jobs.json';
+
 /** Must match SHARED_TOKEN in for-residents.html. Blocks drive-by posts. */
 var SHARED_TOKEN = 'jobsu-request-v1';
 
@@ -40,6 +54,10 @@ function doPost(e) {
     var payload = JSON.parse(e.postData.contents);
 
     if (payload.token !== SHARED_TOKEN) return json({ ok: false, error: 'bad token' });
+
+    // Unlocking the board is a read, not a submission: no honeypot or timing
+    // checks, because a returning student unlocks straight from localStorage.
+    if (payload.action === 'unlock') return handleUnlock(payload);
     // Honeypot: real people never fill a field they cannot see.
     if (payload.company) return json({ ok: true, skipped: 'honeypot' });
     // Bots submit instantly; a person needs longer than three seconds.
@@ -81,6 +99,75 @@ function doPost(e) {
   }
 }
 
+/**
+ * Hands the full job list to a student who identifies with a bc.edu address,
+ * and records the address so Ben can reach them about future jobs.
+ */
+function handleUnlock(payload) {
+  var email = String(payload.email || '').trim().toLowerCase();
+  if (!/^[^@\s]+@bc\.edu$/.test(email)) {
+    return json({ ok: false, error: 'Use your ' + ALLOWED_DOMAIN + ' address.' });
+  }
+
+  var jobs;
+  try {
+    jobs = fetchJobs();
+  } catch (err) {
+    console.error('job fetch failed: ' + err);
+    return json({ ok: false, error: 'jobs unavailable' });
+  }
+
+  // Recording the address must never cost a student the jobs they asked for.
+  var first = false;
+  try {
+    var sheet = getSheet(UNLOCK_SHEET_NAME, ['Unlocked', 'email']);
+    first = !emailSeen(sheet, email);
+    if (first) {
+      sheet.appendRow([new Date(), email]);
+      try {
+        MailApp.sendEmail({
+          to: NOTIFY_EMAIL,
+          subject: 'New student on the board: ' + email,
+          body: email + ' unlocked the job board for the first time.\n\n' +
+                'Reply to this email and it goes straight to them.\n\n' +
+                'Every address is on the "' + UNLOCK_SHEET_NAME + '" tab.',
+          replyTo: email,
+          name: 'JobsU job board'
+        });
+      } catch (mailErr) {
+        console.error('unlock mail failed: ' + mailErr);
+      }
+    }
+  } catch (sheetErr) {
+    console.error('unlock log failed: ' + sheetErr);
+  }
+
+  return json({ ok: true, jobs: jobs, first: first });
+}
+
+/** Cached briefly so a burst of unlocks is one fetch, not one per student. */
+function fetchJobs() {
+  var cache = CacheService.getScriptCache();
+  var hit = cache.get('jobs');
+  if (hit) return JSON.parse(hit);
+
+  var res = UrlFetchApp.fetch(JOBS_URL, { muteHttpExceptions: true });
+  if (res.getResponseCode() !== 200) throw new Error('HTTP ' + res.getResponseCode());
+  var body = res.getContentText();
+  JSON.parse(body); // fail here rather than handing a student broken JSON
+  cache.put('jobs', body, 300);
+  return JSON.parse(body);
+}
+
+function emailSeen(sheet, email) {
+  if (sheet.getLastRow() < 2) return false;
+  var values = sheet.getRange(2, 2, sheet.getLastRow() - 1, 1).getValues();
+  for (var i = 0; i < values.length; i++) {
+    if (String(values[i][0]).trim().toLowerCase() === email) return true;
+  }
+  return false;
+}
+
 function doGet() {
   return json({ ok: true, service: 'jobsu-job-request' });
 }
@@ -90,12 +177,12 @@ function json(obj) {
     .setMimeType(ContentService.MimeType.JSON);
 }
 
-function getSheet(name) {
+function getSheet(name, headers) {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = ss.getSheetByName(name);
   if (!sheet) {
     sheet = ss.insertSheet(name);
-    sheet.appendRow(['Received', 'submissionId']);
+    sheet.appendRow(headers || ['Received', 'submissionId']);
     sheet.setFrozenRows(1);
   }
   return sheet;

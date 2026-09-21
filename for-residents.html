@@ -85,6 +85,7 @@
     .cat-fields { border-top: 1px solid #F0F4FF; margin-top: 22px; padding-top: 22px; }
     .cat-fields[hidden] { display: none; }
     .cat-legend { font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; color: #9BAFCD; margin-bottom: 14px; }
+    .field[hidden] { display: none; }
     .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
     .btn-submit {
       width: 100%; min-height: 52px; margin-top: 6px;
@@ -439,6 +440,35 @@
         </div>
       </div>
 
+      <!-- HOW THEY FOUND JOBSU. Outside every .cat-fields block, for the same
+           reason the consent tick below is: those blocks are disabled while
+           hidden, and a required control inside one would block submission
+           until a category was chosen.
+
+           Distinct from `source`, which the submit handler sets to
+           'for-residents' and which records WHICH PAGE was used. This records
+           how they heard about JobsU at all. Two different questions; keeping
+           one field for both would make each answer unreadable. -->
+      <div class="field">
+        <label for="heardAbout">How did you hear about JobsU?<span class="req" aria-hidden="true">*</span></label>
+        <select id="heardAbout" name="heardAbout" required>
+          <option value="">Choose one&hellip;</option>
+          <option>A flyer</option>
+          <option>Facebook</option>
+          <option>A friend or neighbor</option>
+          <option>A community event (like Village Day)</option>
+          <option>Fig City News or another local outlet</option>
+          <option>Google search</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <!-- Disabled while hidden, not merely hidden: readValues() skips disabled
+           controls, so an untouched box cannot post an empty column. -->
+      <div class="field" id="heardAboutOtherWrap" hidden>
+        <label for="heardAboutOther">Where did you hear about us?</label>
+        <input type="text" id="heardAboutOther" name="heardAboutOther" maxlength="120" disabled />
+      </div>
+
       <div class="consent">
         <label class="consent-label" for="marketingConsent">
           <input type="checkbox" id="marketingConsent" name="marketingConsent" value="yes" />
@@ -771,6 +801,20 @@
       if (window.posthog) posthog.capture('job_request_fallback', { reason: reason });
     }
 
+    // Reveal the free-text box only for "Other", and keep it disabled
+    // otherwise so readValues() leaves the column out entirely.
+    var heardAbout = document.getElementById('heardAbout');
+    var heardOtherWrap = document.getElementById('heardAboutOtherWrap');
+    var heardOther = document.getElementById('heardAboutOther');
+    function syncHeardAbout(clear) {
+      if (!heardAbout || !heardOtherWrap || !heardOther) return;
+      var isOther = heardAbout.value === 'Other';
+      heardOtherWrap.hidden = !isOther;
+      heardOther.disabled = !isOther;
+      if (!isOther && clear) heardOther.value = '';
+    }
+    if (heardAbout) heardAbout.addEventListener('change', function () { syncHeardAbout(true); });
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       if (sending) return;
@@ -928,6 +972,10 @@
 
     syncCategory();
     restoreDraft();
+    // After restoreDraft, not before: a saved "Other" needs its text box shown
+    // again, and restoreDraft skips disabled controls so the box is still
+    // disabled at this point. `false` so a restored value is not wiped.
+    syncHeardAbout(false);
   })();
   </script>
 </body>

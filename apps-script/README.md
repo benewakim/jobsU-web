@@ -7,6 +7,39 @@ directly.
 
 Unlimited submissions, no third-party service, no monthly cost.
 
+## One deployment, several forms
+
+Three pages post to this same web app URL. What a submission *is* comes from its
+`source` field, not from a separate endpoint:
+
+| `source` | posted by | tab | treated as |
+|---|---|---|---|
+| `for-residents` | the "Request a Job" form, `for-residents.html` | `Job requests` | a job — draft card + checklist |
+| `resident-updates` | the "Stay in the loop" form, `for-residents.html` | `Resident updates` | a signup — email only |
+| `jobs-board-alerts` | the alerts block, `jobs/index.html` | `Student job alerts` | a signup — email only |
+| `unlock` (an `action`, not a source) | nothing any more | `Board unlocks` | dead; left for a later pass |
+
+**Adding a form means adding its source to `SIGNUPS` in `job-request.gs`.** A
+source that is not a key there falls through to the job-request path: the address
+lands on the `Job requests` tab and the script mints a draft job card and a
+"before it goes live" checklist for a job nobody asked for.
+
+Signups are also **de-duplicated by email address**, so the same person
+submitting twice does not produce two list rows or two notifications. Job
+requests are not — a resident may legitimately ask for two different jobs.
+
+### The resident mailing list is not the `Job requests` tab
+
+Residents on the `Job requests` tab gave their address to get an answer about one
+specific job. That is not consent to a newsletter. The only recorded consent is:
+
+- a row on the `Resident updates` tab, or
+- `marketingConsent: Yes` on a `Job requests` row (the tick box at the foot of
+  the intake form, unchecked by default).
+
+Rows predating that column have no recorded answer, and are deliberately left
+alone.
+
 ## One-time setup
 
 1. **Create the sheet.** In Google Drive, make a new spreadsheet named
@@ -18,6 +51,11 @@ Unlimited submissions, no third-party service, no monthly cost.
    press **Run**. Approve the permissions prompt (it needs to send mail as you
    and edit this sheet). A test row should appear in the sheet and a test email
    in your inbox. Delete the row afterwards.
+
+   `testResidentSignup` does the same for the mailing list. Run it **twice**:
+   the first run should answer `{ ok: true, mailed: true }`, the second
+   `{ ok: true, duplicate: true }` with no second row on the tab — that is the
+   email de-duplication working. Delete the row afterwards.
 5. **Deploy.** **Deploy → New deployment → Web app**:
    - Description: `job request intake`
    - Execute as: **Me**
@@ -64,7 +102,10 @@ mints a *different* URL and the site keeps posting to the old code.
   fill time are all checked server-side. The 3-second floor in `doPost` is
   mirrored by `MIN_FILL_MS` in `for-residents.html`, which holds a fast
   submission back rather than letting it be silently dropped &mdash; raise one
-  and you must raise the other.
+  and you must raise the other. Both forms on that page share that constant and
+  the hold-back, but each keeps its **own** `openedAt`: the mailing list is one
+  field and is easily filled inside three seconds, so it is the form that
+  actually needs the hold.
 - **The site degrades gracefully.** If this script is unreachable, times out, or
   returns an error, the page hands the resident a prefilled email containing
   everything they typed, so no request is ever lost.

@@ -15,11 +15,29 @@ var NOTIFY_EMAIL = 'ben@jobsu.app';
 /** Tab inside the bound spreadsheet. Created automatically if missing. */
 var SHEET_NAME = 'Job requests';
 
-/** Students asking to hear about new jobs land here instead. */
-var ALERTS_SHEET_NAME = 'Student job alerts';
-
-/** Marks a signup from the board rather than a resident job request. */
-var ALERTS_SOURCE = 'jobs-board-alerts';
+/**
+ * SIGNUPS — sources that submit an email address rather than a job.
+ *
+ * A signup gets its own tab, a short replyable notification, and NO draft card:
+ * there is no job to post. Anything whose `source` is not a key here is treated
+ * as a job request, so adding a form to the site without adding it here writes
+ * the address into 'Job requests' and mints a draft card for a job nobody asked
+ * for. Keyed by the `source` the page sends.
+ */
+var SIGNUPS = {
+  'jobs-board-alerts': {
+    sheet: 'Student job alerts',
+    subject: 'Job alerts signup: ',
+    line: ' asked to hear about new jobs from the board.',
+    name: 'JobsU job alerts'
+  },
+  'resident-updates': {
+    sheet: 'Resident updates',
+    subject: 'Resident mailing list: ',
+    line: ' asked to hear about JobsU updates and free community events.',
+    name: 'JobsU updates'
+  }
+};
 
 /** Students who unlocked the board with a .edu address land here. */
 var UNLOCK_SHEET_NAME = 'Board unlocks';
@@ -64,26 +82,33 @@ function doPost(e) {
     if (Number(payload.elapsedMs) < 3000) return json({ ok: true, skipped: 'too fast' });
     if (!payload.email || !payload.category) return json({ ok: false, error: 'missing fields' });
 
-    var isAlert = payload.source === ALERTS_SOURCE;
-    var sheet = getSheet(isAlert ? ALERTS_SHEET_NAME : SHEET_NAME);
+    var signup = SIGNUPS[payload.source] || null;
+    var sheet = getSheet(signup ? signup.sheet : SHEET_NAME);
 
     // Retries and double clicks resolve to the same row rather than duplicates.
     if (payload.submissionId && hasSubmission(sheet, payload.submissionId)) {
       return json({ ok: true, duplicate: true });
     }
 
+    // A mailing list must not hold the same address twice, and a second
+    // notification for someone already on it is noise. Signups only: a resident
+    // may legitimately request two different jobs from the same address.
+    if (signup && emailOnSheet(sheet, payload.email)) {
+      return json({ ok: true, duplicate: true });
+    }
+
     // A signup is an email address, not a job: no draft card, no checklist.
-    var draft = isAlert ? null : buildDraft(payload);
-    var flags = isAlert ? null : draftFlags(payload, draft);
+    var draft = signup ? null : buildDraft(payload);
+    var flags = signup ? null : draftFlags(payload, draft);
 
     // The sheet is written first: if mail fails, the lead is still captured.
-    appendRow(sheet, payload, isAlert ? {} : {
+    appendRow(sheet, payload, signup ? {} : {
       draftCard: JSON.stringify(draft, null, 2),
       needsAttention: flags.join(' ')
     });
 
     try {
-      if (isAlert) sendAlertNotification(payload);
+      if (signup) sendSignupNotification(payload, signup);
       else sendNotification(payload, draft, flags);
     } catch (mailErr) {
       console.error('mail failed: ' + mailErr);
@@ -159,6 +184,28 @@ function fetchJobs() {
   return JSON.parse(body);
 }
 
+/**
+ * Is this address already on a signup tab?
+ *
+ * Distinct from emailSeen() below, which the board-unlock path uses: that tab is
+ * created with a fixed ['Unlocked', 'email'] header so its email is always
+ * column 2. A signup tab's columns are grown by appendRow() in whatever order
+ * the page first sent them, so the column has to be looked up by name. Reading
+ * column 2 here would have compared submission ids to email addresses and never
+ * found a duplicate.
+ */
+function emailOnSheet(sheet, email) {
+  var wanted = String(email || '').trim().toLowerCase();
+  if (!wanted) return false;
+  var col = headerRow(sheet).indexOf('email') + 1;
+  if (col < 1 || sheet.getLastRow() < 2) return false;
+  var values = sheet.getRange(2, col, sheet.getLastRow() - 1, 1).getValues();
+  for (var i = 0; i < values.length; i++) {
+    if (String(values[i][0]).trim().toLowerCase() === wanted) return true;
+  }
+  return false;
+}
+
 function emailSeen(sheet, email) {
   if (sheet.getLastRow() < 2) return false;
   var values = sheet.getRange(2, 2, sheet.getLastRow() - 1, 1).getValues();
@@ -231,20 +278,20 @@ function appendRow(sheet, payload, extras) {
   }));
 }
 
-/** A student asking to hear about new jobs. Short, and replyable. */
-function sendAlertNotification(payload) {
+/** Someone asking to hear from JobsU. Short, and replyable. */
+function sendSignupNotification(payload, signup) {
   MailApp.sendEmail({
     to: NOTIFY_EMAIL,
-    subject: 'Job alerts signup: ' + payload.email,
+    subject: signup.subject + payload.email,
     body: [
-      payload.email + ' asked to hear about new jobs from the board.',
+      payload.email + signup.line,
       '',
       'Reply to this email and it goes straight to them.',
       '',
-      'They are on the "' + ALERTS_SHEET_NAME + '" tab of the requests sheet.'
+      'They are on the "' + signup.sheet + '" tab of the requests sheet.'
     ].join('\n'),
     replyTo: payload.email,
-    name: 'JobsU job alerts'
+    name: signup.name
   });
 }
 
@@ -489,5 +536,24 @@ function testSubmission() {
       })
     }
   });
+  Logger.log(result.getContent());
+}
+
+/** Run once from the editor to confirm the resident mailing list works. */
+function testResidentSignup() {
+  var result = doPost({
+    postData: {
+      contents: JSON.stringify({
+        token: SHARED_TOKEN,
+        submissionId: 'test-sub-' + Date.now(),
+        elapsedMs: 9000,
+        source: 'resident-updates',
+        category: 'Resident updates',
+        email: NOTIFY_EMAIL
+      })
+    }
+  });
+  // Expect { ok: true, mailed: true } the first time and
+  // { ok: true, duplicate: true } on a second run, with no second row.
   Logger.log(result.getContent());
 }

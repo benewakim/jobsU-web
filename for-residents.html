@@ -112,9 +112,43 @@
 
     .contact-heading { font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; color: #9BAFCD; margin-bottom: 12px; }
 
+    /* The consent tick. Sits outside every .cat-fields block on purpose: those
+       are disabled while hidden, and consent must be visible and submitted
+       whatever category is chosen. */
+    .consent { border-top: 1px solid #F0F4FF; margin-top: 22px; padding-top: 20px; }
+    .consent-label { display: flex; align-items: flex-start; gap: 11px; cursor: pointer; }
+    .consent-label input { flex-shrink: 0; width: 18px; height: 18px; margin-top: 1px; accent-color: #1F4B99; cursor: pointer; }
+    .consent-label span { font-size: 14px; font-weight: 600; color: #5B6B88; line-height: 1.55; }
+
+    /* ── Mailing list ── */
+    .subscribe { background: white; border: 1px solid #E6ECFF; border-radius: 16px; padding: 24px; margin-top: 28px; }
+    .subscribe-title { font-size: 18px; font-weight: 900; margin-bottom: 8px; }
+    .subscribe-sub { font-size: 14px; font-weight: 600; color: #5B6B88; line-height: 1.65; margin-bottom: 18px; }
+    .subscribe-form { display: flex; gap: 10px; }
+    .subscribe-form[hidden] { display: none; }
+    .subscribe-form input[type="email"] {
+      flex: 1; min-width: 0; font-family: inherit; font-size: 15px; font-weight: 600; color: #0B1B3A;
+      background: #FBFCFF; border: 1px solid #E6ECFF; border-radius: 10px; padding: 12px 14px;
+      -webkit-appearance: none; appearance: none;
+    }
+    .subscribe-form input[type="email"]:focus { outline: none; border-color: #1F4B99; background: white; box-shadow: 0 0 0 3px rgba(31,75,153,0.12); }
+    .subscribe-btn {
+      flex-shrink: 0; background: #1F4B99; color: white; font-family: inherit; font-size: 15px; font-weight: 800;
+      border: none; border-radius: 10px; padding: 12px 18px; cursor: pointer; transition: background 0.15s;
+    }
+    .subscribe-btn:hover { background: #0D2D6B; }
+    .subscribe-btn:disabled { background: #9BAFCD; cursor: default; }
+    .subscribe-note { font-size: 13px; font-weight: 600; color: #9BAFCD; line-height: 1.6; margin-top: 12px; }
+    .subscribe-note:empty { display: none; }
+    .subscribe-note.ok { color: #14683C; }
+    .subscribe-note.err { color: #9A3412; }
+    .subscribe-note a { color: #1F4B99; }
+
     @media (max-width: 600px) {
       .field-row { grid-template-columns: 1fr; gap: 0; }
       .form-card { padding: 22px 18px; }
+      .subscribe { padding: 20px 18px; }
+      .subscribe-form { flex-direction: column; }
     }
 
     @media (max-width: 768px) {
@@ -410,6 +444,13 @@
         </div>
       </div>
 
+      <div class="consent">
+        <label class="consent-label" for="marketingConsent">
+          <input type="checkbox" id="marketingConsent" name="marketingConsent" value="yes" />
+          <span>Also send me occasional JobsU updates and invites to free community events.</span>
+        </label>
+      </div>
+
       <div class="hp" aria-hidden="true">
         <label for="company">Company</label>
         <input type="text" id="company" name="company" tabindex="-1" autocomplete="off" />
@@ -462,6 +503,32 @@
       </a>
       <p class="contact-hint">Rates vary by job type. The minimum is $18.75 an hour, and most jobs run $25 to $45 depending on what you need. Not sure what to offer? Put &ldquo;not sure&rdquo; in the form above, or just call, and I&rsquo;ll suggest a range.</p>
     </div>
+
+    <!-- ── Mailing list ──
+         Deliberately NOT an option on the intake form above. That form requires
+         a category, branches into schedule and household questions, generates a
+         draft job card and promises a same-day reply — none of which apply to
+         someone who has no job yet. Asking them to pick a job type in order to
+         say "nothing right now" is the abandonment case.
+
+         It posts to the SAME Apps Script deployment as the intake form, with
+         source 'resident-updates', which routes it to its own sheet tab. A new
+         source must be added to SIGNUPS in apps-script/job-request.gs or it
+         falls through to the job-request tab and mints a bogus draft card. -->
+    <section class="subscribe" id="subscribe">
+      <p class="subscribe-title">Stay in the loop</p>
+      <p class="subscribe-sub">Occasional updates from JobsU, plus first notice of free community events like sports clinics for kids. No more than a couple of emails a month.</p>
+      <form class="subscribe-form" id="subscribe-form" novalidate>
+        <input type="email" id="subscribe-email" placeholder="you@example.com"
+               aria-label="Email address" autocomplete="email" required />
+        <div class="hp" aria-hidden="true">
+          <label for="subscribe-company">Company</label>
+          <input type="text" id="subscribe-company" tabindex="-1" autocomplete="off" />
+        </div>
+        <button type="submit" class="subscribe-btn" id="subscribe-btn">Keep me posted</button>
+      </form>
+      <p class="subscribe-note" id="subscribe-note" role="status"></p>
+    </section>
 
   </div>
 
@@ -577,7 +644,11 @@
       }
       Object.keys(draft.values).forEach(function (name) {
         var el = form.elements[name];
-        if (el && !el.disabled && typeof el.value === 'string') el.value = draft.values[name];
+        if (!el || el.disabled) return;
+        // Consent comes back as checked state, not as a value — and it stays
+        // unticked unless this visitor ticked it themselves.
+        if (el.type === 'checkbox') { el.checked = draft.values[name] === 'Yes'; return; }
+        if (typeof el.value === 'string') el.value = draft.values[name];
       });
     }
 
@@ -595,6 +666,12 @@
         if (!el.name || el.disabled) return;
         if (el.type === 'submit' || el.type === 'button') return;
         if (el.name === 'company') return;
+        // A checkbox's .value is "yes" whether or not it is ticked — only
+        // .checked says anything. Reading .value here would record consent from
+        // every submission, which is the exact opposite of consent. 'No' is
+        // written explicitly rather than omitted, because a missing column and
+        // a declined tick must not look the same in the sheet.
+        if (el.type === 'checkbox') { out[el.name] = el.checked ? 'Yes' : 'No'; return; }
         var value = (el.value || '').trim();
         if (value || includeEmpty) out[el.name] = value;
       });
@@ -608,7 +685,12 @@
 
     /* ── The email escape hatch ── */
 
+    /* Field names whose visible label is a full sentence, too long for a line
+       in the fallback email. */
+    var LABEL_OVERRIDES = { marketingConsent: 'Also send occasional JobsU updates' };
+
     function labelFor(name) {
+      if (LABEL_OVERRIDES[name]) return LABEL_OVERRIDES[name];
       var el = form.elements[name];
       var wrap = el && el.closest ? el.closest('.field') : null;
       var label = wrap ? wrap.querySelector('label') : null;
@@ -741,6 +823,111 @@
         })
         .catch(function (err) {
           showFallback(values, String(err && err.message || err));
+        });
+    });
+
+    /* ── Resident mailing list ──
+       Inside this IIFE on purpose, so ENDPOINT, SHARED_TOKEN, post(), send()
+       and wait() have exactly one definition on the page. A second copy of the
+       endpoint URL is the trap the README warns about: redeploying the script
+       would leave one of them posting to dead code.
+
+       Its own openedAt, though. The two forms share no state: this one is spent
+       by a single field rather than a twenty-field form, and entangling the
+       timers would mean a change to one form's pacing silently changed the
+       other's. Both start at page load, which credits a resident for the time
+       they already spent scrolling; the hold-back below is what keeps a fast
+       one-field submission from being dropped by the server's 3-second bot
+       floor. MIN_FILL_MS must stay >= that floor in doPost. */
+
+    var subForm = document.getElementById('subscribe-form');
+    var subEmail = document.getElementById('subscribe-email');
+    var subBtn = document.getElementById('subscribe-btn');
+    var subNote = document.getElementById('subscribe-note');
+    var subCompany = document.getElementById('subscribe-company');
+    var subOpenedAt = Date.now();
+    var subSending = false;
+
+    function subMailto(email) {
+      var body = [
+        'Hi Ben,',
+        '',
+        'Please add me to the JobsU updates list — I would like to hear about ' +
+          'JobsU news and free community events.',
+        '',
+        'Email: ' + (email || ''),
+        'Town or neighborhood:',
+        '',
+        'Thanks!'
+      ].join('\n');
+      return 'mailto:' + CONTACT +
+        '?subject=' + encodeURIComponent('Add me to the JobsU updates list') +
+        '&body=' + encodeURIComponent(body);
+    }
+
+    function subFailed(email, reason) {
+      subNote.className = 'subscribe-note err';
+      subNote.innerHTML = 'That did not go through. <a href="' + subMailto(email) +
+        '">Send it as an email instead</a> and I will add you.';
+      subBtn.disabled = false;
+      subBtn.textContent = 'Try again';
+      subSending = false;
+      if (window.posthog) posthog.capture('resident_updates_fallback', { reason: reason });
+    }
+
+    function subDone(email) {
+      subForm.hidden = true;
+      subNote.className = 'subscribe-note ok';
+      // textContent, not innerHTML: this is an address someone typed.
+      subNote.textContent = 'You are on the list. Updates go to ' + email +
+        '. Reply to any of them to be taken off.';
+    }
+
+    subForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (subSending) return;
+      if (!subForm.checkValidity()) { subForm.reportValidity(); return; }
+
+      var email = subEmail.value.trim();
+      subSending = true;
+      subBtn.disabled = true;
+      subBtn.textContent = 'Adding…';
+      subNote.className = 'subscribe-note';
+      subNote.textContent = '';
+
+      var payload = {
+        token: SHARED_TOKEN,
+        submissionId: uuid(),
+        source: 'resident-updates',
+        // doPost requires a category on every submission. For a signup it is a
+        // label for the row, not a job type.
+        category: 'Resident updates',
+        email: email,
+        company: subCompany ? subCompany.value : '',
+        elapsedMs: Date.now() - subOpenedAt
+      };
+
+      if (window.posthog) posthog.capture('resident_updates_submitted');
+
+      if (!ENDPOINT) {
+        window.location.href = subMailto(email);
+        subFailed(email, 'no-endpoint');
+        return;
+      }
+
+      wait(Math.max(0, MIN_FILL_MS - payload.elapsedMs))
+        .then(function () {
+          payload.elapsedMs = Date.now() - subOpenedAt;
+          return send(payload, ATTEMPTS);
+        })
+        .then(function (result) {
+          // A honeypot hit answers { ok: true, skipped: 'honeypot' }. Showing a
+          // bot the success state is deliberate.
+          if (result && result.ok) subDone(email);
+          else subFailed(email, (result && result.error) || 'rejected');
+        })
+        .catch(function (err) {
+          subFailed(email, String(err && err.message || err));
         });
     });
 

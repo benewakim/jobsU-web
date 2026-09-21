@@ -456,8 +456,9 @@ function describe(p) {
 function requirementsFor(p) {
   var bits = [];
   p = p || {};
+  // One spelling. `carProvided` was the Driving block's separate name for this
+  // same question and no longer exists on the form.
   if (/own car|student uses/i.test(p.drivingNeeded || '')) bits.push('Own car needed');
-  if (/own/i.test(p.carProvided || '')) bits.push('Own car needed');
   if (/student brings/i.test(p.toolsProvided || '')) bits.push('Student brings their own tools');
   return bits.length ? bits.join('. ') + '.' : null;
 }
@@ -468,7 +469,12 @@ function buildDraft(p) {
   var town = p.town || 'TODO town';
   var title = role + ', ' + town;
 
-  var schedule = p.daysTimes || p.dateAndTime || 'TODO';
+  // Schedule and frequency are one line on the board card. Both were collected
+  // before this and only the schedule half ever reached the card, so every
+  // "Recurring" answer was retyped by hand. `dateAndTime` was Moving Help's
+  // second date question and is gone from the form.
+  var schedule = p.daysTimes || 'TODO';
+  if (p.frequency) schedule = p.daysTimes ? schedule + ' — ' + p.frequency : p.frequency;
 
   var draft = {
     id: slug(title),
@@ -479,7 +485,9 @@ function buildDraft(p) {
     area: town,
     start: p.startDate || 'TODO',
     schedule: schedule,
-    hoursPerWeek: 'TODO',
+    // The form asks this now. It used to be hardcoded TODO on every card, and
+    // Moving Help's `estimatedHours` was collected and then dropped here.
+    hoursPerWeek: p.duration || 'TODO',
     description: describe(p)
   };
 
@@ -494,10 +502,18 @@ function draftFlags(p, draft) {
   var publicText = draft.description.join(' ') + ' ' + (draft.requirements || '');
 
   if (draft.rate === 'TODO') flags.push('No rate given — ask before posting.');
-  flags.push('Hours/week is not asked on the form — work it out from the schedule.');
-  if (draft.schedule === 'TODO') flags.push('No schedule given.');
+  // Was an unconditional "hours/week is not asked on the form". It is asked now,
+  // so this fires only when the resident left it blank.
+  if (!p.duration) flags.push('No duration given — work the hours out from the schedule.');
+  // Checked against the answer, not against draft.schedule: a frequency with no
+  // days and times still leaves the card without a schedule.
+  if (!p.daysTimes) flags.push('No days and times given.');
   if (draft.start === 'TODO') flags.push('No start date given.');
   if (!p.town) flags.push('No town given — the title and area both need one.');
+  // The landmark deliberately does NOT go on the card: it narrows a family's
+  // location on a public page. Its readers are this email and the sheet, where
+  // it answers "how far is this from campus" without being published.
+  if (!p.landmark) flags.push('No landmark given — ask if a student needs to judge the distance.');
 
   if (/\b(school|elementary|middle|high|academy|preschool)\b/i.test(publicText)) {
     flags.push('Mentions a school. Board convention is to name the town, not the school.');
@@ -526,9 +542,12 @@ function testSubmission() {
         lastName: 'Resident',
         email: NOTIFY_EMAIL,
         phone: '(617) 555-0100',
-        town: 'Newtonville',
+        town: 'Newton',
+        landmark: 'Near the high school',
         category: 'Babysitting',
         daysTimes: 'Tuesdays and Fridays, 2 to 6pm',
+        frequency: 'Recurring (weekly or so)',
+        duration: 'About four hours',
         kidsAges: 'Two kids, 3 and 6',
         startDate: 'Next month',
         rate: '$25 to $30',

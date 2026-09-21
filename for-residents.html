@@ -190,8 +190,8 @@
           <input type="text" id="firstName" name="firstName" autocomplete="given-name" required />
         </div>
         <div class="field">
-          <label for="lastName">Last name<span class="req" aria-hidden="true">*</span></label>
-          <input type="text" id="lastName" name="lastName" autocomplete="family-name" required />
+          <label for="lastName">Last name</label>
+          <input type="text" id="lastName" name="lastName" autocomplete="family-name" />
         </div>
       </div>
 
@@ -206,9 +206,16 @@
         </div>
       </div>
 
-      <div class="field">
-        <label for="town">Town or neighborhood</label>
-        <input type="text" id="town" name="town" placeholder="Newtonville, Beacon Hill, Brookline&hellip;" />
+      <div class="field-row">
+        <div class="field">
+          <label for="town">Town<span class="req" aria-hidden="true">*</span></label>
+          <input type="text" id="town" name="town" placeholder="Newton, Brookline, Needham&hellip;" required />
+        </div>
+        <div class="field">
+          <label for="landmark">Nearby landmark</label>
+          <input type="text" id="landmark" name="landmark" placeholder="Near the high school, by the library&hellip;" />
+          <p class="field-hint">Helps a student tell how far it is. No street address needed.</p>
+        </div>
       </div>
 
       <div class="field">
@@ -229,29 +236,8 @@
       <div class="cat-fields" data-cat="Babysitting" hidden>
         <p class="cat-legend">About the babysitting</p>
         <div class="field">
-          <label for="bs-days">Days and times you need</label>
-          <input type="text" id="bs-days" name="daysTimes" placeholder="Tuesdays and Fridays, 2 to 6pm" />
-        </div>
-        <div class="field">
-          <label for="bs-freq">Recurring or occasional?</label>
-          <select id="bs-freq" name="frequency">
-            <option value="">No preference yet</option>
-            <option>Recurring</option>
-            <option>Occasional</option>
-          </select>
-        </div>
-        <div class="field">
           <label for="bs-kids">Number of kids and ages</label>
           <input type="text" id="bs-kids" name="kidsAges" placeholder="Two kids, 5 and 8" />
-        </div>
-        <div class="field">
-          <label for="bs-driving">Driving involved?</label>
-          <select id="bs-driving" name="drivingNeeded">
-            <option value="">Not sure yet</option>
-            <option>No driving needed</option>
-            <option>Yes &mdash; student uses their own car</option>
-            <option>Yes &mdash; we provide a car</option>
-          </select>
         </div>
         <div class="field">
           <label for="bs-extras">Pets, allergies, homework help, bedtime routine</label>
@@ -278,10 +264,6 @@
           </select>
         </div>
         <div class="field">
-          <label for="tu-days">Days and times you need</label>
-          <input type="text" id="tu-days" name="daysTimes" placeholder="Once a week after school" />
-        </div>
-        <div class="field">
           <label for="tu-learning">Anything about how the student learns</label>
           <textarea id="tu-learning" name="learningNotes"></textarea>
         </div>
@@ -297,35 +279,13 @@
           <label for="dr-to">Drop-off location</label>
           <input type="text" id="dr-to" name="dropoffLocation" />
         </div>
-        <div class="field">
-          <label for="dr-days">Days and times</label>
-          <input type="text" id="dr-days" name="daysTimes" placeholder="Weekday afternoons, 2 to 3 times a week" />
-        </div>
-        <div class="field">
-          <label for="dr-car">Whose car?</label>
-          <select id="dr-car" name="carProvided">
-            <option value="">Not sure yet</option>
-            <option>Student uses their own car</option>
-            <option>We provide a car</option>
-          </select>
-        </div>
       </div>
 
       <div class="cat-fields" data-cat="Moving Help" hidden>
         <p class="cat-legend">About the move</p>
         <div class="field">
-          <label for="mv-when">Date and time</label>
-          <input type="text" id="mv-when" name="dateAndTime" placeholder="Saturday the 12th, morning" />
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label for="mv-people">People needed</label>
-            <input type="text" id="mv-people" name="peopleNeeded" placeholder="2" />
-          </div>
-          <div class="field">
-            <label for="mv-hours">Rough hours</label>
-            <input type="text" id="mv-hours" name="estimatedHours" placeholder="2 to 3" />
-          </div>
+          <label for="mv-people">People needed</label>
+          <input type="text" id="mv-people" name="peopleNeeded" />
         </div>
         <div class="field">
           <label for="mv-access">Stairs or elevator?</label>
@@ -393,14 +353,6 @@
             <option>Some of each</option>
           </select>
         </div>
-        <div class="field">
-          <label for="yw-freq">One-time or recurring?</label>
-          <select id="yw-freq" name="frequency">
-            <option value="">No preference yet</option>
-            <option>One-time</option>
-            <option>Recurring</option>
-          </select>
-        </div>
       </div>
 
       <div class="cat-fields" data-cat="Tech Setup" hidden>
@@ -427,16 +379,60 @@
         </div>
       </div>
 
+      <!-- ── Shared, every category ──
+           These four are asked on every follow-up email regardless of job type,
+           so they are asked once here rather than per category. They used to
+           live in the babysitting block; four categories never got them at all,
+           and each one missing is a round trip before the job can be posted.
+           ONE field name and ONE vocabulary each: `frequency` previously had two
+           option sets under one name, and `drivingNeeded`/`carProvided` were two
+           names for one question. -->
+      <div class="cat-fields" data-cat="_common" hidden>
+        <p class="cat-legend">When and how long</p>
+        <div class="field">
+          <label for="daysTimes">Days and times you need</label>
+          <input type="text" id="daysTimes" name="daysTimes" placeholder="Tuesdays and Fridays, 2 to 6pm" />
+        </div>
+        <div class="field">
+          <label for="frequency">How often?</label>
+          <select id="frequency" name="frequency">
+            <option value="">Not sure yet</option>
+            <option>One-time</option>
+            <option>Occasional (as needed)</option>
+            <option>Recurring (weekly or so)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="duration">How long each time?</label>
+          <input type="text" id="duration" name="duration" placeholder="An hour a session, a full afternoon&hellip;" />
+          <p class="field-hint">Roughly is fine. It becomes the hours on the job post.</p>
+        </div>
+        <div class="field">
+          <label for="startDate">Ideal start date</label>
+          <input type="text" id="startDate" name="startDate" placeholder="As soon as possible, in a couple of weeks&hellip;" />
+        </div>
+        <div class="field">
+          <label for="drivingNeeded">Is a car or driving needed?</label>
+          <select id="drivingNeeded" name="drivingNeeded">
+            <option value="">Not sure yet</option>
+            <option>No driving needed</option>
+            <option>Yes &mdash; student uses their own car</option>
+            <option>Yes &mdash; we provide a car</option>
+          </select>
+        </div>
+      </div>
+
       <div class="cat-fields" data-cat="_common" hidden>
         <p class="cat-legend">A few last things</p>
         <div class="field">
-          <label for="startDate">Ideal start date</label>
-          <input type="text" id="startDate" name="startDate" placeholder="Early September, as soon as possible&hellip;" />
-        </div>
-        <div class="field">
           <label for="rate">Rate you have in mind<span class="req" aria-hidden="true">*</span></label>
-          <input type="text" id="rate" name="rate" placeholder="$25 to $30 an hour" required />
-          <p class="field-hint">A range is fine. Not sure? Put &ldquo;not sure&rdquo; and Ben will suggest one.</p>
+          <!-- No placeholder, deliberately. A number sitting in a required field
+               is the strongest anchor on the page, and the one that was here
+               ($25 to $30) topped out below the range below and below the
+               flyer's. The hint names one range, and it is the only range the
+               page states. -->
+          <input type="text" id="rate" name="rate" required />
+          <p class="field-hint">Most families here pay $25 to $45 an hour depending on the job. A range is fine. Not sure? Put &ldquo;not sure&rdquo; and Ben will suggest one.</p>
         </div>
         <div class="field">
           <label for="notes">Anything else worth knowing</label>
@@ -477,7 +473,7 @@
       <div class="form-state state-warn">
         <h2>Send Ben an email</h2>
         <p>This form needs JavaScript. You can email your request instead and Ben will take it from there.</p>
-        <a class="state-btn" href="mailto:ben@jobsu.app?subject=JobsU%20%E2%80%94%20I%20need%20help%20with%20a%20task&body=Hi%20Ben%2C%0A%0AName%3A%0ATown%3A%0APhone%3A%0AWhat%20I%20need%20done%3A%0AWhen%20I%20need%20it%3A%0AHow%20often%3A%0ARate%20you%20have%20in%20mind%3A%0AAnything%20else%3A%0A%0AThanks!">Email ben@jobsu.app</a>
+        <a class="state-btn" href="mailto:ben@jobsu.app?subject=JobsU%20%E2%80%94%20I%20need%20help%20with%20a%20task&body=Hi%20Ben%2C%0A%0AName%3A%0ATown%3A%0ANearby%20landmark%3A%0APhone%3A%0AWhat%20I%20need%20done%3A%0AWhen%20I%20need%20it%3A%0AHow%20long%20it%20takes%3A%0AHow%20often%3A%0ARate%20you%20have%20in%20mind%3A%0AAnything%20else%3A%0A%0AThanks!">Email ben@jobsu.app</a>
       </div>
     </noscript>
 
@@ -493,7 +489,7 @@
         </span>
       </a>
       <a class="contact-row"
-         href="mailto:ben@jobsu.app?subject=JobsU%20%E2%80%94%20I%20need%20help%20with%20a%20task&body=Hi%20Ben%2C%0A%0AName%3A%0ATown%3A%0APhone%20(optional)%3A%0AWhat%20I%20need%20done%3A%0AWhen%20I%20need%20it%3A%0AHow%20often%20(one-time%2C%20weekly%2C%20or%20recurring)%3A%0ARate%20you%20have%20in%20mind%20(optional)%3A%0AAnything%20else%20I%20should%20know%3A%0A%0AThanks!"
+         href="mailto:ben@jobsu.app?subject=JobsU%20%E2%80%94%20I%20need%20help%20with%20a%20task&body=Hi%20Ben%2C%0A%0AName%3A%0ATown%3A%0ANearby%20landmark%3A%0APhone%20(optional)%3A%0AWhat%20I%20need%20done%3A%0AWhen%20I%20need%20it%3A%0AHow%20long%20it%20takes%3A%0AHow%20often%20(one-time%2C%20weekly%2C%20or%20recurring)%3A%0ARate%20you%20have%20in%20mind%3A%0AAnything%20else%20I%20should%20know%3A%0A%0AThanks!"
          onclick="if(window.posthog)posthog.capture('concierge_email_clicked')">
         <span class="contact-icon">✉️</span>
         <span class="contact-text">
@@ -501,7 +497,7 @@
           <span class="contact-value">ben@jobsu.app</span>
         </span>
       </a>
-      <p class="contact-hint">Rates vary by job type. The minimum is $18.75 an hour, and most jobs run $25 to $45 depending on what you need. Not sure what to offer? Put &ldquo;not sure&rdquo; in the form above, or just call, and I&rsquo;ll suggest a range.</p>
+      <p class="contact-hint">Most families here pay $25 to $45 an hour depending on the job. Not sure what to offer? Put &ldquo;not sure&rdquo; in the form above, or just call, and I&rsquo;ll suggest a range. The platform minimum is $18.75 an hour.</p>
     </div>
 
     <!-- ── Mailing list ──

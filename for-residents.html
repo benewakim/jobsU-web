@@ -603,6 +603,31 @@
        While it is empty the form still works: it falls back to a prefilled
        email, so a resident is never left with nowhere to send their request. */
     var ENDPOINT = 'https://script.google.com/macros/s/AKfycbyh5uwj_0CBw73j0DRKtIiDnk7H-O7MVJY8wgfiLFrEjwQY-5uGuSlGs12PYUCq2PNr/exec';
+
+    /* The same submission, written a second time into the platform's requests
+       table, so it stops being retyped by hand.
+
+       The sheet above stays authoritative. Success, the fallback mailto and the
+       retry loop are all still driven by ENDPOINT alone; this call is fired and
+       forgotten. If it fails the resident never learns, because the row is in
+       the sheet and that is exactly the situation that existed before it.
+
+       Never awaited, never retried, never allowed to reject: an unhandled
+       rejection here would surface as a console error on a page whose form just
+       succeeded. */
+    var REQUESTS_ENDPOINT = 'https://jcjbjtolcxxnwkpmlofq.supabase.co/functions/v1/submit-request';
+
+    function alsoRecordRequest(payload) {
+      if (!REQUESTS_ENDPOINT || !window.fetch) return;
+      try {
+        fetch(REQUESTS_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+          keepalive: true
+        }).catch(function () { /* the sheet has it */ });
+      } catch (e) { /* the sheet has it */ }
+    }
     var SHARED_TOKEN = 'jobsu-request-v1';
     var CONTACT = 'ben@jobsu.app';
     var DRAFT_KEY = 'jobsu:request-draft:v1';
@@ -851,6 +876,10 @@
       wait(holdBack)
         .then(function () {
           payload.elapsedMs = Date.now() - openedAt;
+          // Fired alongside the sheet write, not chained to it: the platform
+          // insert must not be able to delay or fail the thing the resident
+          // is waiting on.
+          alsoRecordRequest(payload);
           return send(payload, ATTEMPTS);
         })
         .then(function (result) {

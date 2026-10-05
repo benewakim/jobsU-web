@@ -383,7 +383,10 @@ function label(key) {
    the form actually asked and marks the rest TODO rather than guessing.
    ────────────────────────────────────────────────────────────── */
 
-/** Category -> the role word used in a board title. */
+/** Category -> the role word used in a board title.
+    Keyed to the FORM's category list in for-residents.html, which is friendlier
+    than the platform's job_type vocabulary on purpose. Babysitting is handled by
+    roleFor() below instead of here — see why. */
 var ROLE_WORDS = {
   'Babysitting': 'After-School Care',
   'Tutoring': 'Tutoring',
@@ -463,9 +466,56 @@ function requirementsFor(p) {
   return bits.length ? bits.join('. ') + '.' : null;
 }
 
+/**
+ * The role word for a title.
+ *
+ * Babysitting cannot use a fixed word. ROLE_WORDS mapped it to
+ * "After-School Care" unconditionally, so EVERY babysitting request became
+ * "After-School Care, <town>" — including Teresa Chamberlain's occasional
+ * evening and weekend sitting, which is not after-school care, and Ashley
+ * Rose's, whose draft came out byte-identical in both title and id. Babysitting
+ * is the commonest category on the form, so the one word that was always wrong
+ * was also the most used.
+ *
+ * The id is slug(title), so a wrong title silently produced a wrong id too, and
+ * two requests from the same town collided. The live board has no collision only
+ * because every title has been rewritten by hand before pasting.
+ *
+ * This reads the schedule the family actually typed. It is a heuristic and the
+ * checklist still says to check the title — but it starts from what was asked
+ * for rather than from one guess applied to everything.
+ */
+function roleFor(p) {
+  if (p.category !== 'Babysitting') return ROLE_WORDS[p.category] || 'Help';
+  var when = String((p.daysTimes || '') + ' ' + (p.frequency || '') + ' ' + (p.householdNotes || ''));
+  if (/after[-\s]?school|school pickup|pick ?up from school|dismissal/i.test(when)) return 'After-School Care';
+  // Nobody writes "after school" when they write "Tuesday and Thursday from
+  // 2:45-6". Ashley Rose's request is exactly that, and the words-only version
+  // of this called it "Sitter". A start time between 2 and 4:30pm IS the school
+  // run, so read the clock as well as the vocabulary.
+  var startHour = when.match(/\b(1?\d)(?::(\d{2}))?\s*(am|pm)?\s*(?:-|to|–)/i);
+  if (startHour) {
+    var h = parseInt(startHour[1], 10);
+    var mins = startHour[2] ? parseInt(startHour[2], 10) : 0;
+    var isPm = /pm/i.test(startHour[3] || '') || (h >= 1 && h <= 6 && !/am/i.test(startHour[3] || ''));
+    var h24 = isPm && h < 12 ? h + 12 : h;
+    var t = h24 * 60 + mins;
+    if (t >= 14 * 60 && t <= 16 * 60 + 30 && !/weekend|saturday|sunday/i.test(when)) {
+      return 'After-School Care';
+    }
+  }
+  var evening = /evening|night|date night|bedtime/i.test(when);
+  var weekend = /weekend|saturday|sunday/i.test(when);
+  if (evening && weekend) return 'Evening and Weekend Sitter';
+  if (evening) return 'Evening Sitter';
+  if (weekend) return 'Weekend Sitter';
+  if (/morning/i.test(when)) return 'Morning Sitter';
+  return 'Sitter';
+}
+
 function buildDraft(p) {
   var money = parseRate(p.rate);
-  var role = ROLE_WORDS[p.category] || 'Help';
+  var role = roleFor(p);
   var town = p.town || 'TODO town';
   var title = role + ', ' + town;
 
@@ -510,6 +560,11 @@ function draftFlags(p, draft) {
   if (!p.daysTimes) flags.push('No days and times given.');
   if (draft.start === 'TODO') flags.push('No start date given.');
   if (!p.town) flags.push('No town given — the title and area both need one.');
+  // The script cannot see jobs/index.html, so it cannot know whether this id is
+  // taken. It derives both title and id from a category and a town, which is not
+  // enough to be unique: two babysitting requests from one town produce the same
+  // id, and duplicate ids in the JOBS array are a silent collision.
+  flags.push('Title and id are both derived — "' + draft.id + '". Check it is not already in the JOBS array, and that the title matches what the family actually asked for.');
   // The landmark deliberately does NOT go on the card: it narrows a family's
   // location on a public page. Its readers are this email and the sheet, where
   // it answers "how far is this from campus" without being published.

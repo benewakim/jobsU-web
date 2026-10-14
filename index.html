@@ -112,21 +112,10 @@
       text-align: center;
     }
 
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.35);
-      border-radius: 999px; padding: 6px 14px;
-      font-size: 13px; font-weight: 700; color: white;
-      margin-bottom: 28px; backdrop-filter: blur(6px);
-    }
-
-    .hero-badge-dot {
-      width: 7px; height: 7px; background: var(--green);
-      border-radius: 50%; animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; } 50% { opacity: 0.4; }
+    .hero-label {
+      font-size: 12px; font-weight: 900; text-transform: uppercase;
+      letter-spacing: 1.5px; color: rgba(255,255,255,0.85);
+      margin-bottom: 24px;
     }
 
     .hero h1 {
@@ -174,7 +163,13 @@
 
     .btn-secondary:hover { background: rgba(255,255,255,0.92); transform: translateY(-2px); }
 
-    .hero-trust { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+    .hero-trust { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+
+    .hero-trust-pill {
+      font-size: 12px; font-weight: 700; color: white;
+      background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.35);
+      padding: 5px 14px; border-radius: 999px; backdrop-filter: blur(6px);
+    }
 
     .hero-trust-item {
       display: flex; align-items: center; gap: 6px;
@@ -219,48 +214,6 @@
 
     .hero-float-tag span { font-size: 11px; font-weight: 600; color: var(--muted); }
 
-    /* ── SCHOOL LOGOS STRIP ── */
-    .schools-strip {
-      background: white;
-      padding: 36px 40px;
-      border-bottom: 1px solid var(--border);
-      text-align: center;
-    }
-
-    .schools-label {
-      font-size: 12px; font-weight: 900; text-transform: uppercase;
-      letter-spacing: 1.5px; color: var(--muted); margin-bottom: 24px;
-    }
-
-    .schools-row {
-      display: flex; align-items: center; justify-content: center;
-      gap: 48px; flex-wrap: wrap;
-    }
-
-    .schools-row img {
-      height: 68px; width: auto; object-fit: contain;
-      opacity: 0.8; transition: opacity 0.2s;
-      filter: grayscale(20%);
-    }
-
-    .schools-row img:hover { opacity: 1; filter: grayscale(0%); }
-
-    .schools-trust {
-      display: flex; gap: 12px; justify-content: center;
-      margin-top: 24px; flex-wrap: wrap;
-    }
-
-    .schools-trust-pill {
-      font-size: 12px; font-weight: 700; color: var(--muted);
-      background: var(--ice); border: 1px solid var(--border);
-      padding: 5px 14px; border-radius: 999px;
-    }
-
-    .schools-expand {
-      font-size: 12px; font-weight: 600; color: var(--muted);
-      margin-top: 16px; letter-spacing: 0.3px;
-    }
-
     /* ── TRUST BAR ── */
     .trust-bar {
       background: var(--navy); padding: 14px 40px;
@@ -295,6 +248,20 @@
     }
 
     .bg-ice { background: var(--ice); }
+
+    /* ── WHAT PEOPLE ASK FOR ── */
+    .asks { padding-top: 72px; padding-bottom: 72px; }
+    .asks-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; margin-top: 36px; }
+    .asks-col h3 {
+      font-size: 13px; font-weight: 900; text-transform: uppercase;
+      letter-spacing: 1.2px; color: var(--blue);
+      padding-bottom: 12px; margin-bottom: 4px; border-bottom: 1px solid var(--border);
+    }
+    .asks-col ul { list-style: none; }
+    .asks-col li {
+      font-size: 16px; font-weight: 600; color: var(--navy); line-height: 1.5;
+      padding: 12px 0; border-bottom: 1px solid var(--border);
+    }
 
     /* ── HOW IT WORKS ── */
     .hiw-card {
@@ -348,26 +315,6 @@
     .btn-hiw.resident:hover { background: var(--blue-hover); transform: translateY(-1px); }
     .btn-hiw.student  { background: var(--green-dark); color: white; }
     .btn-hiw.student:hover  { background: var(--green-deep); transform: translateY(-1px); }
-
-    /* ── CATEGORIES ── */
-    .categories-grid {
-      display: grid; grid-template-columns: repeat(6, 1fr);
-      gap: 16px; margin-top: 52px;
-    }
-
-    .category-card {
-      background: white; border: 1px solid var(--border);
-      border-radius: 16px; padding: 20px 12px; text-align: center;
-      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
-    }
-
-    .category-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 28px rgba(31,75,153,0.1); border-color: #C7D7FF;
-    }
-
-    .category-icon { font-size: 32px; margin-bottom: 10px; display: block; }
-    .category-name { font-size: 13px; font-weight: 800; color: var(--navy); }
 
     /* ── WHY JOBSU ── */
     .why-grid {
@@ -563,7 +510,6 @@
     @media (max-width: 960px) {
       .why-grid { grid-template-columns: 1fr 1fr; }
       .quote-grid { grid-template-columns: 1fr; }
-      .categories-grid { grid-template-columns: repeat(3, 1fr); }
       .hiw-card { grid-template-columns: 1fr; }
       .hiw-divider { height: 1px; width: auto; }
       .hiw-col { padding: 36px 32px; }
@@ -581,6 +527,8 @@
       .section { padding: 64px 20px; }
       .trust-bar { padding: 14px 20px; gap: 20px; }
       .why-grid { grid-template-columns: 1fr; }
+      .asks-grid { grid-template-columns: 1fr; gap: 32px; margin-top: 28px; }
+      .asks { padding-top: 56px; padding-bottom: 56px; }
       .cta { padding: 64px 20px; }
 
       .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; }
@@ -590,7 +538,6 @@
     }
 
     @media (max-width: 520px) {
-      .categories-grid { grid-template-columns: repeat(2, 1fr); }
       .hero-actions { flex-direction: column; }
       .hero-actions .btn-primary,
       .hero-actions .btn-secondary { width: 100%; justify-content: center; }
@@ -623,10 +570,7 @@
 
     <div class="hero-inner">
       <div>
-        <div class="hero-badge">
-          <span class="hero-badge-dot"></span>
-          Now serving Newton, Brookline and Brighton
-        </div>
+        <p class="hero-label">Boston College students &middot; Newton, Brookline and Brighton</p>
         <h1>Real help from<br /><em>students</em> down the road.</h1>
         <p class="hero-sub">
           JobsU connects families in Newton, Brookline and Brighton with .edu-confirmed Boston College students for babysitting, tutoring, yard work and more.
@@ -635,23 +579,53 @@
           <a href="for-residents.html" onclick="if(window.posthog)posthog.capture('post_job_clicked')" class="btn-primary">🏡 &nbsp;Request a Job</a>
           <a href="https://app.jobsu.app/student/sign-up" target="_blank" rel="noopener" class="btn-secondary">🎓 &nbsp;I'm a Student</a>
         </div>
+        <div class="hero-trust">
+          <span class="hero-trust-pill">✓ .edu-confirmed students</span>
+          <span class="hero-trust-pill">📍 Newton &middot; Brookline &middot; Brighton</span>
+        </div>
       </div>
 
     </div>
   </section>
 
-  <!-- SCHOOL LOGOS STRIP -->
-  <div class="schools-strip">
-    <p class="schools-label">Now at Boston College</p>
-    <div class="schools-row">
-      <img src="logo-bc.svg.png" alt="Boston College" style="height:96px;opacity:1;filter:none;" />
-    </div>
+  <!-- WHAT PEOPLE ASK FOR -->
+  <section class="section asks" id="asks">
+    <div class="section-inner">
+      <h2 class="section-title">What people ask for</h2>
 
-    <div class="schools-trust">
-      <span class="schools-trust-pill">✓ .edu-confirmed students</span>
-      <span class="schools-trust-pill">📍 Newton &middot; Brookline &middot; Brighton</span>
+      <div class="asks-grid">
+        <div class="asks-col">
+          <h3>Around the house</h3>
+          <ul>
+            <li>Waiting in for a delivery during the workday</li>
+            <li>An extra set of hands on moving day</li>
+            <li>Leaves, mulch, general yard work</li>
+            <li>Clearing out and reorganizing a basement, garage or closet</li>
+            <li>Assembling furniture</li>
+          </ul>
+        </div>
+        <div class="asks-col">
+          <h3>With the kids</h3>
+          <ul>
+            <li>A date night sitter</li>
+            <li>After-school pickup and homework help</li>
+            <li>Occasional evening sitting, as needed</li>
+            <li>Covering when the regular sitter cancels</li>
+            <li>Coaching a skill a kid is learning: goalkeeping, swimming, shooting</li>
+          </ul>
+        </div>
+        <div class="asks-col">
+          <h3>Technology and errands</h3>
+          <ul>
+            <li>Setting up a new phone, printer or TV</li>
+            <li>Sorting out photos or files on a computer</li>
+            <li>Driving to appointments or running errands</li>
+            <li>Someone who comes by weekly for whatever needs doing</li>
+          </ul>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
 
   <!-- HOW IT WORKS -->
   <section class="section bg-ice" id="how-it-works">
@@ -719,42 +693,6 @@
             </div>
           </div>
           <a href="https://app.jobsu.app/student/sign-up" target="_blank" rel="noopener" class="btn-hiw student">Sign Up as a Student &rarr;</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- JOB CATEGORIES -->
-  <section class="section">
-    <div class="section-inner">
-      <p class="section-eyebrow">Job types</p>
-      <h2 class="section-title">Name the task. A student nearby can handle it.</h2>
-      <p class="section-sub">From weekly babysitting to one-off yard work — post any local task and get matched with .edu-confirmed Boston College students.</p>
-
-      <div class="categories-grid">
-        <div class="category-card">
-          <span class="category-icon">🧒</span>
-          <p class="category-name">Babysitting</p>
-        </div>
-        <div class="category-card">
-          <span class="category-icon">🌿</span>
-          <p class="category-name">Yard Work</p>
-        </div>
-        <div class="category-card">
-          <span class="category-icon">📦</span>
-          <p class="category-name">Moving Help</p>
-        </div>
-        <div class="category-card">
-          <span class="category-icon">🐾</span>
-          <p class="category-name">Pet Care</p>
-        </div>
-        <div class="category-card">
-          <span class="category-icon">🛒</span>
-          <p class="category-name">Errands &amp; More</p>
-        </div>
-        <div class="category-card">
-          <span class="category-icon">📚</span>
-          <p class="category-name">In-Person Tutoring</p>
         </div>
       </div>
     </div>

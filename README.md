@@ -6,5 +6,7 @@ deployed via **GitHub Pages** from the **`main`** branch (`CNAME` → `jobsu.app
 > The resident app portal is a **separate** repo (`jobsu-resident` → app.jobsu.app).
 > This repo is marketing only.
 
+**Images:** the provenance ledger lives in `jobsu-notes/IMAGE-PROVENANCE.md`; no image is committed here without a row in it.
+
 ## Analytics
 PostHog is initialized on every page.

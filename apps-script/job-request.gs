@@ -369,8 +369,16 @@ function htmlVersion(lines, draft, flags) {
   return html.join('');
 }
 
+/** Field names whose camelCase reading would be unclear in the email. */
+var LABEL_OVERRIDES = {
+  drivesKids: 'Drives the children',
+  gettingHere: 'Getting to the house',
+  drivingNeeded: 'Driving needed (old form)'
+};
+
 /** camelCase field name -> "Camel case" label for the email body. */
 function label(key) {
+  if (LABEL_OVERRIDES[key]) return LABEL_OVERRIDES[key];
   var spaced = key.replace(/([A-Z])/g, ' $1').replace(/[_-]+/g, ' ').toLowerCase().trim();
   return spaced.charAt(0).toUpperCase() + spaced.slice(1);
 }
@@ -455,13 +463,41 @@ function describe(p) {
   return out;
 }
 
+/**
+ * The car line for the draft card, from the two questions split out on
+ * 2026-10-19 (drivesKids, gettingHere), falling back to the old drivingNeeded.
+ * The DATABASE decides the stored values, in public.request_car_fields(); this
+ * only words them for the email, so keep the two in step if either changes.
+ * Curly apostrophes are folded first: the form submits "They’ll" and "We’ll".
+ */
+function carLine(p) {
+  var fold = function (v) { return String(v || '').toLowerCase().replace(/[\u2018\u2019]/g, "'").trim(); };
+  var drives = fold(p.drivesKids), arrive = fold(p.gettingHere), legacy = fold(p.drivingNeeded);
+  if (drives || arrive) {
+    if (drives.indexOf('yes, in their own car') === 0)
+      return /gas|mileage/.test(drives) ? 'Own car needed; the family covers gas or mileage' : 'Own car needed';
+    if (drives === 'yes, in our car')
+      return arrive.indexOf("they'll need their own car") === 0
+        ? 'Own car needed to get there; the family provides a car for driving the children'
+        : 'The family provides the car';
+    if (arrive.indexOf("they'll need their own car") === 0) return 'Own car needed to get there';
+    if (arrive.indexOf("we'll cover") === 0) return 'The family covers a ride to get there';
+    return null;
+  }
+  // Old single question.
+  if (/cover gas/.test(legacy)) return 'Own car needed; the family covers gas';
+  if (/own car|student uses/.test(legacy)) return 'Own car needed';
+  if (/we provide a car/.test(legacy)) return 'The family provides the car';
+  if (/uber|ride to get here/.test(legacy)) return 'The family covers a ride to get there';
+  return null;
+}
+
 /** Whatever the form learned about a car, tools, or access. */
 function requirementsFor(p) {
   var bits = [];
   p = p || {};
-  // One spelling. `carProvided` was the Driving block's separate name for this
-  // same question and no longer exists on the form.
-  if (/own car|student uses/i.test(p.drivingNeeded || '')) bits.push('Own car needed');
+  var car = carLine(p);
+  if (car) bits.push(car);
   if (/student brings/i.test(p.toolsProvided || '')) bits.push('Student brings their own tools');
   return bits.length ? bits.join('. ') + '.' : null;
 }
@@ -560,6 +596,12 @@ function draftFlags(p, draft) {
   if (!p.daysTimes) flags.push('No days and times given.');
   if (draft.start === 'TODO') flags.push('No start date given.');
   if (!p.town) flags.push('No town given — the title and area both need one.');
+  // The one car combination the job columns cannot hold (requires_car true AND
+  // car_provided is forbidden). Agreed 2026-10-19: requires_car true, and the
+  // family's car goes in the description.
+  var fold = function (v) { return String(v || '').toLowerCase().replace(/[\u2018\u2019]/g, "'").trim(); };
+  if (fold(p.drivesKids) === 'yes, in our car' && fold(p.gettingHere).indexOf("they'll need their own car") === 0)
+    flags.push('Car: the family provides a car for driving the children, but the student needs their own car to get there. Post with requires_car true and say in the description that the family car is for driving the children.');
   // The script cannot see jobs/index.html, so it cannot know whether this id is
   // taken. It derives both title and id from a category and a town, which is not
   // enough to be unique: two babysitting requests from one town produce the same

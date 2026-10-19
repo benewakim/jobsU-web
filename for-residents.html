@@ -244,6 +244,23 @@
           <label for="bs-extras">Pets, allergies, homework help, bedtime routine</label>
           <textarea id="bs-extras" name="householdNotes"></textarea>
         </div>
+        <!-- drivesKids. Split from the old single question "Is a car or driving
+             needed?" on 2026-10-19: families answered "Yes" meaning "the sitter
+             needs a way to get here", and five jobs went live with an own-car
+             requirement they did not need. This question is only about driving
+             the children; getting to the house is the next block's question.
+             The VALUES are read by public.request_car_fields(), so change them
+             there too or not at all. -->
+        <div class="field">
+          <label for="bs-drives">Will the sitter need to drive your children anywhere?</label>
+          <select id="bs-drives" name="drivesKids">
+            <option value="">Not sure yet</option>
+            <option>No</option>
+            <option>Yes, in our car</option>
+            <option>Yes, in their own car</option>
+            <option>Yes, in their own car, and we&rsquo;ll cover gas or mileage</option>
+          </select>
+        </div>
       </div>
 
       <div class="cat-fields" data-cat="Tutoring" hidden>
@@ -279,6 +296,18 @@
         <div class="field">
           <label for="dr-to">Drop-off location</label>
           <input type="text" id="dr-to" name="dropoffLocation" />
+        </div>
+        <!-- Same field and VALUES as the babysitting question (drivesKids), so
+             request_car_fields() reads it the same way; only the wording differs,
+             because a driving job is not always about children. -->
+        <div class="field">
+          <label for="dr-car">Whose car will the student drive?</label>
+          <select id="dr-car" name="drivesKids">
+            <option value="">Not sure yet</option>
+            <option value="Yes, in our car">Ours</option>
+            <option value="Yes, in their own car">Their own</option>
+            <option value="Yes, in their own car, and we&rsquo;ll cover gas or mileage">Their own, and we&rsquo;ll cover gas or mileage</option>
+          </select>
         </div>
       </div>
 
@@ -387,7 +416,8 @@
            and each one missing is a round trip before the job can be posted.
            ONE field name and ONE vocabulary each: `frequency` previously had two
            option sets under one name, and `drivingNeeded`/`carProvided` were two
-           names for one question. -->
+           names for one question. (drivingNeeded is now gettingHere, plus
+           drivesKids in the Babysitting and Driving blocks.) -->
       <div class="cat-fields" data-cat="_common" hidden>
         <p class="cat-legend">When and how long</p>
         <div class="field">
@@ -412,15 +442,16 @@
           <label for="startDate">Ideal start date</label>
           <input type="text" id="startDate" name="startDate" placeholder="As soon as possible, in a couple of weeks&hellip;" />
         </div>
+        <!-- gettingHere replaced drivingNeeded on 2026-10-19 (see drivesKids in
+             the babysitting block). Requests submitted before then still carry
+             drivingNeeded, and request_car_fields() reads it as a fallback. -->
         <div class="field">
-          <label for="drivingNeeded">Is a car or driving needed?</label>
-          <select id="drivingNeeded" name="drivingNeeded">
+          <label for="gettingHere">How will they get to you?</label>
+          <select id="gettingHere" name="gettingHere">
             <option value="">Not sure yet</option>
-            <option>No driving needed</option>
-            <option>Yes &mdash; student uses their own car</option>
-            <option>Yes, student uses their own car &mdash; we&rsquo;ll cover gas</option>
-            <option>Yes &mdash; we provide a car</option>
-            <option>Yes, and we&rsquo;d cover an Uber or ride to get here</option>
+            <option>Walking distance, or public transport is fine</option>
+            <option>We&rsquo;ll cover an Uber or a ride</option>
+            <option>They&rsquo;ll need their own car</option>
           </select>
         </div>
       </div>

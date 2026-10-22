@@ -227,7 +227,7 @@
           <option>Tutoring</option>
           <option>Driving</option>
           <option>Moving Help</option>
-          <option>Sports Lessons</option>
+          <option>Music or Sports Lessons</option>
           <option>Yard Work</option>
           <option>Tech Setup</option>
           <option>Something else</option>
@@ -337,11 +337,15 @@
         </div>
       </div>
 
-      <div class="cat-fields" data-cat="Sports Lessons" hidden>
+      <!-- "Music or Sports Lessons" since 2026-10-22: it said "Sports Lessons", and a
+           parent wanting guitar lessons for a six-year-old found no category and
+           emailed instead. The platform category was always Lessons, which covers
+           both. The field below keeps name="sport" so nothing reading it breaks. -->
+      <div class="cat-fields" data-cat="Music or Sports Lessons" hidden>
         <p class="cat-legend">About the lessons</p>
         <div class="field">
-          <label for="sp-sport">Sport</label>
-          <input type="text" id="sp-sport" name="sport" />
+          <label for="sp-sport">What would they be learning?</label>
+          <input type="text" id="sp-sport" name="sport" placeholder="Guitar, piano, swimming, soccer&hellip;" />
         </div>
         <div class="field-row">
           <div class="field">
@@ -355,7 +359,7 @@
         </div>
         <div class="field">
           <label for="sp-where">Where would it happen?</label>
-          <input type="text" id="sp-where" name="lessonLocation" placeholder="Local pool, our yard, a nearby field&hellip;" />
+          <input type="text" id="sp-where" name="lessonLocation" placeholder="Our home, a local pool, a nearby field&hellip;" />
         </div>
       </div>
 

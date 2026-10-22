@@ -400,7 +400,7 @@ var ROLE_WORDS = {
   'Tutoring': 'Tutoring',
   'Driving': 'Driving Role',
   'Moving Help': 'Moving Help',
-  'Sports Lessons': 'Coaching',
+  // Music or Sports Lessons is handled by roleFor(), from what the family typed.
   'Yard Work': 'Yard Work',
   'Tech Setup': 'Tech Setup',
   'Something else': 'Help'
@@ -444,6 +444,9 @@ function describe(p) {
                   : (p.pickupLocation || p.dropoffLocation)],
     'Moving Help': [p.peopleNeeded && p.peopleNeeded + ' people needed', p.access,
                     p.truckProvided && 'Truck: ' + p.truckProvided.toLowerCase()],
+    'Music or Sports Lessons': [p.sport && p.sport + ' lessons', p.childAge && 'Child is ' + p.childAge,
+                                p.skillLevel, p.lessonLocation],
+    // The label before 2026-10-22, for a page still open in somebody's browser.
     'Sports Lessons': [p.sport && p.sport + ' lessons', p.childAge && 'Child is ' + p.childAge,
                        p.skillLevel, p.lessonLocation],
     'Yard Work': [p.yardTasks, p.yardSize && p.yardSize + ' yard', p.toolsProvided],
@@ -503,6 +506,20 @@ function requirementsFor(p) {
 }
 
 /**
+ * The role word for a lessons title, from what the family said they want taught.
+ * It used to be a fixed "Coaching", which is right for goalkeeping and wrong for
+ * guitar. "guitar" -> "Guitar Lessons"; "swim lessons" -> "Swim Lessons" (no
+ * doubled word); nothing typed -> "Lessons". The field is still named `sport`
+ * because changing a field name would break every reader of old submissions.
+ */
+function lessonsRole(p) {
+  var what = String(p.sport || '').replace(/\s+/g, ' ').trim();
+  if (!what) return 'Lessons';
+  var titled = what.split(' ').map(function (w) { return w.charAt(0).toUpperCase() + w.slice(1); }).join(' ');
+  return /\b(lessons?|coaching|clinic)\b/i.test(titled) ? titled : titled + ' Lessons';
+}
+
+/**
  * The role word for a title.
  *
  * Babysitting cannot use a fixed word. ROLE_WORDS mapped it to
@@ -522,6 +539,7 @@ function requirementsFor(p) {
  * for rather than from one guess applied to everything.
  */
 function roleFor(p) {
+  if (p.category === 'Music or Sports Lessons' || p.category === 'Sports Lessons') return lessonsRole(p);
   if (p.category !== 'Babysitting') return ROLE_WORDS[p.category] || 'Help';
   var when = String((p.daysTimes || '') + ' ' + (p.frequency || '') + ' ' + (p.householdNotes || ''));
   if (/after[-\s]?school|school pickup|pick ?up from school|dismissal/i.test(when)) return 'After-School Care';

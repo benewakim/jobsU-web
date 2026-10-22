@@ -56,8 +56,33 @@ var JOBS_URL = 'https://raw.githubusercontent.com/benewakim/jobsU-web/main/_data
 /** Must match SHARED_TOKEN in for-residents.html. Blocks drive-by posts. */
 var SHARED_TOKEN = 'jobsu-request-v1';
 
+/**
+ * The bot trap's field name. It was `company` until 2026-10-22, and browser
+ * autofill filled it, so real residents were discarded as bots with no row, no
+ * email and no log line. The page now sends `jx_tripwire`; `company` is still
+ * checked for a page that was open before the change.
+ */
+var TRIPWIRE = 'jx_tripwire';
+
 /** Fields never written to the sheet or the email body. */
-var HIDDEN_FIELDS = { token: true, company: true, elapsedMs: true };
+var HIDDEN_FIELDS = { token: true, company: true, jx_tripwire: true, elapsedMs: true };
+
+/**
+ * Every early return logs, so a discarded submission leaves a trace. Read these
+ * in the Apps Script editor: Executions (left sidebar), click a run. Before
+ * 2026-10-22 all of these returns were silent.
+ */
+function logBail(guard, payload) {
+  var p = payload || {};
+  console.log('DISCARDED [' + guard + '] submissionId=' + (p.submissionId || '-') +
+              ' email=' + (p.email || '-') + ' category=' + (p.category || '-') +
+              ' source=' + (p.source || '-') + ' elapsedMs=' + (p.elapsedMs == null ? '-' : p.elapsedMs));
+}
+
+/** Best-effort read of the body, for logging a bail that happens before parsing. */
+function peekPayload(e) {
+  try { return JSON.parse(e.postData.contents); } catch (err) { return {}; }
+}
 
 function doPost(e) {
   var lock = LockService.getScriptLock();
@@ -65,28 +90,43 @@ function doPost(e) {
     // Serialise writes so two submissions can never claim the same row.
     lock.waitLock(20000);
   } catch (err) {
+    logBail('busy: lock not acquired in 20s', peekPayload(e));
     return json({ ok: false, error: 'busy' });
   }
 
   try {
     var payload = JSON.parse(e.postData.contents);
 
-    if (payload.token !== SHARED_TOKEN) return json({ ok: false, error: 'bad token' });
+    if (payload.token !== SHARED_TOKEN) {
+      logBail('bad token', payload);
+      return json({ ok: false, error: 'bad token' });
+    }
 
     // Unlocking the board is a read, not a submission: no honeypot or timing
     // checks, because a returning student unlocks straight from localStorage.
     if (payload.action === 'unlock') return handleUnlock(payload);
-    // Honeypot: real people never fill a field they cannot see.
-    if (payload.company) return json({ ok: true, skipped: 'honeypot' });
+    // Honeypot: real people never fill a field they cannot see. (Autofill did,
+    // when the field was called `company`; see TRIPWIRE.)
+    if (payload[TRIPWIRE] || payload.company) {
+      logBail('honeypot: ' + (payload[TRIPWIRE] ? TRIPWIRE : 'company (old page)') + ' was filled', payload);
+      return json({ ok: true, skipped: 'honeypot' });
+    }
     // Bots submit instantly; a person needs longer than three seconds.
-    if (Number(payload.elapsedMs) < 3000) return json({ ok: true, skipped: 'too fast' });
-    if (!payload.email || !payload.category) return json({ ok: false, error: 'missing fields' });
+    if (Number(payload.elapsedMs) < 3000) {
+      logBail('too fast', payload);
+      return json({ ok: true, skipped: 'too fast' });
+    }
+    if (!payload.email || !payload.category) {
+      logBail('missing fields', payload);
+      return json({ ok: false, error: 'missing fields' });
+    }
 
     var signup = SIGNUPS[payload.source] || null;
     var sheet = getSheet(signup ? signup.sheet : SHEET_NAME);
 
     // Retries and double clicks resolve to the same row rather than duplicates.
     if (payload.submissionId && hasSubmission(sheet, payload.submissionId)) {
+      logBail('duplicate submissionId (already on the sheet)', payload);
       return json({ ok: true, duplicate: true });
     }
 
@@ -94,6 +134,7 @@ function doPost(e) {
     // notification for someone already on it is noise. Signups only: a resident
     // may legitimately request two different jobs from the same address.
     if (signup && emailOnSheet(sheet, payload.email)) {
+      logBail('duplicate signup (email already on the list)', payload);
       return json({ ok: true, duplicate: true });
     }
 

@@ -86,7 +86,9 @@
     .cat-fields[hidden] { display: none; }
     .cat-legend { font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; color: #9BAFCD; margin-bottom: 14px; }
     .field[hidden] { display: none; }
-    .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+    /* Off-screen rather than display:none: some form fillers skip hidden
+       fields but bots and autofill both see a display:none field differently. */
+    .hp { position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden; }
     .btn-submit {
       width: 100%; min-height: 52px; margin-top: 6px;
       background: #1F4B99; color: white; font-family: inherit; font-size: 16px; font-weight: 800;
@@ -517,9 +519,14 @@
         </label>
       </div>
 
+      <!-- Bot trap. Was name="company" until 2026-10-22: browser autofill filled it
+           ("Company" is a field autofill knows), so real residents' requests were
+           silently discarded as bots, by both the Apps Script and the database.
+           The name and label must match NO autofill heuristic: nothing like
+           company, organisation, name, address, phone or email. -->
       <div class="hp" aria-hidden="true">
-        <label for="company">Company</label>
-        <input type="text" id="company" name="company" tabindex="-1" autocomplete="off" />
+        <label for="jx-tripwire">Leave this field blank</label>
+        <input type="text" id="jx-tripwire" name="jx_tripwire" tabindex="-1" autocomplete="off" aria-hidden="true" data-lpignore="true" data-1p-ignore="true" data-form-type="other" />
       </div>
 
       <button type="submit" class="btn-submit" id="submit-btn">Send to Ben</button>
@@ -588,8 +595,8 @@
         <input type="email" id="subscribe-email" placeholder="you@example.com"
                aria-label="Email address" autocomplete="email" required />
         <div class="hp" aria-hidden="true">
-          <label for="subscribe-company">Company</label>
-          <input type="text" id="subscribe-company" tabindex="-1" autocomplete="off" />
+          <label for="subscribe-tripwire">Leave this field blank</label>
+          <input type="text" id="subscribe-tripwire" tabindex="-1" autocomplete="off" aria-hidden="true" data-lpignore="true" data-1p-ignore="true" data-form-type="other" />
         </div>
         <button type="submit" class="subscribe-btn" id="subscribe-btn">Keep me posted</button>
       </form>
@@ -756,7 +763,7 @@
       [].slice.call(form.elements).forEach(function (el) {
         if (!el.name || el.disabled) return;
         if (el.type === 'submit' || el.type === 'button') return;
-        if (el.name === 'company') return;
+        if (el.name === 'jx_tripwire') return;
         // A checkbox's .value is "yes" whether or not it is ticked — only
         // .checked says anything. Reading .value here would record consent from
         // every submission, which is the exact opposite of consent. 'No' is
@@ -896,7 +903,7 @@
       payload.token = SHARED_TOKEN;
       payload.submissionId = uuid();
       payload.elapsedMs = Date.now() - openedAt;
-      payload.company = (form.elements.company && form.elements.company.value) || '';
+      payload.jx_tripwire = (form.elements.jx_tripwire && form.elements.jx_tripwire.value) || '';
       payload.source = 'for-residents';
 
       if (window.posthog) posthog.capture('job_request_submitted', { category: values.category });
@@ -953,7 +960,7 @@
     var subEmail = document.getElementById('subscribe-email');
     var subBtn = document.getElementById('subscribe-btn');
     var subNote = document.getElementById('subscribe-note');
-    var subCompany = document.getElementById('subscribe-company');
+    var subTrip = document.getElementById('subscribe-tripwire');
     var subOpenedAt = Date.now();
     var subSending = false;
 
@@ -1012,7 +1019,7 @@
         // label for the row, not a job type.
         category: 'Resident updates',
         email: email,
-        company: subCompany ? subCompany.value : '',
+        jx_tripwire: subTrip ? subTrip.value : '',
         elapsedMs: Date.now() - subOpenedAt
       };
 

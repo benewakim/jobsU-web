@@ -101,21 +101,50 @@ function doPost(e) {
     var draft = signup ? null : buildDraft(payload);
     var flags = signup ? null : draftFlags(payload, draft);
 
-    // The sheet is written first: if mail fails, the lead is still captured.
-    appendRow(sheet, payload, signup ? {} : {
-      draftCard: JSON.stringify(draft, null, 2),
-      needsAttention: flags.join(' ')
-    });
-
+    // The sheet is written first, so if mail fails the lead is still captured.
+    // A sheet failure must not cost Ben the email either: before 2026-10-22 a
+    // throw here skipped every email below, so the lead was lost in both places.
+    var sheeted = true;
     try {
-      if (signup) sendSignupNotification(payload, signup);
-      else sendNotification(payload, draft, flags);
-    } catch (mailErr) {
-      console.error('mail failed: ' + mailErr);
-      return json({ ok: true, mailed: false });
+      appendRow(sheet, payload, signup ? {} : {
+        draftCard: JSON.stringify(draft, null, 2),
+        needsAttention: flags.join(' ')
+      });
+    } catch (sheetErr) {
+      sheeted = false;
+      console.error('sheet write failed: ' + sheetErr);
     }
 
-    return json({ ok: true, mailed: true });
+    if (signup) {
+      try {
+        sendSignupNotification(payload, signup);
+      } catch (mailErr) {
+        console.error('signup mail failed: ' + mailErr);
+        return json({ ok: true, sheeted: sheeted, mailed: false });
+      }
+      return json({ ok: true, sheeted: sheeted, mailed: true });
+    }
+
+    // TWO emails, both to Ben, sent independently. The first is the one he
+    // replies to: Reply-To is the resident and it carries ONLY their answers, so
+    // when Gmail quotes it back to them nothing internal goes with it. The second
+    // carries the draft card and the checklist, with Reply-To Ben, so a mis-reply
+    // can never reach the family. A failure of the second never stops the first.
+    var mailed = true, drafted = true;
+    try {
+      sendNotification(payload);
+    } catch (mailErr) {
+      mailed = false;
+      console.error('request mail failed: ' + mailErr);
+    }
+    try {
+      sendDraftCard(payload, draft, flags);
+    } catch (draftErr) {
+      drafted = false;
+      console.error('draft card mail failed: ' + draftErr);
+    }
+
+    return json({ ok: true, sheeted: sheeted, mailed: mailed, drafted: drafted });
   } catch (err) {
     console.error(err);
     return json({ ok: false, error: String(err) });
@@ -295,13 +324,23 @@ function sendSignupNotification(payload, signup) {
   });
 }
 
-function sendNotification(payload, draft, flags) {
-  var who = [payload.firstName, payload.lastName].filter(String).join(' ').trim() || 'Someone';
+function requesterName(payload) {
+  return [payload.firstName, payload.lastName].filter(String).join(' ').trim() || 'Someone';
+}
+
+/**
+ * The email Ben REPLIES to. Reply-To is the resident, so Gmail will quote this
+ * whole body back to them: it must hold nothing but their own answers. The
+ * draft card, its derived id and the checklist (some of whose flags read badly
+ * to a family: the health-detail, phone-number and street-address ones) go in
+ * sendDraftCard() instead. Do not add internal content here.
+ */
+function sendNotification(payload) {
   var where = payload.town ? ' — ' + payload.town : '';
   var subject = 'New job request: ' + payload.category + where;
 
   var lines = [
-    who + ' just requested a job through jobsu.app.',
+    requesterName(payload) + ' just requested a job through jobsu.app.',
     '',
     'Reply to this email and it goes straight to them.',
     ''
@@ -314,26 +353,46 @@ function sendNotification(payload, draft, flags) {
     lines.push(label(key) + ': ' + value);
   });
 
-  lines.push('');
-  lines.push('──────────────────────────────────────────');
-  lines.push('DRAFT CARD — paste into the JOBS array in jobs/index.html');
-  lines.push('──────────────────────────────────────────');
-  lines.push('');
-  lines.push(JSON.stringify(draft, null, 2));
-  lines.push('');
-  lines.push('Before it goes live:');
+  MailApp.sendEmail({
+    to: NOTIFY_EMAIL,
+    subject: subject,
+    body: lines.join('\n'),
+    htmlBody: '<div style="font-family:system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.6;color:#0B1B3A"><p>' +
+              lines.map(escapeHtml).join('<br>') + '</p></div>',
+    replyTo: payload.email,
+    name: 'JobsU job requests'
+  });
+}
+
+/**
+ * The internal half: the draft card and the pre-posting checklist. Reply-To is
+ * Ben, NOT the resident, so replying to it by mistake reaches nobody else.
+ */
+function sendDraftCard(payload, draft, flags) {
+  var lines = [
+    'Draft card for ' + requesterName(payload) + "'s request" + (payload.town ? ' (' + payload.town + ')' : '') + '.',
+    'Internal: replies to this email go to ' + NOTIFY_EMAIL + ', not to the resident.',
+    '',
+    '──────────────────────────────────────────',
+    'DRAFT CARD — paste into the JOBS array in jobs/index.html',
+    '──────────────────────────────────────────',
+    '',
+    JSON.stringify(draft, null, 2),
+    '',
+    'Before it goes live:'
+  ];
   flags.forEach(function (f) { lines.push('  • ' + f); });
 
   MailApp.sendEmail({
     to: NOTIFY_EMAIL,
-    subject: subject,
+    subject: 'Draft card: ' + draft.title,
     body: lines.join('\n'),
     // Plain text gets hard-wrapped at ~72 characters by mail clients, which
     // puts line breaks inside the JSON strings and makes the draft unpastable.
     // A <pre> block in the HTML part survives intact.
     htmlBody: htmlVersion(lines, draft, flags),
-    replyTo: payload.email,
-    name: 'JobsU job requests'
+    replyTo: NOTIFY_EMAIL,
+    name: 'JobsU draft cards'
   });
 }
 
@@ -373,7 +432,10 @@ function htmlVersion(lines, draft, flags) {
 var LABEL_OVERRIDES = {
   drivesKids: 'Drives the children',
   gettingHere: 'Getting to the house',
-  drivingNeeded: 'Driving needed (old form)'
+  drivingNeeded: 'Driving needed (old form)',
+  // The lessons field is still named `sport` (see lessonsRole); since
+  // 2026-10-22 it asks "What would they be learning?", and may be guitar.
+  sport: 'Learning'
 };
 
 /** camelCase field name -> "Camel case" label for the email body. */
@@ -430,7 +492,32 @@ function slug(text) {
 function sentence(text) {
   var t = String(text || '').trim();
   if (!t) return '';
+  // Capitalised: "guitar lessons" (the family's own lower-case answer plus a
+  // suffix) used to open a draft description in lower case.
+  t = t.charAt(0).toUpperCase() + t.slice(1);
   return /[.!?]$/.test(t) ? t : t + '.';
+}
+
+/**
+ * "Home" -> "At home", "Local pool" -> "At a local pool", "Our yard" -> "In our
+ * yard". The lessons location used to go into the description raw, so a draft
+ * read "Guitar lessons. Child is 6. Just starting out. Home." A family that
+ * already typed a phrase ("at the Newton Y", "In our backyard") is left as
+ * written, capitalised, so it never comes out as "At at home".
+ */
+function locationPhrase(raw) {
+  var t = String(raw || '').replace(/\s+/g, ' ').trim().replace(/[.,;]+$/, '');
+  if (!t) return '';
+  var cap = function (s) { return s.charAt(0).toUpperCase() + s.slice(1); };
+  var lowerFirst = function (s) { return s.charAt(0).toLowerCase() + s.slice(1); };
+  if (/^(at|in|on|from|near|by|around|outside|inside|over)\b/i.test(t)) return cap(t);
+  if (/^(home|my home|our home|our house|my house|the house)$/i.test(t)) {
+    return /^home$/i.test(t) ? 'At home' : 'At ' + lowerFirst(t);
+  }
+  var outdoorOwn = /\b(yard|backyard|back yard|garden|driveway)\b/i.test(t);
+  if (/^(our|my|their|the|a|an)\b/i.test(t)) return (outdoorOwn ? 'In ' : 'At ') + lowerFirst(t);
+  if (/^(local|nearby)\b/i.test(t)) return 'At a ' + lowerFirst(t);
+  return 'At ' + t;
 }
 
 /** The answers that describe the work, in the order they read best. */
@@ -445,10 +532,10 @@ function describe(p) {
     'Moving Help': [p.peopleNeeded && p.peopleNeeded + ' people needed', p.access,
                     p.truckProvided && 'Truck: ' + p.truckProvided.toLowerCase()],
     'Music or Sports Lessons': [p.sport && p.sport + ' lessons', p.childAge && 'Child is ' + p.childAge,
-                                p.skillLevel, p.lessonLocation],
+                                p.skillLevel, locationPhrase(p.lessonLocation)],
     // The label before 2026-10-22, for a page still open in somebody's browser.
     'Sports Lessons': [p.sport && p.sport + ' lessons', p.childAge && 'Child is ' + p.childAge,
-                       p.skillLevel, p.lessonLocation],
+                       p.skillLevel, locationPhrase(p.lessonLocation)],
     'Yard Work': [p.yardTasks, p.yardSize && p.yardSize + ' yard', p.toolsProvided],
     'Tech Setup': [p.techTasks, p.devices && 'Devices: ' + p.devices, p.techNotes],
     'Something else': [p.whatYouNeed]
@@ -626,9 +713,10 @@ function draftFlags(p, draft) {
   // id, and duplicate ids in the JOBS array are a silent collision.
   flags.push('Title and id are both derived — "' + draft.id + '". Check it is not already in the JOBS array, and that the title matches what the family actually asked for.');
   // The landmark deliberately does NOT go on the card: it narrows a family's
-  // location on a public page. Its readers are this email and the sheet, where
-  // it answers "how far is this from campus" without being published.
-  if (!p.landmark) flags.push('No landmark given — ask if a student needs to judge the distance.');
+  // location on a public page. Its readers are the request email and the sheet,
+  // where it answers "how far is this from campus" without being published.
+  // Required on the form since 2026-10-22, so the "No landmark given" flag that
+  // lived here can no longer fire and was removed.
 
   if (/\b(school|elementary|middle|high|academy|preschool)\b/i.test(publicText)) {
     flags.push('Mentions a school. Board convention is to name the town, not the school.');

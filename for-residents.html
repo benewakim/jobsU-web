@@ -213,9 +213,11 @@
           <input type="text" id="town" name="town" placeholder="Newton, Brookline, Needham&hellip;" required />
         </div>
         <div class="field">
-          <label for="landmark">Nearby landmark</label>
-          <input type="text" id="landmark" name="landmark" placeholder="Near the high school, by the library&hellip;" />
-          <p class="field-hint">Helps a student tell how far it is. No street address needed.</p>
+          <!-- Required since 2026-10-22. Ben uses it to judge distance from campus
+               before posting; it never reaches the public card or the draft card. -->
+          <label for="landmark">Nearby landmark<span class="req" aria-hidden="true">*</span></label>
+          <input type="text" id="landmark" name="landmark" placeholder="Near the high school, by the library&hellip;" required aria-describedby="landmark-hint" />
+          <p class="field-hint" id="landmark-hint">A park, school or main road nearby. This helps students judge how far you are from campus. It is never shown publicly.</p>
         </div>
       </div>
 

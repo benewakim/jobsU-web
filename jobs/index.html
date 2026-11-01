@@ -219,7 +219,12 @@
     /* No preview cards: the gate stands on its own and links to the live board. */
     .peek { max-height: none; overflow: visible; }
     .peek .job-grid, .peek-veil { display: none; }
-    .peek-gate { position: static; transform: none; margin: 0 auto; width: min(560px, 100%); }
+    .peek-gate { position: static; transform: none; margin: 0 auto; width: min(980px, 100%); }
+
+    /* Two ways in: students sign up, residents request a job. Side by side on
+       a wide screen, stacked on a phone, students first. */
+    .paths { display: grid; gap: 18px; grid-template-columns: 1fr; align-items: start; }
+    @media (min-width: 760px) { .paths { grid-template-columns: 1fr 1fr; } }
 
     /* ── Gate ── */
     .gate {
@@ -615,15 +620,24 @@
       <div class="job-grid" id="peek-grid" aria-hidden="true"></div>
       <div class="peek-veil"></div>
       <div class="peek-gate">
+        <div class="paths">
         <section class="gate" id="gate" aria-labelledby="gate-title">
           <p class="gate-title" id="gate-title">Made for BC students</p>
-          <p class="gate-sub">These jobs are within a few miles of campus and posted by local families and residents. Create your account with your @bc.edu email to see all of them and apply.</p>
+          <p class="gate-sub">Every job on JobsU is within a few miles of campus and posted by local families and residents. Create your account with your @bc.edu email to see them all and apply.</p>
           <p class="gate-form">
             <a class="btn" id="gate-btn" href="https://app.jobsu.app/student/sign-up">Create your account</a>
           </p>
           <p class="gate-note" id="gate-note">Already have an account? <a href="https://app.jobsu.app/sign-in">Sign in</a></p>
           <p class="gate-note" style="margin-top:10px;">Apologies if your confirmation email didn&rsquo;t arrive earlier &mdash; that&rsquo;s fixed and signups are working again. Still stuck? Email <a href="mailto:ben@jobsu.app">ben@jobsu.app</a>.</p>
         </section>
+        <section class="gate" id="resident-path" aria-labelledby="resident-title">
+          <p class="gate-title" id="resident-title">Live near BC?</p>
+          <p class="gate-sub">Need a hand with babysitting, tutoring, yard work, moving or errands? Tell me what you need and I&rsquo;ll match you with a BC student.</p>
+          <p class="gate-form">
+            <a class="btn" id="resident-btn" href="../for-residents.html" onclick="if(window.posthog)posthog.capture('post_job_clicked')">Request a Job</a>
+          </p>
+        </section>
+        </div>
       </div>
     </div>
 

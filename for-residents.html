@@ -166,6 +166,25 @@
       .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
     }
   </style>
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  // No automatic button/page-metadata collection: events carry nothing but themselves.
+  fbq('set', 'autoConfig', false, '1497519835841695');
+  fbq('init', '1497519835841695');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1497519835841695&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
 </head>
 <body>
   <nav>
@@ -932,6 +951,11 @@
         })
         .then(function (result) {
           if (result && result.ok) {
+            // Bare event, no parameters: the form's Notes box holds personal
+            // and health details, and none of it goes to Meta. Honeypot,
+            // too-fast and duplicate submissions also answer ok so a bot
+            // never learns it failed; they must not count as Leads.
+            if (!result.skipped && !result.duplicate && typeof fbq === 'function') fbq('track', 'Lead');
             showSuccess(result.mailed);
           } else {
             showFallback(values, (result && result.error) || 'rejected');

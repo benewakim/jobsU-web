@@ -415,7 +415,7 @@ function sendDraftCard(payload, draft, flags) {
     'Internal: replies to this email go to ' + NOTIFY_EMAIL + ', not to the resident.',
     '',
     '──────────────────────────────────────────',
-    'DRAFT CARD — paste into the JOBS array in jobs/index.html',
+    'DRAFT CARD: ' + DRAFT_USE,
     '──────────────────────────────────────────',
     '',
     JSON.stringify(draft, null, 2),
@@ -424,9 +424,12 @@ function sendDraftCard(payload, draft, flags) {
   ];
   flags.forEach(function (f) { lines.push('  • ' + f); });
 
+  // An out-of-area town marks the SUBJECT, so it is seen before the email is
+  // opened. Ben's email only: nothing here, or anywhere in this script, tells
+  // the resident. He answers them himself.
   MailApp.sendEmail({
     to: NOTIFY_EMAIL,
-    subject: 'Draft card: ' + draft.title,
+    subject: (outOfArea(payload.town) ? 'Draft card (OUT OF AREA): ' : 'Draft card: ') + draft.title,
     body: lines.join('\n'),
     // Plain text gets hard-wrapped at ~72 characters by mail clients, which
     // puts line breaks inside the JSON strings and makes the draft unpastable.
@@ -455,7 +458,7 @@ function htmlVersion(lines, draft, flags) {
   var html = [
     '<div style="font-family:system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.6;color:#0B1B3A">',
     '<p>' + answers.join('<br>') + '</p>',
-    '<p style="font-weight:700;margin-bottom:6px">Draft card &mdash; paste into the JOBS array in jobs/index.html</p>',
+    '<p style="font-weight:700;margin-bottom:6px">Draft card: ' + escapeHtml(DRAFT_USE) + '</p>',
     '<pre style="background:#F5F8FF;border:1px solid #E6ECFF;border-radius:8px;padding:14px;',
     'font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;line-height:1.5;',
     'white-space:pre;overflow-x:auto">',
@@ -728,10 +731,50 @@ function buildDraft(p) {
   return draft;
 }
 
+/**
+ * What the draft card is for, now that the static JOBS array in jobs/index.html
+ * is dead (Ben, 2026-11-15). Jobs are posted through scripts/post-job.mjs in
+ * JobsU2 with a payload file; the card below is a starting point for that file,
+ * not something to paste anywhere. Its field names are the old board's.
+ */
+var DRAFT_USE = 'a starting point for a post-job payload (JobsU2: supabase/manual/job_<date>_<slug>.json, then node scripts/post-job.mjs). Not pasteable as is: the old board\'s field names.';
+
+/**
+ * SERVICE AREA (Ben, 2026-11-15): Newton and all its villages, Brookline,
+ * Brighton, Chestnut Hill. A town outside it gets a WARNING on the draft card and
+ * in its subject, never a refusal: Ben has deliberately taken Waltham, West
+ * Roxbury, Jamaica Plain and Sherborn, so the request still lands, the sheet row
+ * is still written and both emails still go to Ben exactly as before.
+ *
+ * The town is free text, typed as "NEWTON", "West Newton, MA", "Newton (Waban)",
+ * "WABAN" and so on, so it is matched case-insensitively on whole words
+ * anywhere in the answer. "Boston" alone is out of area by this list: Brighton is
+ * part of Boston, and the warning is the prompt to check which neighborhood.
+ */
+var SERVICE_AREA = [
+  'newton', 'newtonville', 'newton centre', 'newton center', 'newton corner',
+  'newton highlands', 'newton lower falls', 'newton upper falls', 'west newton',
+  'auburndale', 'nonantum', 'oak hill', 'thompsonville', 'waban',
+  'brookline', 'brighton', 'chestnut hill'
+];
+
+/** True when a town was given and none of SERVICE_AREA appears in it. */
+function outOfArea(town) {
+  var t = String(town || '').toLowerCase().replace(/[^a-z]+/g, ' ').trim();
+  if (!t) return false;  // a missing town has its own flag below
+  var padded = ' ' + t + ' ';
+  return !SERVICE_AREA.some(function (name) { return padded.indexOf(' ' + name + ' ') !== -1; });
+}
+
 /** Things a person should look at before this goes on a public page. */
 function draftFlags(p, draft) {
   var flags = [];
   var publicText = draft.description.join(' ') + ' ' + (draft.requirements || '');
+
+  // First on the list, so it is the first thing read under the card.
+  if (outOfArea(p.town)) {
+    flags.push('⚠ OUT OF AREA: "' + p.town + '" is outside the service area (Newton and its villages, Brookline, Brighton, Chestnut Hill). Close it as lost / out_of_area, or record why you are taking it.');
+  }
 
   if (draft.rate === 'TODO') flags.push('No rate given — ask before posting.');
   // Was an unconditional "hours/week is not asked on the form". It is asked now,
@@ -748,11 +791,10 @@ function draftFlags(p, draft) {
   var fold = function (v) { return String(v || '').toLowerCase().replace(/[\u2018\u2019]/g, "'").trim(); };
   if (fold(p.drivesKids) === 'yes, in our car' && fold(p.gettingHere).indexOf("they'll need their own car") === 0)
     flags.push('Car: the family provides a car for driving the children, but the student needs their own car to get there. Post with requires_car true and say in the description that the family car is for driving the children.');
-  // The script cannot see jobs/index.html, so it cannot know whether this id is
-  // taken. It derives both title and id from a category and a town, which is not
-  // enough to be unique: two babysitting requests from one town produce the same
-  // id, and duplicate ids in the JOBS array are a silent collision.
-  flags.push('Title and id are both derived — "' + draft.id + '". Check it is not already in the JOBS array, and that the title matches what the family actually asked for.');
+  // The title is derived from a category and a town, which is not enough to be
+  // distinctive: two babysitting requests from one town produce the same title.
+  // post-job.mjs refuses a title whose part before the town matches an Active job.
+  flags.push('Title is derived — "' + draft.title + '". Put the distinguishing detail before the comma; post-job.mjs checks it against Active jobs. Check it matches what the family actually asked for.');
   // The landmark deliberately does NOT go on the card: it narrows a family's
   // location on a public page. Its readers are the request email and the sheet,
   // where it answers "how far is this from campus" without being published.
@@ -770,7 +812,7 @@ function draftFlags(p, draft) {
   if (/allerg|adhd|dyslex|autis|neurodiver|anxiet|medical|diagnos/i.test(publicText)) {
     flags.push('Mentions a health detail. Keep it only if a student needs it to do the job safely.');
   }
-  flags.push('Rewrite the description in the board\'s voice before pasting.');
+  flags.push('Rewrite the description in the board\'s voice before posting.');
   return flags;
 }
 

@@ -413,6 +413,15 @@
     }
     .quote-dot[aria-current="true"]::before { background: var(--blue); }
     .quote-dot:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+    /* Press card (Ben, 2026-11-19): one .quote-card below the reviews, in the same ice band. */
+    .press-card { max-width: 760px; }
+    .press-headline {
+      font-size: 20px; font-weight: 900; color: var(--navy);
+      line-height: 1.3; letter-spacing: -0.3px; margin-bottom: 14px;
+    }
+    .press-link { margin-left: auto; font-size: 13px; font-weight: 900; color: var(--blue); text-decoration: none; }
+    .press-link:hover { text-decoration: underline; }
     @media (prefers-reduced-motion: reduce) {
       .quote-stage .quote-slide, .quote-stage .quote-slide.is-active, .quote-dot::before, .quote-arrow { transition: none; }
     }
@@ -1006,6 +1015,22 @@
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
   })();
   </script>
+
+  <!-- PRESS -->
+  <section class="section bg-ice" id="press" style="padding-top: 0;">
+    <div class="section-inner">
+      <div class="quote-card press-card">
+        <p class="section-eyebrow">The Heights &middot; October 29, 2026</p>
+        <h3 class="press-headline">&ldquo;Connecting Campus to Community&rdquo;: JobsU Provides BC Students With Newton Jobs</h3>
+        <p class="quote-text">&ldquo;I think JobsU is just very approachable, and it&rsquo;s really nice too that it&rsquo;s in the community, so it feels personal in a way that other apps and websites don&rsquo;t. You know who you&rsquo;re getting, you know where they&rsquo;re coming from.&rdquo;</p>
+        <div class="quote-by">
+          <span class="quote-name">Megan Kiwada</span>
+          <span class="quote-meta">Newton resident</span>
+          <a class="press-link" href="https://bcheights.com/233829/metro/connecting-campus-to-community-jobsu-provides-bc-students-with-newton-jobs/" target="_blank" rel="noopener">Read the article</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- FAQ -->
   <section class="section" id="faq">

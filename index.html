@@ -352,7 +352,7 @@
 
     .quote-card {
       background: white; border-radius: 20px;
-      border: 1px solid var(--border); padding: 32px;
+      border: 1px solid var(--border); padding: 24px;
       display: flex; flex-direction: column;
     }
 
@@ -361,7 +361,7 @@
     }
 
     .quote-text {
-      font-size: 15px; font-weight: 600; color: var(--navy);
+      font-size: 14px; font-weight: 600; color: var(--navy);
       line-height: 1.7; margin-bottom: 20px; flex: 1;
     }
 
@@ -377,6 +377,44 @@
       font-size: 11px; font-weight: 900; text-transform: uppercase;
       letter-spacing: 1px; color: var(--blue);
       background: var(--ice); border-radius: 999px; padding: 4px 10px;
+    }
+
+    /* Reviews carousel: progressive enhancement. Without JS, .quote-grid renders all
+       eight cards as a plain grid; the inline script after the section builds .quote-stage. */
+    .quote-stage { position: relative; margin-top: 52px; }
+    .quote-stage .quote-slide {
+      position: absolute; top: 0; left: 0; right: 0; margin-top: 0;
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.4s ease, visibility 0s linear 0.4s;
+    }
+    .quote-stage .quote-slide.is-active {
+      opacity: 1; visibility: visible;
+      transition: opacity 0.4s ease, visibility 0s linear 0s;
+    }
+    .quote-controls { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 24px; }
+    .quote-controls[hidden] { display: none; }
+    .quote-dots { display: flex; justify-content: center; gap: 4px; }
+    .quote-arrow {
+      width: 36px; height: 36px; padding: 0; cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: white; border: 1px solid var(--border); border-radius: 999px;
+      color: var(--navy); transition: background 0.2s;
+    }
+    .quote-arrow:hover { background: var(--ice); }
+    .quote-arrow:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+    .quote-arrow svg { width: 16px; height: 16px; display: block; }
+    .quote-dot {
+      width: 24px; height: 24px; padding: 0; border: 0; background: none; cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center; border-radius: 999px;
+    }
+    .quote-dot::before {
+      content: ""; width: 10px; height: 10px; border-radius: 999px; background: var(--border);
+      transition: background 0.2s;
+    }
+    .quote-dot[aria-current="true"]::before { background: var(--blue); }
+    .quote-dot:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+    @media (prefers-reduced-motion: reduce) {
+      .quote-stage .quote-slide, .quote-stage .quote-slide.is-active, .quote-dot::before, .quote-arrow { transition: none; }
     }
 
     /* ── TESTIMONIALS ── */
@@ -766,51 +804,208 @@
     <div class="section-inner">
       <p class="section-eyebrow">Reviews</p>
       <h2 class="section-title">What residents say</h2>
-      <p class="section-sub">Real reviews from people who have hired through JobsU.</p>
+      <p class="section-sub"><span class="quote-stars" role="img" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> <strong style="color:var(--navy);font-weight:900;">5.0</strong> average across 12 reviews</p>
 
+      <div class="quote-carousel" id="quote-carousel">
       <div class="quote-grid">
         <div class="quote-card">
-          <p class="quote-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</p>
-          <p class="quote-text">&ldquo;Very smooth and efficient on a short time frame.&rdquo;</p>
+          <p class="quote-text">&ldquo;Finding a reliable babysitter can be stressful and overwhelming for parents, but Ben makes the entire process so much easier and takes away so much of that stress. It&rsquo;s exactly what our community needed!&rdquo;</p>
           <div class="quote-by">
-            <span class="quote-name">Reynolds J.</span>
-            <span class="quote-meta">Brookline</span>
-            <span class="quote-job">Moving</span>
+            <span class="quote-name">Azi S.</span>
+            <span class="quote-meta">Newton</span>
+            <span class="quote-job">Babysitting</span>
           </div>
         </div>
 
         <div class="quote-card">
-          <p class="quote-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</p>
-          <p class="quote-text">&ldquo;Ben came on Sunday morning and helped me do the work I needed help with. He is nice, works hard, and gets things done. The service is helpful when you need it.&rdquo;</p>
+          <p class="quote-text">&ldquo;David and Adam were on time, respectful and extremely hard working. With our own kids away at college and three GIANT trees on our property this was a very welcome job that we outsourced.&rdquo;</p>
           <div class="quote-by">
-            <span class="quote-name">Ying W.</span>
-            <span class="quote-meta">Newton Centre</span>
+            <span class="quote-name">Nicole S.</span>
+            <span class="quote-meta">Waltham</span>
             <span class="quote-job">Yard work</span>
           </div>
         </div>
 
         <div class="quote-card">
-          <p class="quote-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</p>
-          <p class="quote-text">&ldquo;I had such a great experience with JobsU! They made the entire moving process easy and stress-free from start to finish. The team was professional, efficient, and careful with all of my belongings. This was by far the easiest move I&rsquo;ve ever had. I would absolutely use them again!&rdquo;</p>
+          <p class="quote-text">&ldquo;Ethan, who did the work, helped me figure out the best tools to do the job and he did a great job. He was polite, responsible and an absolute pleasure to work with.&rdquo;</p>
           <div class="quote-by">
-            <span class="quote-name">Danielle B.</span>
-            <span class="quote-meta">South Boston</span>
-            <span class="quote-job">Moving</span>
+            <span class="quote-name">Maureen F.</span>
+            <span class="quote-meta">Newton</span>
+            <span class="quote-job">Window washing</span>
           </div>
         </div>
 
         <div class="quote-card">
-          <p class="quote-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</p>
-          <p class="quote-text">&ldquo;Excellent! JobsU matched with a very nice and helpful young man that was able to assist me with carrying heavy boxes, dressers, large furniture and more. Very professional and handled all of my belongings with care.&rdquo;</p>
+          <p class="quote-text">&ldquo;David is patient, enthusiastic, knowledgeable, and makes learning fun. My son has improved his goalkeeping skills and looks forward to his training sessions.&rdquo;</p>
+          <div class="quote-by">
+            <span class="quote-name">Melissa G.</span>
+            <span class="quote-meta">Newton Centre</span>
+            <span class="quote-job">Goalkeeping training</span>
+          </div>
+        </div>
+
+        <div class="quote-card">
+          <p class="quote-text">&ldquo;The person who we hired arrived on time and got right to work. She was pleasant and got the job done in exactly the time period that we had agreed upon.&rdquo;</p>
+          <div class="quote-by">
+            <span class="quote-name">Julie P.</span>
+            <span class="quote-meta">Newton Centre</span>
+            <span class="quote-job">Cleanup after a dinner party</span>
+          </div>
+        </div>
+
+        <div class="quote-card">
+          <p class="quote-text">&ldquo;Both students arrived on time, worked very quickly and did everything I needed to have done. I would definitely use JobsU again.&rdquo;</p>
+          <div class="quote-by">
+            <span class="quote-name">Esther G.</span>
+            <span class="quote-meta">Newton</span>
+            <span class="quote-job">Moving furniture and boxes</span>
+          </div>
+        </div>
+
+        <div class="quote-card">
+          <p class="quote-text">&ldquo;JobsU matched me with a very nice and helpful young man who was able to assist me with carrying heavy boxes, dressers, large furniture and more. Very professional and handled all of my belongings with care.&rdquo;</p>
           <div class="quote-by">
             <span class="quote-name">Niall S.</span>
             <span class="quote-meta">Cambridge</span>
-            <span class="quote-job">Heavy lifting</span>
+            <span class="quote-job">Heavy lifting, fourth-floor walkup</span>
+          </div>
+        </div>
+
+        <div class="quote-card">
+          <p class="quote-text">&ldquo;On time. Polite. Did everything we asked. Did everything well. Will use again.&rdquo;</p>
+          <div class="quote-by">
+            <span class="quote-name">Charlie H.</span>
+            <span class="quote-meta">Weston</span>
+            <span class="quote-job">Moving furniture</span>
           </div>
         </div>
       </div>
+      </div>
     </div>
   </section>
+
+  <script>
+  /* Reviews carousel (Ben, 2026-11-19). Progressive enhancement: the HTML above is a
+     plain grid of all eight cards; this turns it into slides of 4 (2 at 960px and under).
+     7s advance, 400ms crossfade; pauses on hover and on focus anywhere in the section;
+     a dot or arrow click stops auto-advance for good; prefers-reduced-motion never
+     auto-advances (arrows and dots still work). Controls: previous, dots, next. */
+  (function () {
+    var root = document.getElementById('quote-carousel');
+    if (!root || !window.matchMedia) return;
+    var grid = root.querySelector('.quote-grid');
+    var cards = Array.prototype.slice.call(grid.querySelectorAll('.quote-card'));
+    var section = root.closest('section') || root;
+    var narrow = window.matchMedia('(max-width: 960px)');
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var stage = document.createElement('div');
+    var controls = document.createElement('div');
+    var dots = document.createElement('div');
+    var slides = [], current = 0, timer = null, stopped = false, hovering = false, focused = false, per = 0;
+
+    stage.className = 'quote-stage';
+    stage.setAttribute('role', 'region');
+    stage.setAttribute('aria-roledescription', 'carousel');
+    stage.setAttribute('aria-label', 'Resident reviews');
+    controls.className = 'quote-controls';
+    dots.className = 'quote-dots';
+    dots.setAttribute('role', 'group');
+    dots.setAttribute('aria-label', 'Choose a set of reviews');
+
+    function arrow(label, path) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'quote-arrow';
+      b.setAttribute('aria-label', label);
+      b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" '
+        + 'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">'
+        + '<path d="' + path + '"/></svg>';
+      return b;
+    }
+    // Wraps: next from the last slide goes to the first, previous from the first to the last.
+    function go(step) { stopped = true; stop(); show((current + step + slides.length) % slides.length); }
+    var prev = arrow('Previous reviews', 'M15 18l-6-6 6-6');
+    var next = arrow('Next reviews', 'M9 18l6-6-6-6');
+    prev.addEventListener('click', function () { go(-1); });
+    next.addEventListener('click', function () { go(1); });
+    controls.appendChild(prev);
+    controls.appendChild(dots);
+    controls.appendChild(next);
+
+    function show(n) {
+      current = n;
+      slides.forEach(function (s, i) {
+        var on = i === n;
+        s.classList.toggle('is-active', on);
+        s.setAttribute('aria-hidden', on ? 'false' : 'true');
+      });
+      Array.prototype.forEach.call(dots.children, function (d, i) {
+        if (i === n) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current');
+      });
+    }
+
+    // Fixed height = tallest slide, measured (not hard-coded) so the section never jumps.
+    function measure() {
+      var h = 0;
+      slides.forEach(function (s) { h = Math.max(h, s.offsetHeight); });
+      stage.style.height = h + 'px';
+    }
+
+    function build() {
+      var p = narrow.matches ? 2 : 4;
+      if (p === per) return;
+      per = p;
+      stage.innerHTML = ''; dots.innerHTML = ''; slides = [];
+      var total = Math.ceil(cards.length / per);
+      for (var i = 0; i < cards.length; i += per) {
+        var slide = document.createElement('div');
+        slide.className = 'quote-grid quote-slide';
+        cards.slice(i, i + per).forEach(function (c) { slide.appendChild(c); });
+        stage.appendChild(slide);
+        slides.push(slide);
+        var dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'quote-dot';
+        dot.setAttribute('aria-label', 'Show reviews ' + slides.length + ' of ' + total);
+        (function (n) {
+          dot.addEventListener('click', function () { stopped = true; stop(); show(n); });
+        })(slides.length - 1);
+        dots.appendChild(dot);
+      }
+      if (current >= slides.length) current = 0;
+      controls.hidden = slides.length < 2;
+      show(current);
+      measure();
+    }
+
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+    function start() {
+      stop();
+      if (stopped || reduce.matches || hovering || focused || slides.length < 2) return;
+      timer = setInterval(function () { show((current + 1) % slides.length); }, 7000);
+    }
+
+    grid.parentNode.replaceChild(stage, grid);
+    root.appendChild(controls);
+    build();
+    start();
+
+    section.addEventListener('mouseenter', function () { hovering = true; stop(); });
+    section.addEventListener('mouseleave', function () { hovering = false; start(); });
+    section.addEventListener('focusin', function () { focused = true; stop(); });
+    section.addEventListener('focusout', function (e) {
+      if (!section.contains(e.relatedTarget)) { focused = false; start(); }
+    });
+    var onBreak = function () { build(); start(); };
+    if (narrow.addEventListener) narrow.addEventListener('change', onBreak); else narrow.addListener(onBreak);
+    var onReduce = function () { start(); };
+    if (reduce.addEventListener) reduce.addEventListener('change', onReduce); else reduce.addListener(onReduce);
+    var t;
+    window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(measure, 150); });
+    window.addEventListener('load', measure);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+  })();
+  </script>
 
   <!-- FAQ -->
   <section class="section" id="faq">
